@@ -1,9 +1,9 @@
 .main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
   max-width: 1240px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 40px;
+  grid-template-rows: calc(100vh - 88px);
 }
 

@@ -5,7 +5,7 @@ export default function IngredientsSelector() {
   const [current, setCurrent] = React.useState('buns')
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', marginBottom:  40}}>
       <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
         Булки
       </Tab>
