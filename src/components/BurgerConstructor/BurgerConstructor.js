@@ -32,7 +32,7 @@ export default class BurgerConstructor extends React.Component {
 
           <ul className={styles.insideList}>
             {insideList.map((elem) => (
-              <li className={styles.ingredientWrap}>
+              <li className={styles.ingredientWrap} key={elem._id}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   isLocked={false}
