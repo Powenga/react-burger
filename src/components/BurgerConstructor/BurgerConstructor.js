@@ -1,20 +1,16 @@
-import PropTypes from 'prop-types';
 import {
   Button,
   CurrencyIcon,
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './BurgerConstructor.module.css';
 
 export default function BurgerConstructor({ ingredients, ...props }) {
-  const bunImage = ingredients.find(
-    (elem) => elem.type === 'bun'
-  ).image_mobile;
-  const insideList = ingredients.filter(
-    (elem) => elem.type !== 'bun'
-  );
+  const bunImage = ingredients.find((elem) => elem.type === 'bun').image_mobile;
+  const insideList = ingredients.filter((elem) => elem.type !== 'bun');
   return (
     <section className={styles.constructor}>
       <div className={styles.constructorWrap}>
