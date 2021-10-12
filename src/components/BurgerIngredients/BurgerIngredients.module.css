@@ -1,0 +1,20 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.container {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2F2F37;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
