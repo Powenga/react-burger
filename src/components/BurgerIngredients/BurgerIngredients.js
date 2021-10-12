@@ -4,7 +4,7 @@ import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
 import { ingredientPropTypes } from '../../utils/prop-types';
 
-export default function BurgerIngredients({ ingredients, ...props }) {
+export default function BurgerIngredients({ ingredients }) {
   return (
     <section className={`${styles.ingredients}`}>
       <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>

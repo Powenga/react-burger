@@ -5,14 +5,10 @@ import {
 import PropTypes from 'prop-types';
 import styles from './IngredientCard.module.css';
 
-export default function IngredientCard({ price, name, image, ...props }) {
+export default function IngredientCard({ price, name, image }) {
   return (
     <li className={styles.card}>
-      <img
-        src={image}
-        alt={name}
-        className="ml-4 mr-4 mb-1"
-      />
+      <img src={image} alt={name} className="ml-4 mr-4 mb-1" />
       <Counter count={1} size="default" />
       <p
         className="text text_type_digits-default mb-1"
@@ -35,4 +31,4 @@ IngredientCard.propTypes = {
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-}
+};

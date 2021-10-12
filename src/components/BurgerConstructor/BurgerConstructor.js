@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './BurgerConstructor.module.css';
 
-export default function BurgerConstructor({ ingredients, ...props }) {
+export default function BurgerConstructor({ ingredients }) {
   const bunImage = ingredients.find((elem) => elem.type === 'bun').image_mobile;
   const insideList = ingredients.filter((elem) => elem.type !== 'bun');
   return (
