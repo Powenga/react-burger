@@ -6,6 +6,7 @@ import Api from '../../utils/api';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
 import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
+import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
@@ -14,8 +15,10 @@ export default function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
+  const [ingredientModalData, setIngredientModalData] = useState({});
 
   function handleIngredientClick(ingredient) {
+    setIngredientModalData(ingredient);
     setisIngredientModal(true);
     setIsModalOpen(true);
   }
@@ -74,7 +77,9 @@ export default function App() {
                 title={isIngredientModal && 'Детали ингредиента'}
               >
                 {isIngredientModal ? (
-                  <></>
+                  <IngredientDetails
+                    {...ingredientModalData}
+                  />
                 ) : (
                   <></>
                 )}
