@@ -5,9 +5,22 @@ import {
 import PropTypes from 'prop-types';
 import styles from './IngredientCard.module.css';
 
-export default function IngredientCard({ price, name, image }) {
+export default function IngredientCard({
+  price,
+  name,
+  image,
+  onIngredientClick,
+  ...props
+}) {
+  function handleClick() {
+    onIngredientClick({
+      name,
+      image,
+      ...props,
+    });
+  }
   return (
-    <li className={styles.card}>
+    <li onClick={handleClick} className={styles.card}>
       <img src={image} alt={name} className="ml-4 mr-4 mb-1" />
       <Counter count={1} size="default" />
       <p

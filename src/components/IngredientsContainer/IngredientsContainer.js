@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientsContainer.module.css';
 
-export default function IngredientsContainer({ ingredients, title, ...props }) {
+export default function IngredientsContainer({
+  ingredients,
+  title,
+  onIngredientClick,
+  ...props
+}) {
   return (
     <>
       <h3 className="text text_type_main-medium mb-6">{title}</h3>
       <ul className={styles.list}>
         {ingredients.map((elem) => (
-          <IngredientCard key={elem._id} {...elem} />
+          <IngredientCard
+            key={elem._id}
+            {...elem}
+            onIngredientClick={onIngredientClick}
+          />
         ))}
       </ul>
     </>

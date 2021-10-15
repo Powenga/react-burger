@@ -4,11 +4,25 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.js';
 import styles from './App.module.css';
 import Api from '../../utils/api';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
+import Modal from '../Modal/Modal.js';
+import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
   const [isLoadError, setIsLoadError] = useState(false);
   const [ingredients, setIngredients] = useState({});
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isIngredientModal, setisIngredientModal] = useState(false);
+
+  function handleIngredientClick(ingredient) {
+    setisIngredientModal(true);
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
 
   useEffect(() => {
     setIsloading(true);
@@ -24,7 +38,10 @@ export default function App() {
       <main className={styles.main}>
         {!isLoading && !isLoadError && (
           <>
-            <BurgerIngredients ingredients={ingredients} />
+            <BurgerIngredients
+              ingredients={ingredients}
+              onIngredientClick={handleIngredientClick}
+            />
             <BurgerConstructor ingredients={ingredients} />
           </>
         )}
@@ -49,6 +66,22 @@ export default function App() {
             </p>
           </div>
         )}
+        <div style={{ overflow: 'hidden' }}>
+          {isModalOpen && (
+            <ModalOverlay>
+              <Modal
+                onModalClose={closeModal}
+                title={isIngredientModal && 'Детали ингредиента'}
+              >
+                {isIngredientModal ? (
+                  <></>
+                ) : (
+                  <></>
+                )}
+              </Modal>
+            </ModalOverlay>
+          )}
+        </div>
       </main>
     </>
   );
