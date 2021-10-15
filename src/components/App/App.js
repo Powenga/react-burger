@@ -80,7 +80,7 @@ export default function App() {
         )}
         <div style={{ overflow: 'hidden' }}>
           {isModalOpen && (
-            <ModalOverlay>
+            <ModalOverlay onOverlayClick={closeModal}>
               <Modal
                 onModalClose={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}

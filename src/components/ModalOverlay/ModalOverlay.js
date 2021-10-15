@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { MODAL_ROOT_SELECTOR } from '../../utils/constants';
 const modalRoot = document.querySelector(MODAL_ROOT_SELECTOR)
@@ -11,10 +12,19 @@ const style={
   backgroundColor: 'rgba(0, 0, 0, .6)',
 };
 
-export default function ModalOverlay({ title, children }) {
+export default function ModalOverlay({ title, onOverlayClick, children }) {
+
+  const overlayRef = useRef(null);
+
+  function handleClick(event) {
+    if(event.target === overlayRef.current) {
+      onOverlayClick();
+    }
+  }
+
   return createPortal(
     (
-      <div style={style}>
+      <div ref={overlayRef} style={style} onClickCapture={handleClick}>
         {children}
       </div>
     ),
