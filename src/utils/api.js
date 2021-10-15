@@ -9,7 +9,7 @@ class Api {
   _onError(res) {
     return res.json().then((data) => {
       if (res.ok) {
-        return Promise.resolve(data);
+        return Promise.resolve(data.data);
       }
       return Promise.reject(data);
     });
