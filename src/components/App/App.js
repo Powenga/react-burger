@@ -7,6 +7,7 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
 import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
+import OrderDetails from '../OrderDetails/OrderDetails.js';
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
@@ -20,6 +21,11 @@ export default function App() {
   function handleIngredientClick(ingredient) {
     setIngredientModalData(ingredient);
     setisIngredientModal(true);
+    setIsModalOpen(true);
+  }
+
+  function handleCheckout() {
+    setisIngredientModal(false);
     setIsModalOpen(true);
   }
 
@@ -45,7 +51,10 @@ export default function App() {
               ingredients={ingredients}
               onIngredientClick={handleIngredientClick}
             />
-            <BurgerConstructor ingredients={ingredients} />
+            <BurgerConstructor
+              ingredients={ingredients}
+              onCheckout={handleCheckout}
+            />
           </>
         )}
         {isLoading && (
@@ -77,11 +86,9 @@ export default function App() {
                 title={isIngredientModal && 'Детали ингредиента'}
               >
                 {isIngredientModal ? (
-                  <IngredientDetails
-                    {...ingredientModalData}
-                  />
+                  <IngredientDetails {...ingredientModalData} />
                 ) : (
-                  <></>
+                  <OrderDetails />
                 )}
               </Modal>
             </ModalOverlay>
