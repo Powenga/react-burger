@@ -1,13 +1,15 @@
+import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientDetails.module.css';
 
-export default function IngredientDetails({
-  name,
-  image_large,
-  calories,
-  carbohydrates,
-  fat,
-  proteins,
-}) {
+export default function IngredientDetails({ data }) {
+  const {
+    name,
+    image_large,
+    calories,
+    carbohydrates,
+    fat,
+    proteins,
+  } = data;
   return (
     <>
       <img
@@ -63,3 +65,7 @@ export default function IngredientDetails({
     </>
   );
 }
+
+IngredientDetails.propTypes = {
+  data: ingredientPropTypes.isRequired,
+};

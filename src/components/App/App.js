@@ -86,7 +86,7 @@ export default function App() {
                 title={isIngredientModal && 'Детали ингредиента'}
               >
                 {isIngredientModal ? (
-                  <IngredientDetails {...ingredientModalData} />
+                  <IngredientDetails data={ingredientModalData} />
                 ) : (
                   <OrderDetails />
                 )}

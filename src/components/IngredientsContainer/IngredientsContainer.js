@@ -16,7 +16,7 @@ export default function IngredientsContainer({
         {ingredients.map((elem) => (
           <IngredientCard
             key={elem._id}
-            {...elem}
+            ingredient={elem}
             onIngredientClick={onIngredientClick}
           />
         ))}
@@ -28,4 +28,5 @@ export default function IngredientsContainer({
 IngredientsContainer.propTypes = {
   title: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+  onIngredientClick: PropTypes.func.isRequired,
 };

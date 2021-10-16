@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import { ESC_KEY, MODAL_ROOT_SELECTOR } from '../../utils/constants';
 
@@ -12,7 +13,7 @@ const style={
   backgroundColor: 'rgba(0, 0, 0, .6)',
 };
 
-export default function ModalOverlay({ title, closeModal, children }) {
+export default function ModalOverlay({ closeModal, children }) {
 
   const overlayRef = useRef(null);
 
@@ -42,3 +43,8 @@ export default function ModalOverlay({ title, closeModal, children }) {
     ),
     modalRoot)
 }
+
+ModalOverlay.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.element,
+};
