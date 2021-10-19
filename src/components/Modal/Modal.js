@@ -41,7 +41,7 @@ export default function Modal({ title, closeModal, children }) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
-  onModalClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  closeModal: PropTypes.func.isRequired,
   children: PropTypes.element,
 };
