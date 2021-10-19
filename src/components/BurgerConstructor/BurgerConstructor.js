@@ -26,8 +26,8 @@ export default function BurgerConstructor({ ingredients, onCheckout }) {
         </div>
 
         <ul className={styles.insideList}>
-          {insideList.map((elem) => (
-            <li className={styles.ingredientWrap} key={elem._id}>
+          {insideList.map((elem, index) => (
+            <li className={styles.ingredientWrap} key={index}>
               <DragIcon type="primary" />
               <ConstructorElement
                 isLocked={false}
