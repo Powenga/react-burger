@@ -32,7 +32,7 @@ export default function App() {
         setisIngredientModal(false);
         setIsModalOpen(true);
       })
-      .catch(err => console.log(err))
+      .catch(() => setIsLoadError(true))
   }
 
   function closeModal() {
