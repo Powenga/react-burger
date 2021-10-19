@@ -3,11 +3,17 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientCard.module.css';
 
-export default function IngredientCard({ price, name, image }) {
+
+export default function IngredientCard({ ingredient, onIngredientClick }) {
+  const { price, name, image } = ingredient;
+  function handleClick() {
+    onIngredientClick(ingredient);
+  }
   return (
-    <li className={styles.card}>
+    <li onClick={handleClick} className={styles.card}>
       <img src={image} alt={name} className="ml-4 mr-4 mb-1" />
       <Counter count={1} size="default" />
       <p
@@ -28,7 +34,6 @@ export default function IngredientCard({ price, name, image }) {
 }
 
 IngredientCard.propTypes = {
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  ingredient: ingredientPropTypes.isRequired,
+  onIngredientClick: PropTypes.func.isRequired,
 };

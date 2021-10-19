@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './BurgerConstructor.module.css';
 
-export default function BurgerConstructor({ ingredients }) {
+export default function BurgerConstructor({ ingredients, onCheckout }) {
   const bunImage = ingredients.find((elem) => elem.type === 'bun').image_mobile;
   const insideList = ingredients.filter((elem) => elem.type !== 'bun');
+
   return (
     <section className={styles.constructor}>
       <div className={styles.constructorWrap}>
@@ -52,7 +53,7 @@ export default function BurgerConstructor({ ingredients }) {
           <span style={{ marginRight: 8 }}>610</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={onCheckout}>
           Оформить заказ
         </Button>
       </div>
@@ -62,4 +63,5 @@ export default function BurgerConstructor({ ingredients }) {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+  onCheckout: PropTypes.func.isRequired,
 };
