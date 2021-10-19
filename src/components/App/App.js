@@ -17,6 +17,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
   const [ingredientModalData, setIngredientModalData] = useState({});
+  const [orderNumber, setOrderNumber] = useState(0);
 
   function handleIngredientClick(ingredient) {
     setIngredientModalData(ingredient);
@@ -24,9 +25,14 @@ export default function App() {
     setIsModalOpen(true);
   }
 
-  function handleCheckout() {
-    setisIngredientModal(false);
-    setIsModalOpen(true);
+  function handleCheckout(data) {
+    Api.checkout(data)
+      .then(data => {
+        setOrderNumber(data.order.number)
+        setisIngredientModal(false);
+        setIsModalOpen(true);
+      })
+      .catch(err => console.log(err))
   }
 
   function closeModal() {
@@ -36,7 +42,7 @@ export default function App() {
   useEffect(() => {
     setIsloading(true);
     Api.getIngredients()
-      .then((data) => setIngredients(data))
+      .then((data) => setIngredients(data.data))
       .catch(() => setIsLoadError(true))
       .finally(() => setIsloading(false));
   }, []);
@@ -91,7 +97,7 @@ export default function App() {
               </Modal>
             ) : (
               <Modal closeModal={closeModal}>
-                <OrderDetails />
+                <OrderDetails orderNumber={orderNumber}/>
               </Modal>
             ))}
         </div>

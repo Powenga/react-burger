@@ -1,13 +1,14 @@
 import imagePath from '../../images/order-done.svg';
+import PropTypes from 'prop-types';
 
-export default function OrderDetails() {
+export default function OrderDetails({ orderNumber }) {
   return (
     <>
       <h2
         className="text text_type_digits-large mb-8"
         style={{ textAlign: 'center' }}
       >
-        034536
+        {orderNumber}
       </h2>
       <p
         className="text text_type_main-medium mb-15"
@@ -40,3 +41,7 @@ export default function OrderDetails() {
     </>
   );
 }
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
+};

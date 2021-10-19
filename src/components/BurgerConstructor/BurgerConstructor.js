@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types';
+
 
 export default function BurgerConstructor({ onCheckout }) {
   const ingredients = useContext(IngredientsContext);
@@ -27,6 +27,12 @@ export default function BurgerConstructor({ onCheckout }) {
       toppings: [],
     }
   );
+
+  function handleCheckout() {
+    const ingredients = toppingList.map(elem => elem._id)
+    ingredients.push(bun._id);
+    onCheckout({ingredients});
+  };
 
   const [bun, setBun] = useState(buns[0]);
   const [toppingList, setToppingList] = useState(toppings);
@@ -78,7 +84,7 @@ export default function BurgerConstructor({ onCheckout }) {
           <span style={{ marginRight: 8 }}>{total}</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="medium" onClick={onCheckout}>
+        <Button type="primary" size="medium" onClick={handleCheckout}>
           Оформить заказ
         </Button>
       </div>
@@ -87,6 +93,5 @@ export default function BurgerConstructor({ onCheckout }) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   onCheckout: PropTypes.func.isRequired,
 };
