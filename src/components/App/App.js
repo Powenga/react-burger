@@ -78,18 +78,19 @@ export default function App() {
           </div>
         )}
         <div style={{ overflow: 'hidden' }}>
-          {isModalOpen && (
+          {isModalOpen &&
+            (isIngredientModal ? (
               <Modal
                 closeModal={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}
               >
-                {isIngredientModal ? (
-                  <IngredientDetails data={ingredientModalData} />
-                ) : (
-                  <OrderDetails />
-                )}
+                <IngredientDetails data={ingredientModalData} />
               </Modal>
-          )}
+            ) : (
+              <Modal closeModal={closeModal}>
+                <OrderDetails />
+              </Modal>
+            ))}
         </div>
       </main>
     </>
