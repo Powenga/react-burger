@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import AppHeader from '../AppHeader/AppHeader.js';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.js';
-import styles from './App.module.css';
-import Api from '../../utils/api';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
+import Api from '../../utils/api';
+import { IngredientsContext } from '../../contexts/ingredients-context';
+import styles from './App.module.css';
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
@@ -50,10 +51,12 @@ export default function App() {
               ingredients={ingredients}
               onIngredientClick={handleIngredientClick}
             />
-            <BurgerConstructor
-              ingredients={ingredients}
-              onCheckout={handleCheckout}
-            />
+            <IngredientsContext.Provider value={ingredients}>
+              <BurgerConstructor
+                ingredients={ingredients}
+                onCheckout={handleCheckout}
+              />
+            </IngredientsContext.Provider>
           </>
         )}
         {isLoading && (

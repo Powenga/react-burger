@@ -4,11 +4,17 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useContext } from 'react';
+import { IngredientsContext } from '../../contexts/ingredients-context';
+import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-types';
-import styles from './BurgerConstructor.module.css';
 
-export default function BurgerConstructor({ ingredients, onCheckout }) {
+
+export default function BurgerConstructor({ onCheckout }) {
+
+  const ingredients = useContext(IngredientsContext);
+
   const bunImage = ingredients.find((elem) => elem.type === 'bun').image_mobile;
   const insideList = ingredients.filter((elem) => elem.type !== 'bun');
 
