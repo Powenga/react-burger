@@ -5,7 +5,6 @@ import styles from './App.module.css';
 import Api from '../../utils/api';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
-import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
 
@@ -80,9 +79,8 @@ export default function App() {
         )}
         <div style={{ overflow: 'hidden' }}>
           {isModalOpen && (
-            <ModalOverlay closeModal={closeModal}>
               <Modal
-                onModalClose={closeModal}
+                closeModal={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}
               >
                 {isIngredientModal ? (
@@ -91,7 +89,6 @@ export default function App() {
                   <OrderDetails />
                 )}
               </Modal>
-            </ModalOverlay>
           )}
         </div>
       </main>

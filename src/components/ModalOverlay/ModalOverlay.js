@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { createPortal } from 'react-dom';
-import { ESC_KEY, MODAL_ROOT_SELECTOR } from '../../utils/constants';
 
-const modalRoot = document.querySelector(MODAL_ROOT_SELECTOR)
-const style={
-  position: 'fixed',
+const style = {
+  position: 'absolute',
   top: 0,
   bottom: 0,
   left: 0,
@@ -13,38 +10,18 @@ const style={
   backgroundColor: 'rgba(0, 0, 0, .6)',
 };
 
-export default function ModalOverlay({ closeModal, children }) {
-
+export default function ModalOverlay({ closeModal }) {
   const overlayRef = useRef(null);
 
   function handleClick(event) {
-    if(event.target === overlayRef.current) {
+    if (event.target === overlayRef.current) {
       closeModal();
     }
   }
 
-  useEffect(() => {
-    function handleEscPress(event){
-      if(event.key === ESC_KEY) {
-        closeModal();
-      }
-    }
-    document.addEventListener('keydown', handleEscPress);
-    return () => {
-      document.removeEventListener('keydown', handleEscPress);
-    }
-  }, [closeModal]);
-
-  return createPortal(
-    (
-      <div ref={overlayRef} style={style} onClickCapture={handleClick}>
-        {children}
-      </div>
-    ),
-    modalRoot)
+  return <div ref={overlayRef} style={style} onClickCapture={handleClick} />;
 }
 
 ModalOverlay.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  children: PropTypes.element,
 };
