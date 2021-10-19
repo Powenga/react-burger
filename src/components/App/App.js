@@ -18,6 +18,7 @@ export default function App() {
   const [isIngredientModal, setisIngredientModal] = useState(false);
   const [ingredientModalData, setIngredientModalData] = useState({});
   const [orderNumber, setOrderNumber] = useState(0);
+  const [isOrdering, setIsOrdering] = useState(false);
 
   function handleIngredientClick(ingredient) {
     setIngredientModalData(ingredient);
@@ -26,13 +27,15 @@ export default function App() {
   }
 
   function handleCheckout(data) {
+    setIsOrdering(true);
+    setisIngredientModal(false);
+    setIsModalOpen(true);
     Api.checkout(data)
-      .then(data => {
-        setOrderNumber(data.order.number)
-        setisIngredientModal(false);
-        setIsModalOpen(true);
+      .then((data) => {
+        setOrderNumber(data.order.number);
       })
       .catch(() => setIsLoadError(true))
+      .finally(setIsOrdering(false));
   }
 
   function closeModal() {
@@ -59,6 +62,7 @@ export default function App() {
             />
             <IngredientsContext.Provider value={ingredients}>
               <BurgerConstructor
+                isOrdering={isOrdering}
                 ingredients={ingredients}
                 onCheckout={handleCheckout}
               />
@@ -97,7 +101,10 @@ export default function App() {
               </Modal>
             ) : (
               <Modal closeModal={closeModal}>
-                <OrderDetails orderNumber={orderNumber}/>
+                <OrderDetails
+                  orderNumber={orderNumber}
+                  isOrdering={isOrdering}
+                />
               </Modal>
             ))}
         </div>
