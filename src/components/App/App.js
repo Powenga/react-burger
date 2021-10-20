@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import AppHeader from '../AppHeader/AppHeader.js';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.js';
-import styles from './App.module.css';
-import Api from '../../utils/api';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
-import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
+import Api from '../../utils/api';
+import { IngredientsContext } from '../../contexts/ingredients-context';
+import styles from './App.module.css';
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
@@ -17,6 +17,8 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
   const [ingredientModalData, setIngredientModalData] = useState({});
+  const [orderNumber, setOrderNumber] = useState(0);
+  const [isOrdering, setIsOrdering] = useState(false);
 
   function handleIngredientClick(ingredient) {
     setIngredientModalData(ingredient);
@@ -24,9 +26,16 @@ export default function App() {
     setIsModalOpen(true);
   }
 
-  function handleCheckout() {
+  function handleCheckout(data) {
+    setIsOrdering(true);
     setisIngredientModal(false);
     setIsModalOpen(true);
+    Api.checkout(data)
+      .then((data) => {
+        setOrderNumber(data.order.number);
+      })
+      .catch(() => setIsLoadError(true))
+      .finally(() => setIsOrdering(false));
   }
 
   function closeModal() {
@@ -36,7 +45,7 @@ export default function App() {
   useEffect(() => {
     setIsloading(true);
     Api.getIngredients()
-      .then((data) => setIngredients(data))
+      .then((data) => setIngredients(data.data))
       .catch(() => setIsLoadError(true))
       .finally(() => setIsloading(false));
   }, []);
@@ -46,16 +55,16 @@ export default function App() {
       <AppHeader />
       <main className={styles.main}>
         {!isLoading && !isLoadError && (
-          <>
+          <IngredientsContext.Provider value={ingredients}>
             <BurgerIngredients
-              ingredients={ingredients}
               onIngredientClick={handleIngredientClick}
             />
+
             <BurgerConstructor
-              ingredients={ingredients}
+              isOrdering={isOrdering}
               onCheckout={handleCheckout}
             />
-          </>
+          </IngredientsContext.Provider>
         )}
         {isLoading && (
           <p className="text text text_type_main-small mt-10">
@@ -79,20 +88,22 @@ export default function App() {
           </div>
         )}
         <div style={{ overflow: 'hidden' }}>
-          {isModalOpen && (
-            <ModalOverlay closeModal={closeModal}>
+          {isModalOpen &&
+            (isIngredientModal ? (
               <Modal
-                onModalClose={closeModal}
+                closeModal={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}
               >
-                {isIngredientModal ? (
-                  <IngredientDetails data={ingredientModalData} />
-                ) : (
-                  <OrderDetails />
-                )}
+                <IngredientDetails data={ingredientModalData} />
               </Modal>
-            </ModalOverlay>
-          )}
+            ) : (
+              <Modal closeModal={closeModal}>
+                <OrderDetails
+                  orderNumber={orderNumber}
+                  isOrdering={isOrdering}
+                />
+              </Modal>
+            ))}
         </div>
       </main>
     </>

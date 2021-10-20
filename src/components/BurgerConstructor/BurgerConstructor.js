@@ -4,13 +4,45 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useContext, useEffect, useState } from 'react';
+import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './BurgerConstructor.module.css';
+import PropTypes from 'prop-types';
 
-export default function BurgerConstructor({ ingredients, onCheckout }) {
-  const bunImage = ingredients.find((elem) => elem.type === 'bun').image_mobile;
-  const insideList = ingredients.filter((elem) => elem.type !== 'bun');
+
+export default function BurgerConstructor({ onCheckout }) {
+  const ingredients = useContext(IngredientsContext);
+
+  const { buns, toppings } = ingredients.reduce(
+    (prev, curr) => {
+      if (curr.type === 'bun') {
+        prev.buns.push(curr);
+      } else {
+        prev.toppings.push(curr);
+      }
+      return prev;
+    },
+    {
+      buns: [],
+      toppings: [],
+    }
+  );
+
+  function handleCheckout() {
+    const ingredients = toppingList.map(elem => elem._id)
+    ingredients.push(bun._id);
+    onCheckout({ingredients});
+  };
+
+  const [bun, setBun] = useState(buns[0]);
+  const [toppingList, setToppingList] = useState(toppings);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const total =
+      bun.price * 2 + toppingList.reduce((prev, curr) => prev + curr.price, 0);
+    setTotal(total);
+  }, [bun, toppingList]);
 
   return (
     <section className={styles.constructor}>
@@ -19,20 +51,19 @@ export default function BurgerConstructor({ ingredients, onCheckout }) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={bunImage}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
           />
         </div>
-
         <ul className={styles.insideList}>
-          {insideList.map((elem) => (
-            <li className={styles.ingredientWrap} key={elem._id}>
+          {toppingList.map((elem, index) => (
+            <li className={styles.ingredientWrap} key={index}>
               <DragIcon type="primary" />
               <ConstructorElement
                 isLocked={false}
                 text={elem.name}
-                price={200}
+                price={elem.price}
                 thumbnail={elem.image_mobile}
               />
             </li>
@@ -40,20 +71,20 @@ export default function BurgerConstructor({ ingredients, onCheckout }) {
         </ul>
         <div className="mr-4">
           <ConstructorElement
-            type="bottom"
+            type="down"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={bunImage}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
           />
         </div>
       </div>
       <div className={styles.orderWrap}>
         <p className="text text_type_digits-medium mr-10">
-          <span style={{ marginRight: 8 }}>610</span>
+          <span style={{ marginRight: 8 }}>{total}</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="medium" onClick={onCheckout}>
+        <Button type="primary" size="medium" onClick={handleCheckout}>
           Оформить заказ
         </Button>
       </div>
@@ -62,6 +93,5 @@ export default function BurgerConstructor({ ingredients, onCheckout }) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   onCheckout: PropTypes.func.isRequired,
 };

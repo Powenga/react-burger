@@ -1,10 +1,12 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.css';
 import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { IngredientsContext } from '../../contexts/ingredients-context';
 
-export default function BurgerIngredients({ ingredients, onIngredientClick }) {
+export default function BurgerIngredients({ onIngredientClick }) {
+  const ingredients = useContext(IngredientsContext);
   return (
     <section className={`${styles.ingredients}`}>
       <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
@@ -37,6 +39,5 @@ export default function BurgerIngredients({ ingredients, onIngredientClick }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   onIngredientClick: PropTypes.func.isRequired,
 };
