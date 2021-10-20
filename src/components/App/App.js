@@ -55,19 +55,16 @@ export default function App() {
       <AppHeader />
       <main className={styles.main}>
         {!isLoading && !isLoadError && (
-          <>
+          <IngredientsContext.Provider value={ingredients}>
             <BurgerIngredients
-              ingredients={ingredients}
               onIngredientClick={handleIngredientClick}
             />
-            <IngredientsContext.Provider value={ingredients}>
-              <BurgerConstructor
-                isOrdering={isOrdering}
-                ingredients={ingredients}
-                onCheckout={handleCheckout}
-              />
-            </IngredientsContext.Provider>
-          </>
+
+            <BurgerConstructor
+              isOrdering={isOrdering}
+              onCheckout={handleCheckout}
+            />
+          </IngredientsContext.Provider>
         )}
         {isLoading && (
           <p className="text text text_type_main-small mt-10">
