@@ -35,7 +35,7 @@ export default function App() {
         setOrderNumber(data.order.number);
       })
       .catch(() => setIsLoadError(true))
-      .finally(setIsOrdering(false));
+      .finally(() => setIsOrdering(false));
   }
 
   function closeModal() {
