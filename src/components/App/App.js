@@ -8,6 +8,17 @@ import OrderDetails from '../OrderDetails/OrderDetails.js';
 import Api from '../../utils/api';
 import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './App.module.css';
+import thunk from 'redux-thunk';
+import { compose, createStore, applyMiddleware } from 'redux';
+import { rootReducer } from '../../services/reducers/index.js';
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(thunk));
+const store = createStore(rootReducer, enhancer);
 
 export default function App() {
   const [isLoading, setIsloading] = useState(true);
