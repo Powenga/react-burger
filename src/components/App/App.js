@@ -12,11 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/index.js';
 
 export default function App() {
-  const {
-    ingredients,
-    ingredientsRequest,
-    ingredientsRequestFailed,
-  } = useSelector(store => store.burger);
+  const { ingredients, ingredientsRequest, ingredientsRequestFailed } =
+    useSelector((store) => store.burger);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,16 +56,14 @@ export default function App() {
       <AppHeader />
       <main className={styles.main}>
         {!ingredientsRequest && !ingredientsRequestFailed && (
-          <IngredientsContext.Provider value={ingredients}>
-            <BurgerIngredients
-              onIngredientClick={handleIngredientClick}
-            />
+          <>
+            <BurgerIngredients onIngredientClick={handleIngredientClick} />
 
-            {/* <BurgerConstructor
+            <BurgerConstructor
               isOrdering={isOrdering}
               onCheckout={handleCheckout}
-            /> */}
-          </IngredientsContext.Provider>
+            />
+          </>
         )}
         {ingredientsRequest && (
           <p className="text text text_type_main-small mt-10">

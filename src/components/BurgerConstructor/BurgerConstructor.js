@@ -4,14 +4,13 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext, useEffect, useState } from 'react';
-import { IngredientsContext } from '../../contexts/ingredients-context';
+import { useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
-
+import { useSelector } from 'react-redux';
 
 export default function BurgerConstructor({ onCheckout }) {
-  const ingredients = useContext(IngredientsContext);
+  const { ingredients } = useSelector((store) => store.burger);
 
   const { buns, toppings } = ingredients.reduce(
     (prev, curr) => {
@@ -29,10 +28,10 @@ export default function BurgerConstructor({ onCheckout }) {
   );
 
   function handleCheckout() {
-    const ingredients = toppingList.map(elem => elem._id)
+    const ingredients = toppingList.map((elem) => elem._id);
     ingredients.push(bun._id);
-    onCheckout({ingredients});
-  };
+    onCheckout({ ingredients });
+  }
 
   const [bun, setBun] = useState(buns[0]);
   const [toppingList, setToppingList] = useState(toppings);

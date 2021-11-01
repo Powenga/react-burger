@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.css';
 import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
-import { IngredientsContext } from '../../contexts/ingredients-context';
+import { useSelector } from 'react-redux';
 
 export default function BurgerIngredients({ onIngredientClick }) {
-  const ingredients = useContext(IngredientsContext);
+  const { ingredients } = useSelector((store) => store.burger);
   return (
     <section className={`${styles.ingredients}`}>
       <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
