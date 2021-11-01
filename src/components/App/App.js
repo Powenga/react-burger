@@ -8,22 +8,23 @@ import OrderDetails from '../OrderDetails/OrderDetails.js';
 import Api from '../../utils/api';
 import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './App.module.css';
-import thunk from 'redux-thunk';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { rootReducer } from '../../services/reducers/index.js';
-
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-const store = createStore(rootReducer, enhancer);
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/index.js';
 
 export default function App() {
+  const {
+    ingredients,
+    ingredientsRequest,
+    ingredientsRequestFailed,
+  } = useSelector(store => store.burger);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   const [isLoading, setIsloading] = useState(true);
   const [isLoadError, setIsLoadError] = useState(false);
-  const [ingredients, setIngredients] = useState({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
@@ -53,36 +54,28 @@ export default function App() {
     setIsModalOpen(false);
   }
 
-  useEffect(() => {
-    setIsloading(true);
-    Api.getIngredients()
-      .then((data) => setIngredients(data.data))
-      .catch(() => setIsLoadError(true))
-      .finally(() => setIsloading(false));
-  }, []);
-
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        {!isLoading && !isLoadError && (
+        {!ingredientsRequest && !ingredientsRequestFailed && (
           <IngredientsContext.Provider value={ingredients}>
             <BurgerIngredients
               onIngredientClick={handleIngredientClick}
             />
 
-            <BurgerConstructor
+            {/* <BurgerConstructor
               isOrdering={isOrdering}
               onCheckout={handleCheckout}
-            />
+            /> */}
           </IngredientsContext.Provider>
         )}
-        {isLoading && (
+        {ingredientsRequest && (
           <p className="text text text_type_main-small mt-10">
             Загружаем данные ...
           </p>
         )}
-        {isLoadError && (
+        {ingredientsRequestFailed && (
           <div>
             <p
               className="text text text_type_main-small mt-10"
