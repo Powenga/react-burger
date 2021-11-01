@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { ingredientTypes } from '../../utils/constants';
+import { getRandomBurger } from '../../utils/utils';
 import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
@@ -36,6 +38,7 @@ export const ingredientsReduser = (state = initialState, action) => {
         ingredientsRequest: false,
         ingredientsRequestFailed: false,
         ingredients: action.ingredients,
+        constructorIngredients: getRandomBurger(action.ingredients, ingredientTypes),
       };
 
     default:

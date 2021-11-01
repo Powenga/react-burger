@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 export default function BurgerConstructor({ onCheckout }) {
-  const { ingredients } = useSelector((store) => store.burger);
+  const { constructorIngredients } = useSelector((store) => store.burger);
 
-  const { buns, toppings } = ingredients.reduce(
+  const { buns, toppings } = constructorIngredients.reduce(
     (prev, curr) => {
       if (curr.type === 'bun') {
         prev.buns.push(curr);
@@ -38,23 +38,29 @@ export default function BurgerConstructor({ onCheckout }) {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const total =
-      bun.price * 2 + toppingList.reduce((prev, curr) => prev + curr.price, 0);
-    setTotal(total);
+    if (bun) {
+      const total =
+        bun.price * 2 +
+        toppingList.reduce((prev, curr) => prev + curr.price, 0);
+      setTotal(total);
+    }
   }, [bun, toppingList]);
 
   return (
     <section className={styles.constructor}>
       <div className={styles.constructorWrap}>
-        <div className="mr-4">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image_mobile}
-          />
-        </div>
+        {bun && (
+          <div className="mr-4">
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image_mobile}
+            />
+          </div>
+        )}
+
         <ul className={styles.insideList}>
           {toppingList.map((elem, index) => (
             <li className={styles.ingredientWrap} key={index}>
@@ -68,15 +74,18 @@ export default function BurgerConstructor({ onCheckout }) {
             </li>
           ))}
         </ul>
-        <div className="mr-4">
-          <ConstructorElement
-            type="down"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image_mobile}
-          />
-        </div>
+
+        {bun && (
+          <div className="mr-4">
+            <ConstructorElement
+              type="down"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image_mobile}
+            />
+          </div>
+        )}
       </div>
       <div className={styles.orderWrap}>
         <p className="text text_type_digits-medium mr-10">
