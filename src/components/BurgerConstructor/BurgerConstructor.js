@@ -7,44 +7,46 @@ import {
 import { useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { GET_CONSTRUCTOR_INGREDIENTS } from '../../services/actions';
 
 export default function BurgerConstructor({ onCheckout }) {
-  const { constructorIngredients } = useSelector((store) => store.burger);
-
-  const { buns, toppings } = constructorIngredients.reduce(
-    (prev, curr) => {
-      if (curr.type === 'bun') {
-        prev.buns.push(curr);
-      } else {
-        prev.toppings.push(curr);
-      }
-      return prev;
-    },
-    {
-      buns: [],
-      toppings: [],
-    }
+  const { bun, toppings } = useSelector(
+    (store) => store.burger.constructorIngredients
   );
 
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(GET_CONSTRUCTOR_INGREDIENTS)
+  // }, [dispatch, bun, toppings]);
+
+  // useEffect(() => {
+  //   const { bun, toppings } = constructorIngredients.reduce(
+  //     (prev, curr) => {
+  //       if (curr.type === 'bun') {
+  //         console.log(curr);
+  //         prev.bun = curr;
+  //       } else {
+  //         prev.toppings.push(curr);
+  //       }
+  //       return prev;
+  //     },
+  //     {
+  //       bun: {},
+  //       toppings: [],
+  //     }
+  //   );
+  //   console.log(bun);
+  // }, [constructorIngredients]);
+
   function handleCheckout() {
-    const ingredients = toppingList.map((elem) => elem._id);
+    const ingredients = toppings.map((elem) => elem._id);
     ingredients.push(bun._id);
     onCheckout({ ingredients });
   }
 
-  const [bun, setBun] = useState(buns[0]);
-  const [toppingList, setToppingList] = useState(toppings);
   const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    if (bun) {
-      const total =
-        bun.price * 2 +
-        toppingList.reduce((prev, curr) => prev + curr.price, 0);
-      setTotal(total);
-    }
-  }, [bun, toppingList]);
 
   return (
     <section className={styles.constructor}>
@@ -62,30 +64,36 @@ export default function BurgerConstructor({ onCheckout }) {
         )}
 
         <ul className={styles.insideList}>
-          {toppingList.map((elem, index) => (
-            <li className={styles.ingredientWrap} key={index}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                isLocked={false}
-                text={elem.name}
-                price={elem.price}
-                thumbnail={elem.image_mobile}
-              />
-            </li>
-          ))}
+          {toppings.length ? (
+            toppings.map((elem, index) => (
+              <li className={styles.ingredientWrap} key={index}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  isLocked={false}
+                  text={elem.name}
+                  price={elem.price}
+                  thumbnail={elem.image_mobile}
+                />
+              </li>
+            ))
+          ) : (
+            <div className={styles.placeholderWrap}>
+              <p className="text text_type_main-small text_color_inactive">
+                Добавьте ингредиенты или измените булку!
+              </p>
+            </div>
+          )}
         </ul>
 
-        {bun && (
-          <div className="mr-4">
-            <ConstructorElement
-              type="down"
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
-          </div>
-        )}
+        <div className="mr-4">
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </div>
       </div>
       <div className={styles.orderWrap}>
         <p className="text text_type_digits-medium mr-10">

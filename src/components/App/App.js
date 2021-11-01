@@ -6,13 +6,12 @@ import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
 import Api from '../../utils/api';
-import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/index.js';
 
 export default function App() {
-  const { ingredients, ingredientsRequest, ingredientsRequestFailed } =
+  const { ingredientsRequest, ingredientsRequestFailed } =
     useSelector((store) => store.burger);
   const dispatch = useDispatch();
 

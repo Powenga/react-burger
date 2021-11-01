@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { ingredientTypes } from '../../utils/constants';
-import { getRandomBurger } from '../../utils/utils';
+
 import {
+  GET_CONSTRUCTOR_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -12,7 +12,11 @@ const initialState = {
   ingredientsRequest: false,
   ingredientsRequestFailed: false,
 
-  constructorIngredients: [],
+  constructorIngredients: {
+    bun: {},
+    toppings: [],
+  },
+
   currentIngredient: {},
   order: {},
 };
@@ -38,8 +42,20 @@ export const ingredientsReduser = (state = initialState, action) => {
         ingredientsRequest: false,
         ingredientsRequestFailed: false,
         ingredients: action.ingredients,
-        constructorIngredients: getRandomBurger(action.ingredients, ingredientTypes),
+        constructorIngredients: {
+          bun: action.ingredients.find((elem) => elem.type === 'bun'),
+          toppings: action.ingredients.filter((elem) => elem.type !== 'bun'),
+        },
       };
+
+      case GET_CONSTRUCTOR_INGREDIENTS:
+        return {
+          ...state,
+          constructorIngredients: {
+            bun: action.ingredients.find((elem) => elem.type === 'bun'),
+            toppings: action.ingredients.filter((elem) => elem.type !== 'bun'),
+          },
+        };
 
     default:
       return state;
