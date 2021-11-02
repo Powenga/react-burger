@@ -8,7 +8,7 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientCard.module.css';
 
 export default function IngredientCard({ ingredient, onIngredientClick }) {
-  const { price, name, image } = ingredient;
+  const { price, name, image, qty } = ingredient;
 
   function handleClick() {
     onIngredientClick(ingredient);
@@ -23,7 +23,7 @@ export default function IngredientCard({ ingredient, onIngredientClick }) {
   return (
     <li ref={dragRef} onClick={handleClick} className={styles.card}>
       <img src={image} alt={name} className="ml-4 mr-4 mb-1" />
-      <Counter count={1} size="default" />
+      {qty !== 0 && <Counter count={qty} size="default" />}
       <p
         className="text text_type_digits-default mb-1"
         style={{ textAlign: 'center' }}

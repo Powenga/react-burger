@@ -14,7 +14,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export default function App() {
   const { ingredientsRequest, ingredientsRequestFailed } =
-    useSelector((store) => store.burger);
+    useSelector((store) => store.ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {
