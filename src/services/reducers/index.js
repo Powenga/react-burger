@@ -61,7 +61,6 @@ export const ingredients = (state = ingedientsState, action) => {
 };
 
 export const burgerConstructor = (state = constructorState, action) => {
-  console.log(action.ingredients);
   switch (action.type) {
     case GET_CONSTURCTOR_INGREDIENTS:
       return {

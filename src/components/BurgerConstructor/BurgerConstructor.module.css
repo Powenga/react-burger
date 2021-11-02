@@ -40,13 +40,6 @@
   background-color: #8585AD;
 }
 
-.ingredientWrap {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .orderWrap {
   display: flex;
   flex-direction: row;

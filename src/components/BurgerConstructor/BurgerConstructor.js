@@ -2,43 +2,23 @@ import {
   Button,
   CurrencyIcon,
   ConstructorElement,
-  DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_INGREDIENT, GET_CONSTURCTOR_INGREDIENTS, REMOVE_INGREDIENT } from '../../services/actions';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
 import { useDrop } from 'react-dnd';
+import Topping from '../Topping/Topping';
 
 export default function BurgerConstructor({ onCheckout }) {
-  const { ingredients, bun, toppings } =  useSelector((store) => ({
+  const { ingredients, bun, toppings } = useSelector((store) => ({
     ingredients: store.ingredients.ingredients,
     bun: store.burgerConstructor.bun,
     toppings: store.burgerConstructor.toppings,
-  }))
+  }));
 
   const dispatch = useDispatch();
-
-
-  // useEffect(() => {
-  //   const { bun, toppings } = constructorIngredients.reduce(
-  //     (prev, curr) => {
-  //       if (curr.type === 'bun') {
-  //         console.log(curr);
-  //         prev.bun = curr;
-  //       } else {
-  //         prev.toppings.push(curr);
-  //       }
-  //       return prev;
-  //     },
-  //     {
-  //       bun: {},
-  //       toppings: [],
-  //     }
-  //   );
-  //   console.log(bun);
-  // }, [constructorIngredients]);
 
   function handleCheckout() {
     const ingredients = toppings.map((elem) => elem._id);
@@ -56,6 +36,10 @@ export default function BurgerConstructor({ onCheckout }) {
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(ingredient) {
+      if(toppings.find(elem => elem.key === ingredient.key)) {
+        console.log('перетаскиваем');
+        return;
+      }
       dispatch({ type: ADD_INGREDIENT, ingredient });
     },
   });
@@ -77,19 +61,8 @@ export default function BurgerConstructor({ onCheckout }) {
 
         <ul className={styles.insideList}>
           {toppings.length ? (
-            toppings.map((elem, index) => (
-              <li className={styles.ingredientWrap} key={index}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  isLocked={false}
-                  text={elem.name}
-                  price={elem.price}
-                  thumbnail={elem.image_mobile}
-                  handleClose={(event) => {
-                    handleRemove(event, elem);
-                  }}
-                />
-              </li>
+            toppings.map((elem) => (
+              <Topping key={elem.key} elem={elem} handleRemove={handleRemove} />
             ))
           ) : (
             <div className={styles.placeholderWrap}>
