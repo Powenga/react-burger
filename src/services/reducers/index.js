@@ -11,7 +11,8 @@ import {
   ADD_INGREDIENT_INFO,
   CHECKOUT_REQUEST,
   CHECKOUT_FAILED,
-  CHECKOUT_SUCCESS
+  CHECKOUT_SUCCESS,
+  SET_CURRENT_TAB
 } from '../actions';
 
 const ingedientsState = {
@@ -177,9 +178,20 @@ export const order = (state = orderState, action) => {
   }
 };
 
+export const currentTab = (state = 'buns', action) => {
+  switch (action.type) {
+    case SET_CURRENT_TAB:
+      return action.currentTab;
+
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   ingredients,
   burgerConstructor,
   currentIngredient,
-  order
+  order,
+  currentTab
 });

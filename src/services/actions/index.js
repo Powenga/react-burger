@@ -16,6 +16,8 @@ export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
 export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
 export const CHECKOUT_FAILED = 'CHECKOUT_FAILED';
 
+export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
