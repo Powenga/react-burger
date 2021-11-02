@@ -3,26 +3,30 @@ import {
   CurrencyIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ADD_INGREDIENT,
-  MOVE_INGREDIENT,
-  REMOVE_INGREDIENT,
-} from '../../services/actions';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
 
 export default function BurgerConstructor({ onCheckout }) {
-  const { ingredients, bun, toppings } = useSelector((store) => ({
-    ingredients: store.ingredients.ingredients,
-    bun: store.burgerConstructor.bun,
-    toppings: store.burgerConstructor.toppings,
-  }));
+   const dispatch = useDispatch();
+  const { bun, toppings } = useSelector((store) => store.burgerConstructor);
 
-  const dispatch = useDispatch();
+  const [total, setTotal] = useState(0);
+
+  const [, dropIngredientsTarget] = useDrop({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch({ type: ADD_INGREDIENT, ingredient });
+    },
+  });
+
+  useEffect(() => {
+    setTotal(bun.price * 2 + toppings.reduce((acc, curr) => acc + curr.price, 0));
+  }, [bun, toppings])
 
   function handleCheckout() {
     const ingredients = toppings.map((elem) => elem._id);
@@ -34,22 +38,6 @@ export default function BurgerConstructor({ onCheckout }) {
     event.preventDefault();
     dispatch({ type: REMOVE_INGREDIENT, ingredient });
   }
-
-  const [total, setTotal] = useState(0);
-
-  const [, dropIngredientsTarget] = useDrop({
-    accept: 'ingredient',
-    drop(ingredient) {
-      dispatch({ type: ADD_INGREDIENT, ingredient });
-    },
-  });
-
-  // const [, dropToppingsTarget] = useDrop({
-  //   accept: 'topping',
-  //   drop(ingredient) {
-  //     console.log('gthtklgjdfkl');
-  //   },
-  // });
 
   return (
     <section className={styles.constructor}>

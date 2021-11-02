@@ -3,7 +3,6 @@ import styles from './BurgerIngredients.module.css';
 import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 export default function BurgerIngredients({ onIngredientClick }) {
   const { ingredients } = useSelector(
