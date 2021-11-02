@@ -9,6 +9,9 @@ import {
   GET_CONSTURCTOR_INGREDIENTS,
   MOVE_INGREDIENT,
   ADD_INGREDIENT_INFO,
+  CHECKOUT_REQUEST,
+  CHECKOUT_FAILED,
+  CHECKOUT_SUCCESS
 } from '../actions';
 
 const ingedientsState = {
@@ -23,7 +26,10 @@ const constructorState = {
 };
 
 const orderState = {
-  order: {},
+  orderNumber: '',
+  orders: [],
+  checkoutRequest: false,
+  checkoutRequestFailed: false,
 };
 
 const currentIngredientState = {
@@ -134,8 +140,46 @@ export const currentIngredient = (state = currentIngredientState, action) => {
   }
 };
 
+export const order = (state = orderState, action) => {
+  switch (action.type) {
+    case CHECKOUT_REQUEST:
+      return {
+        ...state,
+        checkoutRequest: true,
+      };
+
+    case CHECKOUT_FAILED:
+      return {
+        ...state,
+        checkoutRequest: false,
+        ingredientsRequestFailed: true,
+      };
+
+    case CHECKOUT_SUCCESS:
+      const orderNumber = action.orderNumber;
+      return {
+        ...state,
+        orderNumber,
+        orders: [
+          ...state.orders,
+          {
+            orderNumber,
+            ingredients: action.orderIngredients,
+            name: action.orderName
+          }
+        ],
+        checkoutRequest: false,
+        ingredientsRequestFailed: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   ingredients,
   burgerConstructor,
   currentIngredient,
+  order
 });

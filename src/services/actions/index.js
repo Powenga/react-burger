@@ -12,6 +12,10 @@ export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
 export const ADD_INGREDIENT_INFO = 'ADD_INGREDIENT_INFO';
 export const REMOVE_INGREDIENT_INFO = 'REMOVE_INGREDIENT_INFO';
 
+export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
+export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
+export const CHECKOUT_FAILED = 'CHECKOUT_FAILED';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({
@@ -32,6 +36,29 @@ export function getIngredients() {
       .catch(() => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
+        });
+      });
+  };
+}
+
+export function checkout(orderIngredients) {
+  return function (dispatch) {
+    dispatch({
+      type: CHECKOUT_REQUEST,
+    });
+    api
+      .checkout(orderIngredients)
+      .then((res) => {
+        dispatch({
+          type: CHECKOUT_SUCCESS,
+          orderNumber: res.order.number,
+          orderName: res.name,
+          orderIngredients
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: CHECKOUT_FAILED,
         });
       });
   };
