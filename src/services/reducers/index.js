@@ -81,25 +81,26 @@ export const burgerConstructor = (state = constructorState, action) => {
 
       return {
         ...state,
-          bun: state.bun,
-          toppings: [
-            ...state.toppings,
-            action.ingredient,
-          ],
+        bun: state.bun,
+        toppings: [
+          ...state.toppings,
+          {
+            ...action.ingredient,
+            key: Date.now(),
+          },
+        ],
       };
 
-    // case REMOVE_INGREDIENT:
-    //   return {
-    //     ...state,
-    //     constructorIngredients: {
-    //       bun: state.constructorIngredients.bun,
-    //       toppings: [
-    //         ...state.constructorIngredients.toppings.filter((elem) => {
-    //           return elem._id !== action.ingredient._id;
-    //         }),
-    //       ],
-    //     },
-    //   };
+    case REMOVE_INGREDIENT:
+      return {
+        ...state,
+        bun: state.bun,
+        toppings: [
+          ...state.toppings.filter((elem) => {
+            return elem.key !== action.ingredient.key;
+          }),
+        ],
+      };
 
     default:
       return state;
