@@ -8,7 +8,7 @@ import OrderDetails from '../OrderDetails/OrderDetails.js';
 import Api from '../../utils/api';
 import styles from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/index.js';
+import { ADD_INGREDIENT_INFO, getIngredients, REMOVE_INGREDIENT_INFO } from '../../services/actions/index.js';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
@@ -26,12 +26,11 @@ export default function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
-  const [ingredientModalData, setIngredientModalData] = useState({});
   const [orderNumber, setOrderNumber] = useState(0);
   const [isOrdering, setIsOrdering] = useState(false);
 
   function handleIngredientClick(ingredient) {
-    setIngredientModalData(ingredient);
+    dispatch({type: ADD_INGREDIENT_INFO, ingredient})
     setisIngredientModal(true);
     setIsModalOpen(true);
   }
@@ -49,6 +48,7 @@ export default function App() {
   }
 
   function closeModal() {
+    dispatch({type: REMOVE_INGREDIENT_INFO})
     setIsModalOpen(false);
   }
 
@@ -94,7 +94,7 @@ export default function App() {
                 closeModal={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}
               >
-                <IngredientDetails data={ingredientModalData} />
+                <IngredientDetails />
               </Modal>
             ) : (
               <Modal closeModal={closeModal}>

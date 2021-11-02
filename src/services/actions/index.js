@@ -9,6 +9,9 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
 
+export const ADD_INGREDIENT_INFO = 'ADD_INGREDIENT_INFO';
+export const REMOVE_INGREDIENT_INFO = 'REMOVE_INGREDIENT_INFO';
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({

@@ -8,6 +8,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_CONSTURCTOR_INGREDIENTS,
   MOVE_INGREDIENT,
+  ADD_INGREDIENT_INFO,
 } from '../actions';
 
 const ingedientsState = {
@@ -120,7 +121,21 @@ export const burgerConstructor = (state = constructorState, action) => {
   }
 };
 
+export const currentIngredient = (state = currentIngredientState, action) => {
+  switch (action.type) {
+    case ADD_INGREDIENT_INFO:
+      return { ...action.ingredient };
+
+    case REMOVE_INGREDIENT:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
 export const rootReducer = combineReducers({
   ingredients,
   burgerConstructor,
+  currentIngredient,
 });
