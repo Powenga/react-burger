@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
 import {
-  GET_CONSTRUCTOR_INGREDIENTS,
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -44,18 +45,43 @@ export const ingredientsReduser = (state = initialState, action) => {
         ingredients: action.ingredients,
         constructorIngredients: {
           bun: action.ingredients.find((elem) => elem.type === 'bun'),
-          toppings: action.ingredients.filter((elem) => elem.type !== 'bun'),
+          toppings: [],
         },
       };
 
-      case GET_CONSTRUCTOR_INGREDIENTS:
+    case ADD_INGREDIENT:
+      if (action.ingredient.type === 'bun') {
         return {
           ...state,
           constructorIngredients: {
-            bun: action.ingredients.find((elem) => elem.type === 'bun'),
-            toppings: action.ingredients.filter((elem) => elem.type !== 'bun'),
+            bun: action.ingredient,
+            toppings: state.constructorIngredients.toppings,
           },
         };
+      }
+      return {
+        ...state,
+        constructorIngredients: {
+          bun: state.constructorIngredients.bun,
+          toppings: [
+            ...state.constructorIngredients.toppings,
+            action.ingredient,
+          ],
+        },
+      };
+
+    case REMOVE_INGREDIENT:
+      return {
+        ...state,
+        constructorIngredients: {
+          bun: state.constructorIngredients.bun,
+          toppings: [
+            ...state.constructorIngredients.toppings.filter((elem) => {
+              return elem._id !== action.ingredient._id;
+            }),
+          ],
+        },
+      };
 
     default:
       return state;

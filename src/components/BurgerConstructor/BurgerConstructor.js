@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_CONSTRUCTOR_INGREDIENTS } from '../../services/actions';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
+import { useDrop } from 'react-dnd';
 
 export default function BurgerConstructor({ onCheckout }) {
   const { bun, toppings } = useSelector(
@@ -46,11 +47,23 @@ export default function BurgerConstructor({ onCheckout }) {
     onCheckout({ ingredients });
   }
 
+  function handleRemove(event, ingredient) {
+    event.preventDefault();
+    dispatch({ type: REMOVE_INGREDIENT, ingredient });
+  }
+
   const [total, setTotal] = useState(0);
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch({ type: ADD_INGREDIENT, ingredient });
+    }
+  })
 
   return (
     <section className={styles.constructor}>
-      <div className={styles.constructorWrap}>
+      <div ref={dropTarget} className={styles.constructorWrap}>
         {bun && (
           <div className="mr-4">
             <ConstructorElement
@@ -73,6 +86,7 @@ export default function BurgerConstructor({ onCheckout }) {
                   text={elem.name}
                   price={elem.price}
                   thumbnail={elem.image_mobile}
+                  handleClose={(event) => {handleRemove(event, elem)}}
                 />
               </li>
             ))

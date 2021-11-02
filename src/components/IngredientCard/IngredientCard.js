@@ -3,17 +3,25 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
 import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientCard.module.css';
 
-
 export default function IngredientCard({ ingredient, onIngredientClick }) {
   const { price, name, image } = ingredient;
+
   function handleClick() {
     onIngredientClick(ingredient);
   }
+
+
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: ingredient
+  })
+
   return (
-    <li onClick={handleClick} className={styles.card}>
+    <li ref={dragRef} onClick={handleClick} className={styles.card}>
       <img src={image} alt={name} className="ml-4 mr-4 mb-1" />
       <Counter count={1} size="default" />
       <p

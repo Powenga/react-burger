@@ -9,6 +9,8 @@ import Api from '../../utils/api';
 import styles from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/index.js';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export default function App() {
   const { ingredientsRequest, ingredientsRequestFailed } =
@@ -55,14 +57,14 @@ export default function App() {
       <AppHeader />
       <main className={styles.main}>
         {!ingredientsRequest && !ingredientsRequestFailed && (
-          <>
+          <DndProvider backend={HTML5Backend}>
             <BurgerIngredients onIngredientClick={handleIngredientClick} />
 
             <BurgerConstructor
               isOrdering={isOrdering}
               onCheckout={handleCheckout}
             />
-          </>
+          </DndProvider>
         )}
         {ingredientsRequest && (
           <p className="text text text_type_main-small mt-10">
