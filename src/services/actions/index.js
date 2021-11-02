@@ -7,6 +7,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const GET_CONSTURCTOR_INGREDIENTS = 'GET_CONSTURCTOR_INGREDIENTS';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
+export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
 
 export function getIngredients() {
   return function (dispatch) {

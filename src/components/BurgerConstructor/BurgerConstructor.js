@@ -7,7 +7,11 @@ import { useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
+import {
+  ADD_INGREDIENT,
+  MOVE_INGREDIENT,
+  REMOVE_INGREDIENT,
+} from '../../services/actions';
 import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
 
@@ -33,20 +37,23 @@ export default function BurgerConstructor({ onCheckout }) {
 
   const [total, setTotal] = useState(0);
 
-  const [, dropTarget] = useDrop({
+  const [, dropIngredientsTarget] = useDrop({
     accept: 'ingredient',
     drop(ingredient) {
-      if(toppings.find(elem => elem.key === ingredient.key)) {
-        console.log('перетаскиваем');
-        return;
-      }
       dispatch({ type: ADD_INGREDIENT, ingredient });
     },
   });
 
+  // const [, dropToppingsTarget] = useDrop({
+  //   accept: 'topping',
+  //   drop(ingredient) {
+  //     console.log('gthtklgjdfkl');
+  //   },
+  // });
+
   return (
     <section className={styles.constructor}>
-      <div ref={dropTarget} className={styles.constructorWrap}>
+      <div ref={dropIngredientsTarget} className={styles.constructorWrap}>
         {bun && (
           <div className="mr-4">
             <ConstructorElement
@@ -61,8 +68,13 @@ export default function BurgerConstructor({ onCheckout }) {
 
         <ul className={styles.insideList}>
           {toppings.length ? (
-            toppings.map((elem) => (
-              <Topping key={elem.key} elem={elem} handleRemove={handleRemove} />
+            toppings.map((elem, index) => (
+              <Topping
+                key={elem.key}
+                elem={elem}
+                handleRemove={handleRemove}
+                index={index}
+              />
             ))
           ) : (
             <div className={styles.placeholderWrap}>

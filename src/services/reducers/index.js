@@ -7,6 +7,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_CONSTURCTOR_INGREDIENTS,
+  MOVE_INGREDIENT,
 } from '../actions';
 
 const ingedientsState = {
@@ -99,6 +100,19 @@ export const burgerConstructor = (state = constructorState, action) => {
             return elem.key !== action.ingredient.key;
           }),
         ],
+      };
+
+    case MOVE_INGREDIENT:
+      const toppings = state.toppings;
+      toppings.splice(
+        action.dragIndex,
+        0,
+        toppings.splice(action.hoverIndex, 1)[0]
+      );
+      return {
+        ...state,
+        bun: state.bun,
+        toppings: [...toppings],
       };
 
     default:
