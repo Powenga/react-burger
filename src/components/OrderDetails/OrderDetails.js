@@ -51,5 +51,5 @@ export default function OrderDetails({ orderNumber, isOrdering }) {
 
 OrderDetails.propTypes = {
   isOrdering: PropTypes.bool,
-  orderNumber: PropTypes.number.isRequired,
+  orderNumber: PropTypes.string.isRequired,
 };

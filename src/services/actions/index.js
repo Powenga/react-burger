@@ -51,7 +51,7 @@ export function checkout(orderIngredients) {
       .then((res) => {
         dispatch({
           type: CHECKOUT_SUCCESS,
-          orderNumber: res.order.number,
+          orderNumber: String(res.order.number),
           orderName: res.name,
           orderIngredients
         });

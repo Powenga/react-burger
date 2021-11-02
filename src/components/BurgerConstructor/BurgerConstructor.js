@@ -12,7 +12,7 @@ import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
 
 export default function BurgerConstructor({ onCheckout }) {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { bun, toppings } = useSelector((store) => store.burgerConstructor);
 
   const [total, setTotal] = useState(0);
@@ -25,8 +25,12 @@ export default function BurgerConstructor({ onCheckout }) {
   });
 
   useEffect(() => {
-    setTotal(bun.price * 2 + toppings.reduce((acc, curr) => acc + curr.price, 0));
-  }, [bun, toppings])
+    if (bun.price) {
+      setTotal(
+        bun.price * 2 + toppings.reduce((acc, curr) => acc + curr.price, 0)
+      );
+    }
+  }, [bun, toppings]);
 
   function handleCheckout() {
     const ingredients = toppings.map((elem) => elem._id);
