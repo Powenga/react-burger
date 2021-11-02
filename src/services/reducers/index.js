@@ -66,52 +66,27 @@ export const burgerConstructor = (state = constructorState, action) => {
     case GET_CONSTURCTOR_INGREDIENTS:
       return {
         ...state,
-        bun: action.ingredients.find(elem => elem.type === 'bun'),
+        bun: action.ingredients.find((elem) => elem.type === 'bun'),
         toppings: [],
       };
 
-    // case ADD_INGREDIENT:
-    //   if (action.ingredient.type === 'bun') {
-    //     return {
-    //       ...state,
-    //       ingredients: state.ingredients.map((elem) => {
-    //         return {
-    //           ...elem,
-    //           qty: elem._id === action.ingredient._id ? 1 : 0,
-    //         };
-    //       }),
-    //       constructorIngredients: {
-    //         bun: action.ingredient,
-    //         toppings: state.constructorIngredients.toppings,
-    //       },
-    //     };
-    //   }
+    case ADD_INGREDIENT:
+      if (action.ingredient.type === 'bun') {
+        return {
+          ...state,
+          bun: action.ingredient,
+          toppings: state.toppings,
+        };
+      }
 
-    //   return {
-    //     ...state,
-    //     ingredients: state.ingredients.map((elem) => {
-    //       return {
-    //         ...elem,
-    //         qty:
-    //           elem.type !== 'bun'
-    //             ? state.constructorIngredients.toppings.filter(
-    //                 (contructorElem) => {
-    //                   return (contructorElem._id = elem._id);
-    //                 }
-    //               ).length
-    //             : state.constructorIngredients.bun._id === elem._id
-    //             ? 1
-    //             : 0,
-    //       };
-    //     }),
-    //     constructorIngredients: {
-    //       bun: state.constructorIngredients.bun,
-    //       toppings: [
-    //         ...state.constructorIngredients.toppings,
-    //         action.ingredient,
-    //       ],
-    //     },
-    //   };
+      return {
+        ...state,
+          bun: state.bun,
+          toppings: [
+            ...state.toppings,
+            action.ingredient,
+          ],
+      };
 
     // case REMOVE_INGREDIENT:
     //   return {
@@ -133,5 +108,5 @@ export const burgerConstructor = (state = constructorState, action) => {
 
 export const rootReducer = combineReducers({
   ingredients,
-  burgerConstructor
+  burgerConstructor,
 });
