@@ -7,10 +7,9 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default function LoginForm() {
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     email: '',
   });
-  const [isShownPass, setIsShownPass] = useState(false);
 
   const handleChange = useCallback((event) => {
     event.preventDefault();

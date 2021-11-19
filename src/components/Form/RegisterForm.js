@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 export default function RegisterForm() {
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
