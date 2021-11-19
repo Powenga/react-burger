@@ -6,7 +6,6 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_CONSTURCTOR_INGREDIENTS,
   MOVE_INGREDIENT,
   ADD_INGREDIENT_INFO,
   CHECKOUT_REQUEST,
@@ -71,12 +70,6 @@ export const ingredients = (state = ingedientsState, action) => {
 
 export const burgerConstructor = (state = constructorState, action) => {
   switch (action.type) {
-    case GET_CONSTURCTOR_INGREDIENTS:
-      return {
-        ...state,
-        bun: action.ingredients.find((elem) => elem.type === 'bun'),
-        toppings: [],
-      };
 
     case ADD_INGREDIENT:
       if (action.ingredient.type === 'bun') {

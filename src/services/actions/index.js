@@ -4,7 +4,6 @@ export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
-export const GET_CONSTURCTOR_INGREDIENTS = 'GET_CONSTURCTOR_INGREDIENTS';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
@@ -30,11 +29,7 @@ export function getIngredients() {
           type: GET_INGREDIENTS_SUCCESS,
           ingredients: res.data,
         });
-        dispatch({
-          type: GET_CONSTURCTOR_INGREDIENTS,
-          ingredients: res.data,
-        });
-      })
+        })
       .catch(() => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,

@@ -42,11 +42,12 @@ export default function BurgerConstructor({ onCheckout }) {
     event.preventDefault();
     dispatch({ type: REMOVE_INGREDIENT, ingredient });
   }
+  console.log({bun, length: Object.keys(bun).length });
 
   return (
     <section className={styles.constructor}>
       <div ref={dropIngredientsTarget} className={styles.constructorWrap}>
-        {bun && (
+        {bun && Object.keys(bun).length !== 0 && (
           <div className="mr-4">
             <ConstructorElement
               type="top"
@@ -71,21 +72,29 @@ export default function BurgerConstructor({ onCheckout }) {
           ) : (
             <div className={styles.placeholderWrap}>
               <p className="text text_type_main-small text_color_inactive">
-                Добавьте ингредиенты или измените булку!
+                {bun && Object.keys(bun).length !== 0 ? (
+                  'Добавьте ингредиенты'
+                ) : (
+                  'Перенесите сюда булку, чтобы начать собирать заказ'
+                )}
+
               </p>
             </div>
           )}
         </ul>
 
-        <div className="mr-4">
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image_mobile}
-          />
-        </div>
+        {bun && Object.keys(bun).length !== 0 && (
+          <div className="mr-4">
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image_mobile}
+            />
+          </div>
+        )}
+
       </div>
       <div className={styles.orderWrap}>
         <p className="text text_type_digits-medium mr-10">
