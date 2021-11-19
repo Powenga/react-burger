@@ -1,15 +1,9 @@
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { useSelector } from 'react-redux';
 import styles from './IngredientDetails.module.css';
 
-export default function IngredientDetails({ data }) {
-  const {
-    name,
-    image_large,
-    calories,
-    carbohydrates,
-    fat,
-    proteins,
-  } = data;
+export default function IngredientDetails() {
+  const { name, image_large, calories, carbohydrates, fat, proteins } =
+    useSelector((store) => store.currentIngredient);
   return (
     <>
       <img
@@ -65,7 +59,3 @@ export default function IngredientDetails({ data }) {
     </>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: ingredientPropTypes.isRequired,
-};

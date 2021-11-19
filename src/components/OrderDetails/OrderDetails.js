@@ -2,12 +2,16 @@ import Preloader from '../Preloader/Preloader';
 import imagePath from '../../images/order-done.svg';
 import PropTypes from 'prop-types';
 
-export default function OrderDetails({ orderNumber, isOrdering }) {
+export default function OrderDetails({
+  orderNumber,
+  isOrdering,
+  isOrderFailed,
+}) {
   return (
     <>
       {isOrdering ? (
-        <Preloader/>
-      ) : (
+        <Preloader />
+      ) : !isOrderFailed ? (
         <>
           <h2
             className="text text_type_digits-large mb-8"
@@ -44,6 +48,21 @@ export default function OrderDetails({ orderNumber, isOrdering }) {
             Дождитесь готовности на орбитальной станции
           </p>
         </>
+      ) : (
+        <>
+          <p
+            className="text text_type_main-default mb-2"
+            style={{ textAlign: 'center' }}
+          >
+            Что-то пошло не так!
+          </p>
+          <p
+            className="text text_type_main-default text_color_inactive mb-20"
+            style={{ textAlign: 'center' }}
+          >
+            Пожалуйста, попробуйте отправить заказ позже
+          </p>
+        </>
       )}
     </>
   );
@@ -51,5 +70,6 @@ export default function OrderDetails({ orderNumber, isOrdering }) {
 
 OrderDetails.propTypes = {
   isOrdering: PropTypes.bool,
-  orderNumber: PropTypes.number.isRequired,
+  orderNumber: PropTypes.string.isRequired,
+  isOrderFailed: PropTypes.bool.isRequired,
 };

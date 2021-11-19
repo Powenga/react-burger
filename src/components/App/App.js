@@ -5,73 +5,72 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.js';
 import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
-import Api from '../../utils/api';
-import { IngredientsContext } from '../../contexts/ingredients-context';
 import styles from './App.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  ADD_INGREDIENT_INFO,
+  checkout,
+  getIngredients,
+  REMOVE_INGREDIENT_INFO,
+} from '../../services/actions/index.js';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export default function App() {
-  const [isLoading, setIsloading] = useState(true);
-  const [isLoadError, setIsLoadError] = useState(false);
-  const [ingredients, setIngredients] = useState({});
+  const { ingredientsRequest, ingredientsRequestFailed } = useSelector(
+    (store) => store.ingredients
+  );
+  const {
+    orderNumber,
+    checkoutRequest,
+    checkoutRequestFailed } = useSelector(
+      (store) => store.order
+    );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isIngredientModal, setisIngredientModal] = useState(false);
-  const [ingredientModalData, setIngredientModalData] = useState({});
-  const [orderNumber, setOrderNumber] = useState(0);
-  const [isOrdering, setIsOrdering] = useState(false);
 
   function handleIngredientClick(ingredient) {
-    setIngredientModalData(ingredient);
+    dispatch({ type: ADD_INGREDIENT_INFO, ingredient });
     setisIngredientModal(true);
     setIsModalOpen(true);
   }
 
   function handleCheckout(data) {
-    setIsOrdering(true);
     setisIngredientModal(false);
     setIsModalOpen(true);
-    Api.checkout(data)
-      .then((data) => {
-        setOrderNumber(data.order.number);
-      })
-      .catch(() => setIsLoadError(true))
-      .finally(() => setIsOrdering(false));
+    dispatch(checkout(data));
   }
 
   function closeModal() {
+    dispatch({ type: REMOVE_INGREDIENT_INFO });
     setIsModalOpen(false);
   }
-
-  useEffect(() => {
-    setIsloading(true);
-    Api.getIngredients()
-      .then((data) => setIngredients(data.data))
-      .catch(() => setIsLoadError(true))
-      .finally(() => setIsloading(false));
-  }, []);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        {!isLoading && !isLoadError && (
-          <IngredientsContext.Provider value={ingredients}>
-            <BurgerIngredients
-              onIngredientClick={handleIngredientClick}
-            />
+        {!ingredientsRequest && !ingredientsRequestFailed && (
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients onIngredientClick={handleIngredientClick} />
 
             <BurgerConstructor
-              isOrdering={isOrdering}
-              onCheckout={handleCheckout}
+               onCheckout={handleCheckout}
             />
-          </IngredientsContext.Provider>
+          </DndProvider>
         )}
-        {isLoading && (
+        {ingredientsRequest && (
           <p className="text text text_type_main-small mt-10">
             Загружаем данные ...
           </p>
         )}
-        {isLoadError && (
+        {(ingredientsRequestFailed) && (
           <div>
             <p
               className="text text text_type_main-small mt-10"
@@ -94,13 +93,14 @@ export default function App() {
                 closeModal={closeModal}
                 title={isIngredientModal && 'Детали ингредиента'}
               >
-                <IngredientDetails data={ingredientModalData} />
+                <IngredientDetails />
               </Modal>
             ) : (
               <Modal closeModal={closeModal}>
                 <OrderDetails
                   orderNumber={orderNumber}
-                  isOrdering={isOrdering}
+                  isOrdering={checkoutRequest}
+                  isOrderFailed={checkoutRequestFailed}
                 />
               </Modal>
             ))}
