@@ -11,8 +11,7 @@ import {
   getIngredients,
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
-import { Home, Login } from '../../pages/';
-import Register from '../../pages/register.js';
+import { ForgotPassword, Home, Login, Register } from '../../pages/';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -62,10 +61,7 @@ export default function App() {
           <Register />
         </Route>
         <Route path="/forgot-password" exact>
-          <Home
-            handleIngredientClick={handleIngredientClick}
-            handleCheckout={handleCheckout}
-          />
+          <ForgotPassword />
         </Route>
         <Route path="/reset" exact>
           <Home
