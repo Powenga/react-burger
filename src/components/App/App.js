@@ -3,15 +3,16 @@ import AppHeader from '../AppHeader/AppHeader.js';
 import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
-import styles from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {
   ADD_INGREDIENT_INFO,
   checkout,
   getIngredients,
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
-import Home from '../../pages/home.js';
+import { Home } from '../../pages/';
+import styles from './App.module.css';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -44,13 +45,17 @@ export default function App() {
   }
 
   return (
-    <>
+    <Router>
       <AppHeader />
       <main className={styles.main}>
-        <Home
-          handleIngredientClick={handleIngredientClick}
-          handleCheckout={handleCheckout}
-        />
+        <Switch>
+          <Route path="/" exact>
+            <Home
+              handleIngredientClick={handleIngredientClick}
+              handleCheckout={handleCheckout}
+            />
+          </Route>
+        </Switch>
       </main>
       <div style={{ overflow: 'hidden' }}>
         {isModalOpen &&
@@ -71,6 +76,6 @@ export default function App() {
             </Modal>
           ))}
       </div>
-    </>
+    </Router>
   );
 }
