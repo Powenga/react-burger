@@ -11,7 +11,7 @@ import {
   getIngredients,
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
-import { ForgotPassword, Home, Login, Register } from '../../pages/';
+import { ForgotPassword, Home, Login, Register, NotFound } from '../../pages/';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -81,7 +81,9 @@ export default function App() {
             handleCheckout={handleCheckout}
           />
         </Route>
-        <Route>404</Route>
+        <Route>
+          <NotFound />
+        </Route>
       </Switch>
 
       <div style={{ overflow: 'hidden' }}>
