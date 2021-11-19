@@ -6,7 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default function ForgotPasswordForm() {
+export default function LoginForm() {
   const [values, setValues] = useState({
     email: '',
   });
