@@ -6,8 +6,9 @@ import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const [values, setValues] = React.useState({
+    name: '',
     email: '',
     password: '',
   });
@@ -23,7 +24,17 @@ export default function LoginForm() {
   }, []);
 
   return (
-    <Form name="loginForom" title="Вход">
+    <Form name="loginForom" title="Регистрация">
+      <div className="mb-6">
+        <Input
+          placeholder="Имя"
+          name="name"
+          value={values.name}
+          onChange={handleChange}
+          type="text"
+          size={'default'}
+        />
+      </div>
       <div className="mb-6">
         <Input
           placeholder="E-mail"
@@ -51,27 +62,17 @@ export default function LoginForm() {
       </div>
       <div className="mb-20">
         <Button type="primary" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
-      <p className="mb-4 text text_type_main-default text_color_inactive">
-        Вы — новый пользователь?{' '}
-        <Link
-          to="/register"
-          className="text text_type_main-default text_color_accent"
-          style={{ textDecoration: 'none' }}
-        >
-          Зарегистрироваться
-        </Link>
-      </p>
       <p className="text text_type_main-default text_color_inactive">
-        Забыли пароль?{' '}
+        Уже зарегистрированы?{' '}
         <Link
-          to="/forgot-password"
+          to="/login"
           className="text text_type_main-default text_color_accent"
           style={{ textDecoration: 'none' }}
         >
-          Восстановить пароль
+          Войти
         </Link>
       </p>
     </Form>

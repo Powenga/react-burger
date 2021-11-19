@@ -12,6 +12,7 @@ import {
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
 import { Home, Login } from '../../pages/';
+import Register from '../../pages/register.js';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -58,10 +59,7 @@ export default function App() {
           <Login />
         </Route>
         <Route path="/register" exact>
-          <Home
-            handleIngredientClick={handleIngredientClick}
-            handleCheckout={handleCheckout}
-          />
+          <Register />
         </Route>
         <Route path="/forgot-password" exact>
           <Home
