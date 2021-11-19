@@ -11,8 +11,7 @@ import {
   getIngredients,
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
-import { Home } from '../../pages/';
-import styles from './App.module.css';
+import { Home, Login } from '../../pages/';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -47,16 +46,50 @@ export default function App() {
   return (
     <Router>
       <AppHeader />
-      <main className={styles.main}>
-        <Switch>
-          <Route path="/" exact>
-            <Home
-              handleIngredientClick={handleIngredientClick}
-              handleCheckout={handleCheckout}
-            />
-          </Route>
-        </Switch>
-      </main>
+
+      <Switch>
+        <Route path="/" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/register" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/reset" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/profile" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/ingredients/:id" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route>404</Route>
+      </Switch>
+
       <div style={{ overflow: 'hidden' }}>
         {isModalOpen &&
           (isIngredientModal ? (

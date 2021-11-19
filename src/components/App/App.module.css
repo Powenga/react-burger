@@ -1,10 +1,14 @@
 .main {
   max-width: 1240px;
   margin: 0 auto 40px;
+  overflow: hidden;
+  height: calc(100vh - 88px - 40px);
+}
+
+.main_type_home {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0 40px;
   grid-template-rows: calc(100vh - 88px - 40px);
-  overflow: hidden;
 }
 

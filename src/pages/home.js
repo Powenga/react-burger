@@ -4,6 +4,7 @@ import BurgerConstructor from '../components/BurgerConstructor/BurgerConstructor
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
+import styles from '../components/App/App.module.css';
 
 export default function Home({
   handleIngredientClick,
@@ -13,7 +14,7 @@ export default function Home({
     (store) => store.ingredients
   );
   return (
-    <>
+    <main className={`${styles.main} ${styles['main_type_home']} `}>
       {!ingredientsRequest && !ingredientsRequestFailed && (
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients onIngredientClick={handleIngredientClick} />
@@ -42,6 +43,6 @@ export default function Home({
           </p>
         </div>
       )}
-    </>
+    </main>
   );
 }
