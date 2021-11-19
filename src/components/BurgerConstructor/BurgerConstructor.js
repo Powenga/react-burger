@@ -101,7 +101,11 @@ export default function BurgerConstructor({ onCheckout }) {
           <span style={{ marginRight: 8 }}>{total}</span>
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="medium" onClick={handleCheckout}>
+        <Button
+          type="primary"
+          size="medium"
+          onClick={handleCheckout}
+          disabled={!bun || Object.keys(bun).length === 0}>
           Оформить заказ
         </Button>
       </div>
