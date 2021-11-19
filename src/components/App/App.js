@@ -23,7 +23,7 @@ export default function App() {
   const {
     orderNumber,
     checkoutRequest,
-    checkoutRequesFailed } = useSelector(
+    checkoutRequestFailed } = useSelector(
       (store) => store.order
     );
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ export default function App() {
             Загружаем данные ...
           </p>
         )}
-        {(ingredientsRequestFailed || checkoutRequesFailed) && (
+        {(ingredientsRequestFailed) && (
           <div>
             <p
               className="text text text_type_main-small mt-10"
@@ -100,6 +100,7 @@ export default function App() {
                 <OrderDetails
                   orderNumber={orderNumber}
                   isOrdering={checkoutRequest}
+                  isOrderFailed={checkoutRequestFailed}
                 />
               </Modal>
             ))}

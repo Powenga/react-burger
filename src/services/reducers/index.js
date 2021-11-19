@@ -153,7 +153,7 @@ export const order = (state = orderState, action) => {
       return {
         ...state,
         checkoutRequest: false,
-        ingredientsRequestFailed: true,
+        checkoutRequestFailed: true,
       };
 
     case CHECKOUT_SUCCESS:
@@ -170,7 +170,7 @@ export const order = (state = orderState, action) => {
           }
         ],
         checkoutRequest: false,
-        ingredientsRequestFailed: false,
+        checkoutRequestFailed: false,
       };
 
     default:
