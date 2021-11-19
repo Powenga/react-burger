@@ -14,6 +14,7 @@ export default function IngredientCard({ ingredient, onIngredientClick }) {
   const [qty, setQty] = useState(0);
   const constructorIngredients = useSelector((store) => [
     store.burgerConstructor.bun,
+    store.burgerConstructor.bun,
     ...store.burgerConstructor.toppings,
   ]);
 
