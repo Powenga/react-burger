@@ -8,6 +8,7 @@ class Api {
 
   _onError(res) {
     return res.json().then((data) => {
+      console.log({ok: res.ok, data})
       if (res.ok) {
         return Promise.resolve(data);
       }

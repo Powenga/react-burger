@@ -42,7 +42,6 @@ export default function BurgerConstructor({ onCheckout }) {
     event.preventDefault();
     dispatch({ type: REMOVE_INGREDIENT, ingredient });
   }
-  console.log({bun, length: Object.keys(bun).length });
 
   return (
     <section className={styles.constructor}>

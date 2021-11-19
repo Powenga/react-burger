@@ -7,6 +7,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   MOVE_INGREDIENT,
+  CLEAR_CONSTRUCTOR,
   ADD_INGREDIENT_INFO,
   CHECKOUT_REQUEST,
   CHECKOUT_FAILED,
@@ -70,7 +71,6 @@ export const ingredients = (state = ingedientsState, action) => {
 
 export const burgerConstructor = (state = constructorState, action) => {
   switch (action.type) {
-
     case ADD_INGREDIENT:
       if (action.ingredient.type === 'bun') {
         return {
@@ -114,6 +114,13 @@ export const burgerConstructor = (state = constructorState, action) => {
         ...state,
         bun: state.bun,
         toppings: [...toppings],
+      };
+
+    case CLEAR_CONSTRUCTOR:
+      return {
+        ...state,
+        bun: {},
+        toppings: [],
       };
 
     default:

@@ -36,7 +36,6 @@ export default function BurgerIngredients({ onIngredientClick }) {
     if (toppingsRefY < saucesRefY) {
       newTab = 'toppings';
     }
-    console.log({currentTab, newTab});
     if (currentTab !== newTab) {
       dispatch({ type: SET_CURRENT_TAB, currentTab: newTab });
     }

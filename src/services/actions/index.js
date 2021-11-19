@@ -7,6 +7,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 
 export const ADD_INGREDIENT_INFO = 'ADD_INGREDIENT_INFO';
 export const REMOVE_INGREDIENT_INFO = 'REMOVE_INGREDIENT_INFO';
@@ -29,7 +30,7 @@ export function getIngredients() {
           type: GET_INGREDIENTS_SUCCESS,
           ingredients: res.data,
         });
-        })
+      })
       .catch(() => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
@@ -50,8 +51,9 @@ export function checkout(orderIngredients) {
           type: CHECKOUT_SUCCESS,
           orderNumber: String(res.order.number),
           orderName: res.name,
-          orderIngredients
+          orderIngredients,
         });
+        dispatch({type: CLEAR_CONSTRUCTOR});
       })
       .catch(() => {
         dispatch({
