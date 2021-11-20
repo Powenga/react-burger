@@ -4,6 +4,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from '../../services/actions/user';
 import Form from './Form';
 
 export default function RegisterForm() {
@@ -13,6 +15,7 @@ export default function RegisterForm() {
     password: '',
   });
   const [isShownPass, setIsShownPass] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = useCallback((event) => {
     event.preventDefault();
@@ -22,6 +25,11 @@ export default function RegisterForm() {
       [name]: value,
     }));
   }, []);
+
+  const handleSumbit = useCallback((event) => {
+    event.preventDefault();
+    dispatch(register(values));
+  }, [dispatch, values]);
 
   return (
     <Form name="loginForom" title="Регистрация">
@@ -61,7 +69,7 @@ export default function RegisterForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={handleSumbit}>
           Зарегистрироваться
         </Button>
       </div>

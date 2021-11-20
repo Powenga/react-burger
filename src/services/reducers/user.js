@@ -2,12 +2,16 @@ import {
   LOGIN_REQUEST,
   LOGIN_REQUEST_SUCCESS,
   LOGIN_REQUEST_FAILED,
+  REGISTER_REQUEST,
+  REGISTER_REQUEST_SUCCESS,
+  REGISTER_REQUEST_FAILED,
 } from '../actions/user';
 
 const userState = {
-  user: { email: '', name: '', isLogginIn: false },
-  loginRequest: false,
-  loginRequestFaided: false,
+  user: { email: '', name: '', accessToken: '', isLogginIn: false },
+
+  request: false,
+  requestFaided: false,
 };
 
 export const user = (state = userState, action) => {
@@ -15,21 +19,43 @@ export const user = (state = userState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        loginRequest: true,
+        request: true,
       };
 
     case LOGIN_REQUEST_FAILED:
       return {
         ...state,
-        loginRequest: false,
-        loginRequestFaided: true,
+        request: false,
+        requestFaided: true,
       };
 
     case LOGIN_REQUEST_SUCCESS:
       return {
         ...state,
-        loginRequest: false,
-        loginRequestFaided: false,
+        request: false,
+        requestFaided: false,
+        user: action.user,
+      };
+
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        request: true,
+      };
+
+    case REGISTER_REQUEST_FAILED:
+      return {
+        ...state,
+        request: false,
+        requestFaided: true,
+      };
+
+    case REGISTER_REQUEST_SUCCESS:
+      console.log(action.user);
+      return {
+        ...state,
+        request: false,
+        requestFaided: false,
         user: action.user,
       };
 
