@@ -40,11 +40,11 @@ class Auth {
     }).then(this._onError);
   }
 
-  refreshToken(data) {
+  refreshToken() {
     return fetch(`${this._baseUrl}/token`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({token: getCookie('refreshToken')}),
     }).then(this._onError);
   }
 

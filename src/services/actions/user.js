@@ -69,7 +69,7 @@ export function register(data) {
   };
 }
 
-export function getUser() {
+export const getUser = () => {
   return function (dispatch) {
     dispatch({
       type: USER_REQUEST,
@@ -82,6 +82,15 @@ export function getUser() {
           type: USER_REQUEST_SUCCESS,
           user,
         });
+      })
+      .catch(async (error) => {
+        console.log(error);
+        if (error.message === 'jwt malformed') {
+          const { accessToken } = await auth.refreshToken()
+          console.log(accessToken);
+          getUser();
+        }
+        return Promise.reject(error);
       })
       .catch(() => {
         dispatch({
@@ -125,7 +134,7 @@ export function logout() {
           deleteCookie('accessToken');
           deleteCookie('refreshToken');
         } catch (error) {
-          throw new Error('Не удалось удалить куки!')
+          throw new Error('Не удалось удалить куки!');
         }
         dispatch({
           type: USER_LOGOUT_SUCCESS,
