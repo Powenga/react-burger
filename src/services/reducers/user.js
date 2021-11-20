@@ -51,7 +51,6 @@ export const user = (state = userState, action) => {
       };
 
     case REGISTER_REQUEST_SUCCESS:
-      console.log(action.user);
       return {
         ...state,
         request: false,

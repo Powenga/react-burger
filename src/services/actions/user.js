@@ -17,9 +17,11 @@ export function login(data) {
     auth
       .login(data)
       .then((res) => {
+        const { refreshToken } = res;
+        setCookie('refreshToken', refreshToken);
         dispatch({
           type: LOGIN_REQUEST_SUCCESS,
-          user: res.data,
+          user: { ...res.user, accessToken: res.accessToken},
         });
       })
       .catch(() => {
