@@ -47,7 +47,6 @@ export const user = (state = userState, action) => {
         request: false,
         requestFaided: false,
         user: { email: '', name: '' },
-        isUserLoaded: false,
         isLoggedIn: false,
       };
 

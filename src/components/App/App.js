@@ -11,6 +11,8 @@ import {
   getIngredients,
   REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
+import { getUser } from '../../services/actions/user';
 import {
   ForgotPassword,
   Home,
@@ -19,9 +21,8 @@ import {
   NotFound,
   ResetPassword,
   Ingredient,
-  Profile
+  Profile,
 } from '../../pages/';
-import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -29,6 +30,10 @@ export default function App() {
   );
   const currentIngredient = useSelector((store) => store.currentIngredient);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -95,7 +100,7 @@ export default function App() {
               closeModal={closeModal}
               title={isIngredientModal && 'Детали ингредиента'}
             >
-              <IngredientDetails ingredient={currentIngredient}/>
+              <IngredientDetails ingredient={currentIngredient} />
             </Modal>
           ) : (
             <Modal closeModal={closeModal}>
