@@ -31,6 +31,7 @@ const orderState = {
   orders: [],
   checkoutRequest: false,
   checkoutRequestFailed: false,
+  isCheckoutSuccess: false,
 };
 
 export const ingredients = (state = ingedientsState, action) => {
@@ -130,6 +131,7 @@ export const order = (state = orderState, action) => {
       return {
         ...state,
         checkoutRequest: true,
+        isCheckoutSuccess: false,
       };
 
     case CHECKOUT_FAILED:
@@ -137,6 +139,7 @@ export const order = (state = orderState, action) => {
         ...state,
         checkoutRequest: false,
         checkoutRequestFailed: true,
+        isCheckoutSuccess: false,
       };
 
     case CHECKOUT_SUCCESS:
@@ -154,6 +157,7 @@ export const order = (state = orderState, action) => {
         ],
         checkoutRequest: false,
         checkoutRequestFailed: false,
+        isCheckoutSuccess: true,
       };
 
     default:

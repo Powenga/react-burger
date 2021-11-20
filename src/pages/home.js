@@ -17,30 +17,32 @@ export default function Home({ handleIngredientClick, handleCheckout }) {
   }
 
   return (
-    <main className={`${styles.main} ${styles['main_type_home']} `}>
-      {!ingredientsRequest && !ingredientsRequestFailed && (
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients onIngredientClick={handleIngredientClick} />
+    <>
+      <main className={`${styles.main} ${styles['main_type_home']} `}>
+        {!ingredientsRequest && !ingredientsRequestFailed && (
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients onIngredientClick={handleIngredientClick} />
 
-          <BurgerConstructor onCheckout={handleCheckout} />
-        </DndProvider>
-      )}
-      {ingredientsRequestFailed && (
-        <div>
-          <p
-            className="text text text_type_main-small mt-10"
-            style={{ color: '#e52b1a' }}
-          >
-            При загрузке данных произошла ошибка :(
-          </p>
-          <p
-            className="text text text_type_main-small"
-            style={{ color: '#e52b1a' }}
-          >
-            Пожалуйста, обновите страницу.
-          </p>
-        </div>
-      )}
-    </main>
+            <BurgerConstructor onCheckout={handleCheckout} />
+          </DndProvider>
+        )}
+        {ingredientsRequestFailed && (
+          <div>
+            <p
+              className="text text text_type_main-small mt-10"
+              style={{ color: '#e52b1a' }}
+            >
+              При загрузке данных произошла ошибка :(
+            </p>
+            <p
+              className="text text text_type_main-small"
+              style={{ color: '#e52b1a' }}
+            >
+              Пожалуйста, обновите страницу.
+            </p>
+          </div>
+        )}
+      </main>
+    </>
   );
 }

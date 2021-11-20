@@ -36,7 +36,7 @@ export function getIngredients() {
   };
 }
 
-export function checkout(orderIngredients) {
+export function checkout(orderIngredients, callback) {
   return function (dispatch) {
     dispatch({
       type: CHECKOUT_REQUEST,
@@ -50,6 +50,7 @@ export function checkout(orderIngredients) {
           orderName: res.name,
           orderIngredients,
         });
+        callback();
         dispatch({type: CLEAR_CONSTRUCTOR});
       })
       .catch(() => {

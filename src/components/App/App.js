@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import AppHeader from '../AppHeader/AppHeader.js';
 import Modal from '../Modal/Modal.js';
+import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
+import Preloader from '../Preloader/Preloader.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import {
-  checkout,
-  getIngredients,
-} from '../../services/actions/index.js';
+import { checkout, getIngredients } from '../../services/actions/index.js';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
 import { getUser } from '../../services/actions/user';
 import {
@@ -23,9 +22,7 @@ import {
 } from '../../pages/';
 
 export default function App() {
-  const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
-    (store) => store.order
-  );
+  const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
   const { isLoggedIn } = useSelector((store) => store.user);
   const location = useLocation();
   const history = useHistory();
@@ -40,10 +37,8 @@ export default function App() {
   }, [dispatch]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isIngredientModal, setisIngredientModal] = useState(false);
 
   function handleIngredientClick(ingredient) {
-    setisIngredientModal(true);
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
       state: { background: { pathname: '/' } },
@@ -54,9 +49,11 @@ export default function App() {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {
-      setisIngredientModal(false);
-      setIsModalOpen(true);
-      dispatch(checkout(data));
+      dispatch(
+        checkout(data, () => {
+          setIsModalOpen(true);
+        })
+      );
     }
   }
 
@@ -108,26 +105,28 @@ export default function App() {
         <Route
           path="/ingredients/:id"
           exact
-          render={({ location } ) => {
-            if(location.state?.background)
+          render={({ location }) => {
+            if (location.state?.background)
               return (
-              <Modal
-                closeModal={closeIngredientModal}
-                title="Детали ингредиента"
-              >
-                <IngredientDetails />
-              </Modal>
-            );
+                <Modal
+                  closeModal={closeIngredientModal}
+                  title="Детали ингредиента"
+                >
+                  <IngredientDetails />
+                </Modal>
+              );
           }}
         />
-        {isModalOpen && !isIngredientModal && (
+        {isModalOpen && (
           <Modal closeModal={closeModal}>
-            <OrderDetails
-              orderNumber={orderNumber}
-              isOrdering={checkoutRequest}
-              isOrderFailed={checkoutRequestFailed}
-            />
+            <OrderDetails orderNumber={orderNumber} />
           </Modal>
+        )}
+        {checkoutRequest && (
+          <>
+            <ModalOverlay closeModal={() => {}} />
+            <Preloader />
+          </>
         )}
       </div>
     </>
