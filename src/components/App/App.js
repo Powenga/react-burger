@@ -19,6 +19,7 @@ import {
   NotFound,
   ResetPassword,
   Ingredient,
+  Profile
 } from '../../pages/';
 
 export default function App() {
@@ -76,10 +77,7 @@ export default function App() {
           <ResetPassword />
         </Route>
         <Route path="/profile" exact>
-          <Home
-            handleIngredientClick={handleIngredientClick}
-            handleCheckout={handleCheckout}
-          />
+          <Profile />
         </Route>
         <Route path="/ingredients/:id" exact>
           <Ingredient />

@@ -9,7 +9,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0 40px;
-  grid-template-rows: calc(100vh - 88px - 40px);
+  grid-template-rows: 100%;
+}
+
+.main_type_profile {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  grid-template-rows: 100%;
 }
 
 .mainInner {
