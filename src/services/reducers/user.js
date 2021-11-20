@@ -1,4 +1,6 @@
 import {
+  GET_USER_REQUEST_FAILED,
+  GET_USER_REQUEST_SUCCESS,
   USER_REQUEST,
   USER_REQUEST_FAILED,
   USER_REQUEST_SUCCESS,
@@ -9,22 +11,42 @@ const userState = {
   user: { email: '', name: '' },
   isUserLoaded: false,
   isLoggedIn: false,
-  request: true,
+  userRequest: false,
   requestFaided: false,
 };
 
 export const user = (state = userState, action) => {
   switch (action.type) {
+    case GET_USER_REQUEST_FAILED:
+      return {
+        ...state,
+
+        requestFaided: true,
+        user: { email: '', name: '' },
+        isUserLoaded: true,
+        isLoggedIn: false,
+      };
+
+    case GET_USER_REQUEST_SUCCESS:
+      return {
+        ...state,
+
+        requestFaided: false,
+        user: { ...action.user },
+        isUserLoaded: true,
+        isLoggedIn: true,
+      };
+
     case USER_REQUEST:
       return {
         ...state,
-        request: true,
+        userRequest: true,
       };
 
     case USER_REQUEST_FAILED:
       return {
         ...state,
-        request: false,
+        userRequest: false,
         requestFaided: true,
         user: { email: '', name: '' },
         isUserLoaded: true,
@@ -34,7 +56,7 @@ export const user = (state = userState, action) => {
     case USER_REQUEST_SUCCESS:
       return {
         ...state,
-        request: false,
+        userRequest: false,
         requestFaided: false,
         user: { ...action.user },
         isUserLoaded: true,
@@ -44,7 +66,7 @@ export const user = (state = userState, action) => {
     case USER_LOGOUT_SUCCESS:
       return {
         ...state,
-        request: false,
+        userRequest: false,
         requestFaided: false,
         user: { email: '', name: '' },
         isLoggedIn: false,

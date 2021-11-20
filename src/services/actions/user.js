@@ -5,9 +5,13 @@ import {
 } from '../../utils/constants';
 import { setCookie, deleteCookie } from '../../utils/utils';
 
+export const GET_USER_REQUEST_FAILED = 'GET_USER_REQUEST_FAILED';
+export const GET_USER_REQUEST_SUCCESS = 'GET_USER_REQUEST_SUCCESS';
+
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_REQUEST_FAILED = 'USER_REQUEST_FAILED';
 export const USER_REQUEST_SUCCESS = 'USER_REQUEST_SUCCESS';
+
 export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
 
 function saveCokies(accessToken, refreshToken) {
@@ -71,14 +75,11 @@ export function register(data) {
 
 export function getUser() {
   return function (dispatch) {
-    dispatch({
-      type: USER_REQUEST,
-    });
     return auth.getUser()
       .then((res) => {
         const { user } = res;
         dispatch({
-          type: USER_REQUEST_SUCCESS,
+          type: GET_USER_REQUEST_SUCCESS,
           user,
         });
       })
@@ -98,7 +99,7 @@ export function getUser() {
       })
       .catch(() => {
         dispatch({
-          type: USER_REQUEST_FAILED,
+          type: GET_USER_REQUEST_FAILED,
         });
       });
   };

@@ -23,7 +23,7 @@ import {
 
 export default function App() {
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
-  const { isLoggedIn } = useSelector((store) => store.user);
+  const { isLoggedIn, userRequest } = useSelector((store) => store.user);
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -122,7 +122,7 @@ export default function App() {
             <OrderDetails orderNumber={orderNumber} />
           </Modal>
         )}
-        {checkoutRequest && (
+        {(checkoutRequest || userRequest) && (
           <>
             <ModalOverlay closeModal={() => {}} />
             <Preloader />
