@@ -9,11 +9,10 @@ import {
   GET_INGREDIENTS_SUCCESS,
   MOVE_INGREDIENT,
   CLEAR_CONSTRUCTOR,
-  ADD_INGREDIENT_INFO,
   CHECKOUT_REQUEST,
   CHECKOUT_FAILED,
   CHECKOUT_SUCCESS,
-  SET_CURRENT_TAB
+  SET_CURRENT_TAB,
 } from '../actions';
 
 const ingedientsState = {
@@ -32,10 +31,6 @@ const orderState = {
   orders: [],
   checkoutRequest: false,
   checkoutRequestFailed: false,
-};
-
-const currentIngredientState = {
-  currentIngredient: {},
 };
 
 export const ingredients = (state = ingedientsState, action) => {
@@ -129,19 +124,6 @@ export const burgerConstructor = (state = constructorState, action) => {
   }
 };
 
-export const currentIngredient = (state = currentIngredientState, action) => {
-  switch (action.type) {
-    case ADD_INGREDIENT_INFO:
-      return { ...action.ingredient };
-
-    case REMOVE_INGREDIENT:
-      return {};
-
-    default:
-      return state;
-  }
-};
-
 export const order = (state = orderState, action) => {
   switch (action.type) {
     case CHECKOUT_REQUEST:
@@ -167,8 +149,8 @@ export const order = (state = orderState, action) => {
           {
             orderNumber,
             ingredients: action.orderIngredients,
-            name: action.orderName
-          }
+            name: action.orderName,
+          },
         ],
         checkoutRequest: false,
         checkoutRequestFailed: false,
@@ -192,8 +174,7 @@ export const currentTab = (state = 'buns', action) => {
 export const rootReducer = combineReducers({
   ingredients,
   burgerConstructor,
-  currentIngredient,
   order,
   currentTab,
-  user
+  user,
 });

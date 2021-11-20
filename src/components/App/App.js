@@ -6,10 +6,8 @@ import OrderDetails from '../OrderDetails/OrderDetails.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import {
-  ADD_INGREDIENT_INFO,
   checkout,
   getIngredients,
-  REMOVE_INGREDIENT_INFO,
 } from '../../services/actions/index.js';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
 import { getUser } from '../../services/actions/user';
@@ -28,7 +26,6 @@ export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
     (store) => store.order
   );
-  const currentIngredient = useSelector((store) => store.currentIngredient);
   const { isLoggedIn } = useSelector((store) => store.user);
   const location = useLocation();
   const history = useHistory();
@@ -46,7 +43,6 @@ export default function App() {
   const [isIngredientModal, setisIngredientModal] = useState(false);
 
   function handleIngredientClick(ingredient) {
-    dispatch({ type: ADD_INGREDIENT_INFO, ingredient });
     setisIngredientModal(true);
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
@@ -116,7 +112,7 @@ export default function App() {
                 closeModal={closeIngredientModal}
                 title="Детали ингредиента"
               >
-                <IngredientDetails ingredient={currentIngredient} />
+                <IngredientDetails />
               </Modal>
             );
           }}
