@@ -1,5 +1,5 @@
 import auth from '../../utils/auth';
-import { setCookie } from '../../utils/utils';
+import { setAccessToken, setCookie } from '../../utils/utils';
 
 export const LOGIN_REQUEST = 'LOGIN';
 export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
@@ -17,11 +17,12 @@ export function login(data) {
     auth
       .login(data)
       .then((res) => {
-        const { refreshToken } = res;
+        const { accessToken, refreshToken, user } = res;
+        setAccessToken('accessToken', accessToken);
         setCookie('refreshToken', refreshToken);
         dispatch({
           type: LOGIN_REQUEST_SUCCESS,
-          user: { ...res.user, accessToken: res.accessToken},
+          user,
         });
       })
       .catch(() => {
@@ -40,11 +41,12 @@ export function register(data) {
     auth
       .register(data)
       .then((res) => {
-        const { refreshToken } = res;
+        const { accessToken, refreshToken, user } = res;
+        setAccessToken('accessToken', accessToken);
         setCookie('refreshToken', refreshToken);
         dispatch({
           type: REGISTER_REQUEST_SUCCESS,
-          user: { ...res.user, accessToken: res.accessToken},
+          user,
         });
       })
       .catch(() => {

@@ -8,7 +8,7 @@ import {
 } from '../actions/user';
 
 const userState = {
-  user: { email: '', name: '', accessToken: '', isLogginIn: false },
+  user: { email: '', name: '', isLogginIn: false },
 
   request: false,
   requestFaided: false,
@@ -27,6 +27,7 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: true,
+        user: { email: '', name: '', isLogginIn: false },
       };
 
     case LOGIN_REQUEST_SUCCESS:
@@ -34,7 +35,7 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: false,
-        user: action.user,
+        user: { ...action.user, isLogginIn: true },
       };
 
     case REGISTER_REQUEST:
@@ -48,6 +49,7 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: true,
+        user: { email: '', name: '', isLogginIn: false },
       };
 
     case REGISTER_REQUEST_SUCCESS:
@@ -55,7 +57,7 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: false,
-        user: action.user,
+        user: { ...action.user, isLogginIn: true },
       };
 
     default:

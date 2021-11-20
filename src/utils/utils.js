@@ -36,3 +36,11 @@ export function setCookie(name, value, props) {
   }
   document.cookie = updatedCookie;
 }
+
+export function setAccessToken(name, value) {
+  try {
+    localStorage.setItem(name, JSON.stringify(value));
+  } catch (error) {
+    throw new Error('Не удалось сохранить токен доступа');
+  }
+}
