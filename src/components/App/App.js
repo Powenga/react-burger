@@ -4,7 +4,12 @@ import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import {
   ADD_INGREDIENT_INFO,
   checkout,
@@ -29,6 +34,9 @@ export default function App() {
     (store) => store.order
   );
   const currentIngredient = useSelector((store) => store.currentIngredient);
+  const { isLoggedIn } = useSelector((store) => store.user);
+  const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,9 +57,13 @@ export default function App() {
   }
 
   function handleCheckout(data) {
-    setisIngredientModal(false);
-    setIsModalOpen(true);
-    dispatch(checkout(data));
+    if (!isLoggedIn) {
+      history.push({ pathname: '/login', state: { from: location } });
+    } else {
+      setisIngredientModal(false);
+      setIsModalOpen(true);
+      dispatch(checkout(data));
+    }
   }
 
   function closeModal() {
@@ -60,7 +72,7 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <>
       <AppHeader />
 
       <Switch>
@@ -112,6 +124,6 @@ export default function App() {
             </Modal>
           ))}
       </div>
-    </Router>
+    </>
   );
 }

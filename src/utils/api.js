@@ -1,4 +1,5 @@
 import { BASE_URL } from './constants';
+import { getCookie } from './utils';
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -24,7 +25,10 @@ class Api {
   checkout(data) {
     return fetch(`${this._baseUrl}/orders`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: 'Bearer ' + getCookie('accessToken'),
+      },
       body: JSON.stringify(data),
     }).then(this._onError);
   }
@@ -33,7 +37,7 @@ class Api {
     return fetch(`${this._baseUrl}/password-reset`, {
       method: 'POST',
       headers: {
-        ...this._headers
+        ...this._headers,
       },
       body: JSON.stringify(data),
     }).then(this._onError);
@@ -43,12 +47,11 @@ class Api {
     return fetch(`${this._baseUrl}/password-reset/reset`, {
       method: 'POST',
       headers: {
-        ...this._headers
+        ...this._headers,
       },
       body: JSON.stringify(data),
     }).then(this._onError);
   }
-
 }
 
 export default new Api({
