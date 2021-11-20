@@ -4,5 +4,6 @@ import Register from './register';
 import ForgotPassword from './forgot-password';
 import NotFound from './404';
 import ResetPassword from './reset-password';
+import Ingredient from './ingredient';
 
-export { Home, Login, Register, ForgotPassword, NotFound, ResetPassword };
+export { Home, Login, Register, ForgotPassword, NotFound, ResetPassword, Ingredient };

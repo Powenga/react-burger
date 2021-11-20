@@ -17,7 +17,7 @@ import {
 
 const ingedientsState = {
   ingredients: [],
-  ingredientsRequest: false,
+  ingredientsRequest: true,
   ingredientsRequestFailed: false,
 };
 

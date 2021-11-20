@@ -1,9 +1,14 @@
-import { useSelector } from 'react-redux';
 import styles from './IngredientDetails.module.css';
 
-export default function IngredientDetails() {
-  const { name, image_large, calories, carbohydrates, fat, proteins } =
-    useSelector((store) => store.currentIngredient);
+export default function IngredientDetails({ ingredient }) {
+  const {
+    name,
+    image_large,
+    calories,
+    carbohydrates,
+    fat,
+    proteins } = ingredient || {};
+
   return (
     <>
       <img

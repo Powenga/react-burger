@@ -18,12 +18,14 @@ import {
   Register,
   NotFound,
   ResetPassword,
+  Ingredient,
 } from '../../pages/';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
     (store) => store.order
   );
+  const currentIngredient = useSelector((store) => store.currentIngredient);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -80,10 +82,7 @@ export default function App() {
           />
         </Route>
         <Route path="/ingredients/:id" exact>
-          <Home
-            handleIngredientClick={handleIngredientClick}
-            handleCheckout={handleCheckout}
-          />
+          <Ingredient />
         </Route>
         <Route>
           <NotFound />
@@ -97,7 +96,7 @@ export default function App() {
               closeModal={closeModal}
               title={isIngredientModal && 'Детали ингредиента'}
             >
-              <IngredientDetails />
+              <IngredientDetails ingredient={currentIngredient}/>
             </Modal>
           ) : (
             <Modal closeModal={closeModal}>

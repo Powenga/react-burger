@@ -4,8 +4,8 @@ import styles from '../components/App/App.module.css';
 
 export default function Register() {
   return (
-    <div className={styles.main}>
+    <main className={styles.main}>
       <RegisterForm />
-    </div>
+    </main>
   );
 }
