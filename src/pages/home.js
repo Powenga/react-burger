@@ -1,18 +1,21 @@
-import React from "react";
+import React from 'react';
 import BurgerIngredients from '../components/BurgerIngredients/BurgerIngredients.js';
 import BurgerConstructor from '../components/BurgerConstructor/BurgerConstructor.js';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
+import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
-export default function Home({
-  handleIngredientClick,
-  handleCheckout,
-}) {
+export default function Home({ handleIngredientClick, handleCheckout }) {
   const { ingredientsRequest, ingredientsRequestFailed } = useSelector(
     (store) => store.ingredients
   );
+
+  if (ingredientsRequest) {
+    return <Preloader />;
+  }
+
   return (
     <main className={`${styles.main} ${styles['main_type_home']} `}>
       {!ingredientsRequest && !ingredientsRequestFailed && (
@@ -21,11 +24,6 @@ export default function Home({
 
           <BurgerConstructor onCheckout={handleCheckout} />
         </DndProvider>
-      )}
-      {ingredientsRequest && (
-        <p className="text text text_type_main-small mt-10">
-          Загружаем данные ...
-        </p>
       )}
       {ingredientsRequestFailed && (
         <div>
