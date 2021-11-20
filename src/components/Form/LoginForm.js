@@ -4,6 +4,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../services/actions/user';
 import Form from './Form';
 
 export default function LoginForm() {
@@ -12,6 +14,7 @@ export default function LoginForm() {
     password: '',
   });
   const [isShownPass, setIsShownPass] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = useCallback((event) => {
     event.preventDefault();
@@ -21,6 +24,11 @@ export default function LoginForm() {
       [name]: value,
     }));
   }, []);
+
+  const handleSumbit = useCallback((event) => {
+    event.preventDefault();
+    dispatch(login(values));
+  }, [dispatch, values]);
 
   return (
     <Form name="loginForom" title="Вход">
@@ -50,7 +58,7 @@ export default function LoginForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={handleSumbit}>
           Войти
         </Button>
       </div>

@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { user } from './user';
 
 import {
   ADD_INGREDIENT,
@@ -193,5 +194,6 @@ export const rootReducer = combineReducers({
   burgerConstructor,
   currentIngredient,
   order,
-  currentTab
+  currentTab,
+  user
 });
