@@ -5,6 +5,8 @@ import {
   USER_REQUEST_FAILED,
   USER_REQUEST_SUCCESS,
   USER_LOGOUT_SUCCESS,
+  GET_RESET_CODE_SUCCESS,
+  RESET_PASSWORD_SUCCESS,
 } from '../actions/user';
 
 const userState = {
@@ -70,6 +72,20 @@ export const user = (state = userState, action) => {
         requestFaided: false,
         user: { email: '', name: '' },
         isLoggedIn: false,
+      };
+
+    case GET_RESET_CODE_SUCCESS:
+      return {
+        ...state,
+        userRequest: false,
+        requestFaided: false,
+      };
+
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        userRequest: false,
+        requestFaided: false,
       };
 
     default:

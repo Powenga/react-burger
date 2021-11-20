@@ -1,4 +1,5 @@
 import auth from '../../utils/auth';
+import api from '../../utils/api';
 import {
   ACCESS_COOKIE_EXPIRES,
   REFRESH_COOKIE_EXPIRES,
@@ -13,6 +14,9 @@ export const USER_REQUEST_FAILED = 'USER_REQUEST_FAILED';
 export const USER_REQUEST_SUCCESS = 'USER_REQUEST_SUCCESS';
 
 export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
+
+export const GET_RESET_CODE_SUCCESS = 'GET_RESET_CODE_SUCCESS';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 
 function saveCokies(accessToken, refreshToken) {
   try {
@@ -75,7 +79,8 @@ export function register(data) {
 
 export function getUser() {
   return function (dispatch) {
-    return auth.getUser()
+    return auth
+      .getUser()
       .then((res) => {
         const { user } = res;
         dispatch({
@@ -103,14 +108,15 @@ export function getUser() {
         });
       });
   };
-};
+}
 
 export function updateUser(data) {
   return function (dispatch) {
     dispatch({
       type: USER_REQUEST,
     });
-    return auth.updateUser(data)
+    return auth
+      .updateUser(data)
       .then((res) => {
         const { user } = res;
         dispatch({
@@ -157,6 +163,44 @@ export function logout(callback) {
         dispatch({
           type: USER_LOGOUT_SUCCESS,
         });
+        callback();
+      })
+      .catch(() => {
+        dispatch({
+          type: USER_REQUEST_FAILED,
+        });
+      });
+  };
+}
+
+export function getResetCode(data, callback) {
+  return function (dispatch) {
+    dispatch({
+      type: USER_REQUEST,
+    });
+    api
+      .getResetCode(data)
+      .then(() => {
+        dispatch({ type: GET_RESET_CODE_SUCCESS });
+        callback();
+      })
+      .catch(() => {
+        dispatch({
+          type: USER_REQUEST_FAILED,
+        });
+      });
+  };
+}
+
+export function resetPassord(data, callback) {
+  return function (dispatch) {
+    dispatch({
+      type: USER_REQUEST,
+    });
+    api
+      .getResetCode(data)
+      .then(() => {
+        dispatch({ type: RESET_PASSWORD_SUCCESS });
         callback();
       })
       .catch(() => {

@@ -3,8 +3,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState } from 'react';
-import { Link, useHistory,useLocation } from 'react-router-dom';
-import api from '../../utils/api';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { getResetCode } from '../../services/actions/user';
 import Form from './Form';
 
 export default function ForgotPasswordForm() {
@@ -13,6 +14,7 @@ export default function ForgotPasswordForm() {
   });
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleChange = useCallback((event) => {
     event.preventDefault();
@@ -23,13 +25,20 @@ export default function ForgotPasswordForm() {
     }));
   }, []);
 
-  const handleSumbit = useCallback((event) => {
-    event.preventDefault();
-    api.getResetCode(values)
-      .then(() => {
-        history.push({pathname: '/reset-password', state:{ email: values.email, from: location }})
-      });
-  }, [values, history, location]);
+  const handleSumbit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(
+        getResetCode(values, () => {
+          history.push({
+            pathname: '/reset-password',
+            state: { email: values.email, from: location },
+          });
+        })
+      );
+    },
+    [values, history, location, dispatch]
+  );
 
   return (
     <Form name="loginForom" title="Восстановление пароля">

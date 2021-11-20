@@ -3,8 +3,9 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import api from '../../utils/api';
+import { resetPassord } from '../../services/actions/user';
 import Form from './Form';
 
 export default function ResetPasswordForm() {
@@ -14,6 +15,7 @@ export default function ResetPasswordForm() {
   });
   const [isShownPass, setIsShownPass] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleChange = useCallback((event) => {
     event.preventDefault();
@@ -27,11 +29,15 @@ export default function ResetPasswordForm() {
   const handleSumbit = useCallback(
     (event) => {
       event.preventDefault();
-      api.resetPassword(values).then(() => {
-        history.push({ pathname: '/login' });
-      });
+      dispatch(
+        resetPassord(values, () => {
+          history.push({
+            pathname: '/login',
+          });
+        })
+      );
     },
-    [values, history]
+    [values, history, dispatch]
   );
 
   return (
