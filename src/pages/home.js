@@ -4,6 +4,7 @@ import BurgerConstructor from '../components/BurgerConstructor/BurgerConstructor
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
@@ -46,3 +47,8 @@ export default function Home({ handleIngredientClick, handleCheckout }) {
     </>
   );
 }
+
+Home.propTypes = {
+  handleIngredientClick: PropTypes.func.isRequired,
+  handleCheckout: PropTypes.func.isRequired,
+};

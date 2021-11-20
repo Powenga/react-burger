@@ -21,7 +21,7 @@ export default function NotFound() {
           404
         </p>
         <p className="text text_type_main-large mb-10">
-          Страница не найдена : (
+          Страница не найдена :(
         </p>
         <Link
           className="text text_type_main-medium text_color_inactive"

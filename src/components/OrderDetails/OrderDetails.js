@@ -1,7 +1,7 @@
 import imagePath from '../../images/order-done.svg';
 import PropTypes from 'prop-types';
 
-export default function OrderDetails({ orderNumber, isOrderFailed }) {
+export default function OrderDetails({ orderNumber }) {
   return (
     <>
       <h2
@@ -44,5 +44,4 @@ export default function OrderDetails({ orderNumber, isOrderFailed }) {
 
 OrderDetails.propTypes = {
   orderNumber: PropTypes.string.isRequired,
-  isOrderFailed: PropTypes.bool.isRequired,
 };

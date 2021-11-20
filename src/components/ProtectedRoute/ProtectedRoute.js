@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Preloader from '../../components/Preloader/Preloader';
 
 export function ProtectedRoute({ children, ...rest }) {
@@ -23,3 +24,7 @@ export function ProtectedRoute({ children, ...rest }) {
     />
   );
 }
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.element,
+};

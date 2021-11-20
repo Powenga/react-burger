@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export function NavLink({ to, linkClass, exact, children, ...rest }) {
+export default function NavLink({ to, linkClass, exact, children, ...rest }){
   const path = typeof to === 'object' ? to.pathname : to;
   return (
     <Route
@@ -18,3 +19,10 @@ export function NavLink({ to, linkClass, exact, children, ...rest }) {
     ></Route>
   );
 }
+
+NavLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  linkClass: PropTypes.string,
+  exact: PropTypes.bool,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+};

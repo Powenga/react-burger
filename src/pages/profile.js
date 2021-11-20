@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import ProfileForm from '../components/Form/ProfileForm';
-import { NavLink } from '../components/NavLink/NavLink';
+import NavLink from '../components/NavLink/NavLink';
 import styles from '../components/App/App.module.css';
 import { logout } from '../services/actions/user';
 

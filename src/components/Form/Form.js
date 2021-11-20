@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Form.module.css';
 
 export default function Form({ name, title, children }) {
@@ -9,3 +10,9 @@ export default function Form({ name, title, children }) {
     </form>
   );
 }
+
+Form.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+};

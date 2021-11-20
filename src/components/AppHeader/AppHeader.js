@@ -5,7 +5,7 @@ import {
   ProfileIcon,
   ListIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from '../NavLink/NavLink';
+import NavLink from '../NavLink/NavLink';
 import styles from './AppHeader.module.css';
 
 export default function AppHeader() {
