@@ -1,33 +1,45 @@
 import auth from '../../utils/auth';
-import { setAccessToken, setCookie } from '../../utils/utils';
+import {
+  ACCESS_COOKIE_EXPIRES,
+  REFRESH_COOKIE_EXPIRES,
+} from '../../utils/constants';
+import { setCookie } from '../../utils/utils';
 
-export const LOGIN_REQUEST = 'LOGIN';
-export const LOGIN_REQUEST_SUCCESS = 'LOGIN_REQUEST_SUCCESS';
-export const LOGIN_REQUEST_FAILED = 'LOGIN_REQUEST_FAILED';
+export const USER_REQUEST = 'USER_REQUEST';
+export const USER_REQUEST_FAILED = 'USER_REQUEST_FAILED';
+export const USER_REQUEST_SUCCESS = 'USER_REQUEST_SUCCESS';
 
-export const REGISTER_REQUEST = 'REGISTER';
-export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS';
-export const REGISTER_REQUEST_FAILED = 'REGISTER_REQUEST_FAILED';
+function saveCokies(accessToken, refreshToken) {
+  try {
+    setCookie('accessToken', accessToken.split('Bearer ')[1], {
+      expires: ACCESS_COOKIE_EXPIRES,
+    });
+    setCookie('refreshToken', refreshToken, {
+      expires: REFRESH_COOKIE_EXPIRES,
+    });
+  } catch (error) {
+    throw new Error();
+  }
+}
 
 export function login(data) {
   return function (dispatch) {
     dispatch({
-      type: LOGIN_REQUEST,
+      type: USER_REQUEST,
     });
     auth
       .login(data)
       .then((res) => {
         const { accessToken, refreshToken, user } = res;
-        setAccessToken('accessToken', accessToken);
-        setCookie('refreshToken', refreshToken);
+        saveCokies(accessToken, refreshToken);
         dispatch({
-          type: LOGIN_REQUEST_SUCCESS,
+          type: USER_REQUEST_SUCCESS,
           user,
         });
       })
       .catch(() => {
         dispatch({
-          type: LOGIN_REQUEST_FAILED,
+          type: USER_REQUEST_FAILED,
         });
       });
   };
@@ -36,22 +48,65 @@ export function login(data) {
 export function register(data) {
   return function (dispatch) {
     dispatch({
-      type: REGISTER_REQUEST,
+      type: USER_REQUEST,
     });
     auth
       .register(data)
       .then((res) => {
         const { accessToken, refreshToken, user } = res;
-        setAccessToken('accessToken', accessToken);
-        setCookie('refreshToken', refreshToken);
+        saveCokies(accessToken, refreshToken);
         dispatch({
-          type: REGISTER_REQUEST_SUCCESS,
+          type: USER_REQUEST_SUCCESS,
           user,
         });
       })
       .catch(() => {
         dispatch({
-          type: REGISTER_REQUEST_FAILED,
+          type: USER_REQUEST_FAILED,
+        });
+      });
+  };
+}
+
+export function getUser() {
+  return function (dispatch) {
+    dispatch({
+      type: USER_REQUEST,
+    });
+    auth
+      .getUser()
+      .then((res) => {
+        const { user } = res;
+        dispatch({
+          type: USER_REQUEST_SUCCESS,
+          user,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: USER_REQUEST_FAILED,
+        });
+      });
+  };
+}
+
+export function updateUser(data) {
+  return function (dispatch) {
+    dispatch({
+      type: USER_REQUEST,
+    });
+    auth
+      .updateUser(data)
+      .then((res) => {
+        const { user } = res;
+        dispatch({
+          type: USER_REQUEST_SUCCESS,
+          user,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: USER_REQUEST_FAILED,
         });
       });
   };

@@ -1,4 +1,5 @@
 import { BASE_URL } from './constants';
+import { getCookie } from './utils';
 
 class Auth {
   constructor({ baseUrl, headers }) {
@@ -43,6 +44,27 @@ class Auth {
     return fetch(`${this._baseUrl}/token`, {
       method: 'POST',
       headers: this._headers,
+      body: JSON.stringify(data),
+    }).then(this._onError);
+  }
+
+  getUser() {
+    return fetch(`${this._baseUrl}/user`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+        Authorization: 'Bearer ' + getCookie('accessToken'),
+      },
+    }).then(this._onError);
+  }
+
+  updateUser(data) {
+    return fetch(`${this._baseUrl}/user`, {
+      method: 'PATCH',
+      headers: {
+        ...this._headers,
+        Authorization: 'Bearer ' + getCookie('accessToken'),
+      },
       body: JSON.stringify(data),
     }).then(this._onError);
   }
