@@ -48,7 +48,6 @@ export default function App() {
   function handleIngredientClick(ingredient) {
     dispatch({ type: ADD_INGREDIENT_INFO, ingredient });
     setisIngredientModal(true);
-    setIsModalOpen(true);
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
       state: { background: { pathname: '/' } },
@@ -66,8 +65,7 @@ export default function App() {
   }
 
   function closeIngredientModal() {
-    dispatch({ type: REMOVE_INGREDIENT_INFO });
-    setIsModalOpen(false);
+    history.push('/');
   }
 
   function closeModal() {
@@ -99,9 +97,9 @@ export default function App() {
         <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
-        {/* <Route path="/ingredients/:id" exact>
+        <Route path="/ingredients/:id" exact>
           <Ingredient />
-        </Route> */}
+        </Route>
         <Route>
           <NotFound />
         </Route>
@@ -111,8 +109,9 @@ export default function App() {
         <Route
           path="/ingredients/:id"
           exact
-          render={() => {
-            return (
+          render={({ location } ) => {
+            if(location.state?.background)
+              return (
               <Modal
                 closeModal={closeIngredientModal}
                 title="Детали ингредиента"
