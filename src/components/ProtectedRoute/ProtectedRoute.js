@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Preloader from '../../components/Preloader/Preloader';
 
-export function ProtectedRoute({ children, ...rest }) {
+export default function ProtectedRoute({ children, ...rest }) {
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
 
   if (!isUserLoaded) {

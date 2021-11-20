@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { checkout, getIngredients } from '../../services/actions/index.js';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 import AppHeader from '../AppHeader/AppHeader.js';
 import Modal from '../Modal/Modal.js';
 import ModalOverlay from '../ModalOverlay/ModalOverlay.js';
 import Preloader from '../Preloader/Preloader.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
-import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
-import { checkout, getIngredients } from '../../services/actions/index.js';
-import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
 import { getUser } from '../../services/actions/user';
 import {
   ForgotPassword,
@@ -87,10 +87,7 @@ export default function App() {
         <Route path="/reset-password" exact>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile" exact>
-          <Profile />
-        </ProtectedRoute>
-        <ProtectedRoute path="/profile/history" exact>
+        <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
         <Route path="/ingredients/:id" exact>

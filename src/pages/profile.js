@@ -1,6 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import ProfileForm from '../components/Form/ProfileForm';
 import NavLink from '../components/NavLink/NavLink';
 import styles from '../components/App/App.module.css';
@@ -55,7 +55,7 @@ export default function Profile() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/profile/history" style={navLinkStyle}>
+              <NavLink to="/profile/orders" style={navLinkStyle}>
                 {(isActive) => (
                   <span
                     className={`text text text_type_main-medium ${
@@ -88,7 +88,12 @@ export default function Profile() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <ProfileForm />
+      <Switch>
+        <Route path="/profile" exact>
+          <ProfileForm />
+        </Route>
+        <Route path="/profile/orders" exact></Route>
+      </Switch>
     </main>
   );
 }
