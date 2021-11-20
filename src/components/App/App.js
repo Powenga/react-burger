@@ -93,6 +93,9 @@ export default function App() {
         <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute path="/profile/history" exact>
+          <Profile />
+        </ProtectedRoute>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
         </Route>
