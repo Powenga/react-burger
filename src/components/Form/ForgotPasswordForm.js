@@ -3,13 +3,16 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory,useLocation } from 'react-router-dom';
+import api from '../../utils/api';
 import Form from './Form';
 
 export default function ForgotPasswordForm() {
   const [values, setValues] = useState({
     email: '',
   });
+  const history = useHistory();
+  const location = useLocation();
 
   const handleChange = useCallback((event) => {
     event.preventDefault();
@@ -19,6 +22,14 @@ export default function ForgotPasswordForm() {
       [name]: value,
     }));
   }, []);
+
+  const handleSumbit = useCallback((event) => {
+    event.preventDefault();
+    api.getResetCode(values)
+      .then(() => {
+        history.push({pathname: '/reset-password', state:{ email: values.email, from: location }})
+      });
+  }, [values, history, location]);
 
   return (
     <Form name="loginForom" title="Восстановление пароля">
@@ -33,7 +44,7 @@ export default function ForgotPasswordForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={handleSumbit}>
           Восстановить
         </Button>
       </div>

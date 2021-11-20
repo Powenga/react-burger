@@ -86,7 +86,7 @@ export const getUser = () => {
       .catch(async (error) => {
         console.log(error);
         if (error.message === 'jwt malformed') {
-          const { accessToken } = await auth.refreshToken()
+          const { accessToken } = await auth.refreshToken();
           console.log(accessToken);
           getUser();
         }
@@ -98,7 +98,7 @@ export const getUser = () => {
         });
       });
   };
-}
+};
 
 export function updateUser(data) {
   return function (dispatch) {

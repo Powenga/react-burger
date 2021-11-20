@@ -12,6 +12,13 @@ export default function ResetPassword() {
     return <Redirect to={location.state?.from || '/'} />;
   }
 
+  if (
+    location.state?.from?.pathname !== '/forgot-password' ||
+    !location.state?.email
+  ) {
+    return <Redirect to="/" />;
+  }
+
   if (!isUserLoaded) {
     return null;
   }
