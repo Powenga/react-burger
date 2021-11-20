@@ -1,10 +1,26 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  Input,
+  Button,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../services/actions/user';
 import Form from './Form';
 
+const buttonContainerStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+  width: 320,
+};
+
+const buttonWrapStyle = {
+  flex: '0 0 20%',
+};
+
 export default function ProfileForm() {
+  const [isDataChanged, setIsDataChanged] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.user);
 
@@ -31,13 +47,39 @@ export default function ProfileForm() {
     [dispatch, values]
   );
 
+  const handleReset = useCallback(
+    (event) => {
+      event.preventDefault();
+      setValues((state) => ({
+        ...state,
+        name: user.name,
+        email: user.email,
+        password: '',
+      }));
+    },
+    [user]
+  );
+
   useEffect(() => {
     setValues((state) => ({
       ...state,
       name: user.name,
       email: user.email,
+      password: '',
     }));
   }, [user]);
+
+  useEffect(() => {
+    if (
+      values.email !== user.email ||
+      values.name !== user.name ||
+      values.password !== ''
+    ) {
+      setIsDataChanged(true);
+    } else {
+      setIsDataChanged(false);
+    }
+  }, [values, user]);
 
   return (
     <Form name="profileForm" title="">
@@ -50,7 +92,6 @@ export default function ProfileForm() {
           type="text"
           size={'default'}
           icon="EditIcon"
-          onIconClick={handleSumbit}
         />
       </div>
       <div className="mb-6">
@@ -62,7 +103,6 @@ export default function ProfileForm() {
           type="text"
           size={'default'}
           icon="EditIcon"
-          onIconClick={handleSumbit}
         />
       </div>
       <div className="mb-6">
@@ -74,9 +114,22 @@ export default function ProfileForm() {
           type="password"
           size={'default'}
           icon="EditIcon"
-          onIconClick={handleSumbit}
         />
       </div>
+      {isDataChanged && (
+        <div style={buttonContainerStyle}>
+          <div style={buttonWrapStyle}>
+            <Button type="primary" size="medium" onClick={handleReset}>
+              Отмена
+            </Button>
+          </div>
+          <div style={buttonWrapStyle}>
+            <Button type="primary" size="medium" onClick={handleSumbit}>
+              Сохранить
+            </Button>
+          </div>
+        </div>
+      )}
     </Form>
   );
 }
