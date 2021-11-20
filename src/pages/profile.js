@@ -28,7 +28,7 @@ export default function Profile() {
         <nav className="mb-20">
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <li>
-              <NavLink to="/profile" style={navLinkStyle}>
+              <NavLink to="/profile" style={navLinkStyle} exact={true}>
                 {(isActive) => (
                   <span
                     className={`text text_type_main-medium ${

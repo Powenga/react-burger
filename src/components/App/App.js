@@ -77,7 +77,7 @@ export default function App() {
         <Route path="/reset" exact>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile">
+        <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
         <Route path="/ingredients/:id" exact>
