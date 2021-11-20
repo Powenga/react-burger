@@ -69,13 +69,12 @@ export function register(data) {
   };
 }
 
-export const getUser = () => {
+export function getUser() {
   return function (dispatch) {
     dispatch({
       type: USER_REQUEST,
     });
-    auth
-      .getUser()
+    return auth.getUser()
       .then((res) => {
         const { user } = res;
         dispatch({
@@ -83,12 +82,17 @@ export const getUser = () => {
           user,
         });
       })
-      .catch(async (error) => {
-        console.log(error);
+      .catch((error) => {
         if (error.message === 'jwt malformed') {
-          const { accessToken } = await auth.refreshToken();
-          console.log(accessToken);
-          getUser();
+          return auth
+            .refreshToken()
+            .then(({ accessToken, refreshToken }) => {
+              saveCokies(accessToken, refreshToken);
+              dispatch(getUser());
+            })
+            .catch((error) => {
+              return Promise.reject(error);
+            });
         }
         return Promise.reject(error);
       })
@@ -105,14 +109,27 @@ export function updateUser(data) {
     dispatch({
       type: USER_REQUEST,
     });
-    auth
-      .updateUser(data)
+    return auth.updateUser(data)
       .then((res) => {
         const { user } = res;
         dispatch({
           type: USER_REQUEST_SUCCESS,
           user,
         });
+      })
+      .catch((error) => {
+        if (error.message === 'jwt malformed') {
+          return auth
+            .refreshToken()
+            .then(({ accessToken, refreshToken }) => {
+              saveCokies(accessToken, refreshToken);
+              dispatch(updateUser(data));
+            })
+            .catch((error) => {
+              return Promise.reject(error);
+            });
+        }
+        return Promise.reject(error);
       })
       .catch(() => {
         dispatch({
