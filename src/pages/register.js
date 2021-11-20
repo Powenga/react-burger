@@ -2,14 +2,19 @@ import React from 'react';
 import { Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import RegisterForm from '../components/Form/RegisterForm';
+import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
 export default function Register() {
-  const { isLoggedIn } = useSelector((store) => store.user);
+  const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
   const location = useLocation();
 
   if (isLoggedIn) {
     return <Redirect to={location.state?.from || '/'} />;
+  }
+
+  if (!isUserLoaded) {
+    return <Preloader />;
   }
 
   return (
