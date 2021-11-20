@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import ForgotPasswordForm from '../components/Form/ForgotPasswordForm';
+import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
 export default function ForgotPassword() {
@@ -13,7 +14,7 @@ export default function ForgotPassword() {
   }
 
   if (!isUserLoaded) {
-    return null;
+    return <Preloader />;
   }
 
   return (
