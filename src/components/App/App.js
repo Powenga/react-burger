@@ -4,12 +4,7 @@ import Modal from '../Modal/Modal.js';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 import OrderDetails from '../OrderDetails/OrderDetails.js';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Switch,
-  Route,
-  useLocation,
-  useHistory,
-} from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import {
   ADD_INGREDIENT_INFO,
   checkout,
@@ -54,6 +49,10 @@ export default function App() {
     dispatch({ type: ADD_INGREDIENT_INFO, ingredient });
     setisIngredientModal(true);
     setIsModalOpen(true);
+    history.push({
+      pathname: `/ingredients/${ingredient._id}`,
+      state: { background: { pathname: '/' } },
+    });
   }
 
   function handleCheckout(data) {
@@ -66,16 +65,19 @@ export default function App() {
     }
   }
 
-  function closeModal() {
+  function closeIngredientModal() {
     dispatch({ type: REMOVE_INGREDIENT_INFO });
+    setIsModalOpen(false);
+  }
+
+  function closeModal() {
     setIsModalOpen(false);
   }
 
   return (
     <>
       <AppHeader />
-
-      <Switch>
+      <Switch location={location.state?.background ?? location}>
         <Route path="/" exact>
           <Home
             handleIngredientClick={handleIngredientClick}
@@ -97,32 +99,38 @@ export default function App() {
         <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
-        <Route path="/ingredients/:id" exact>
+        {/* <Route path="/ingredients/:id" exact>
           <Ingredient />
-        </Route>
+        </Route> */}
         <Route>
           <NotFound />
         </Route>
       </Switch>
 
       <div style={{ overflow: 'hidden' }}>
-        {isModalOpen &&
-          (isIngredientModal ? (
-            <Modal
-              closeModal={closeModal}
-              title={isIngredientModal && 'Детали ингредиента'}
-            >
-              <IngredientDetails ingredient={currentIngredient} />
-            </Modal>
-          ) : (
-            <Modal closeModal={closeModal}>
-              <OrderDetails
-                orderNumber={orderNumber}
-                isOrdering={checkoutRequest}
-                isOrderFailed={checkoutRequestFailed}
-              />
-            </Modal>
-          ))}
+        <Route
+          path="/ingredients/:id"
+          exact
+          render={() => {
+            return (
+              <Modal
+                closeModal={closeIngredientModal}
+                title="Детали ингредиента"
+              >
+                <IngredientDetails ingredient={currentIngredient} />
+              </Modal>
+            );
+          }}
+        />
+        {isModalOpen && !isIngredientModal && (
+          <Modal closeModal={closeModal}>
+            <OrderDetails
+              orderNumber={orderNumber}
+              isOrdering={checkoutRequest}
+              isOrderFailed={checkoutRequestFailed}
+            />
+          </Modal>
+        )}
       </div>
     </>
   );
