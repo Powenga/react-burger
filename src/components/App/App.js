@@ -21,6 +21,7 @@ import {
   Ingredient,
   Profile
 } from '../../pages/';
+import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute.js';
 
 export default function App() {
   const { orderNumber, checkoutRequest, checkoutRequestFailed } = useSelector(
@@ -76,9 +77,9 @@ export default function App() {
         <Route path="/reset" exact>
           <ResetPassword />
         </Route>
-        <Route path="/profile" exact>
+        <ProtectedRoute path="/profile">
           <Profile />
-        </Route>
+        </ProtectedRoute>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
         </Route>

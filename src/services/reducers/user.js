@@ -5,9 +5,10 @@ import {
 } from '../actions/user';
 
 const userState = {
-  user: { email: '', name: '', isLogginIn: false },
-
-  request: false,
+  user: { email: '', name: '' },
+  isUserLoaded: false,
+  isLoggedIn: false,
+  request: true,
   requestFaided: false,
 };
 
@@ -24,7 +25,9 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: true,
-        user: { email: '', name: '', isLogginIn: false },
+        user: { email: '', name: '' },
+        isUserLoaded: true,
+        isLoggedIn: false,
       };
 
     case USER_REQUEST_SUCCESS:
@@ -32,7 +35,9 @@ export const user = (state = userState, action) => {
         ...state,
         request: false,
         requestFaided: false,
-        user: { ...action.user, isLogginIn: true },
+        user: { ...action.user },
+        isUserLoaded: true,
+        isLoggedIn: true,
       };
 
     default:

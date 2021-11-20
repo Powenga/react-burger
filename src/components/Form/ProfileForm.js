@@ -1,16 +1,14 @@
-import {
-  Input,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, updateUser } from '../../services/actions/user';
+import { updateUser } from '../../services/actions/user';
 import Form from './Form';
 
-export default function LoginForm() {
+export default function ProfileForm() {
   const dispatch = useDispatch();
-  const { user, request, requesFailed } = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
 
-   const [values, setValues] = useState({
+  const [values, setValues] = useState({
     name: user.name,
     email: user.email,
     password: '',
@@ -25,14 +23,13 @@ export default function LoginForm() {
     }));
   }, []);
 
-  const handleSumbit = useCallback((event) => {
-    event.preventDefault();
-    dispatch(updateUser(values));
-  }, [dispatch, values]);
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+  const handleSumbit = useCallback(
+    (event) => {
+      event.preventDefault();
+      dispatch(updateUser(values));
+    },
+    [dispatch, values]
+  );
 
   useEffect(() => {
     setValues((state) => ({
@@ -40,7 +37,7 @@ export default function LoginForm() {
       name: user.name,
       email: user.email,
     }));
-  }, [ user]);
+  }, [user]);
 
   return (
     <Form name="profileForm" title="">
