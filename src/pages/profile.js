@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import ProfileForm from '../components/Form/ProfileForm';
 import { NavLink } from '../components/NavLink/NavLink';
@@ -18,13 +18,16 @@ const navLinkStyle = {
 };
 
 export default function Profile() {
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   function handleExit(event) {
     event.preventDefault();
-    dispatch(logout());
-    history.replace('/');
+    dispatch(
+      logout(() => {
+        history.replace('/login');
+      })
+    );
   }
 
   return (

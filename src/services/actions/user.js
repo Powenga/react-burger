@@ -139,7 +139,7 @@ export function updateUser(data) {
   };
 }
 
-export function logout() {
+export function logout(callback) {
   return function (dispatch) {
     dispatch({
       type: USER_REQUEST,
@@ -156,6 +156,7 @@ export function logout() {
         dispatch({
           type: USER_LOGOUT_SUCCESS,
         });
+        callback();
       })
       .catch(() => {
         dispatch({
