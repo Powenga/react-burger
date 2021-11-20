@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import LoginForm from '../components/Form/LoginForm';
+import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
 export default function Login() {
@@ -13,7 +14,7 @@ export default function Login() {
   }
 
   if (!isUserLoaded) {
-    return null;
+    return <Preloader />;
   }
 
   return (
