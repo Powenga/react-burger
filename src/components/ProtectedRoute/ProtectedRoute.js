@@ -12,7 +12,6 @@ export function ProtectedRoute({ children, ...rest }) {
   }, [dispatch]);
 
   if (!isUserLoaded) {
-    console.log(isUserLoaded);
     return null;
   }
 

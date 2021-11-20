@@ -1,8 +1,10 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import ProfileForm from '../components/Form/ProfileForm';
-import styles from '../components/App/App.module.css';
 import { NavLink } from '../components/NavLink/NavLink';
-
+import styles from '../components/App/App.module.css';
+import { logout } from '../services/actions/user';
 
 const navLinkStyle = {
   textDecoration: 'none',
@@ -16,6 +18,15 @@ const navLinkStyle = {
 };
 
 export default function Profile() {
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  function handleExit(event) {
+    event.preventDefault();
+    dispatch(logout());
+    history.replace('/');
+  }
+
   return (
     <main className={`${styles.main} ${styles['main_type_profile']}`}>
       <div
@@ -41,7 +52,6 @@ export default function Profile() {
               </NavLink>
             </li>
             <li>
-              {' '}
               <NavLink to="/profile/history" style={navLinkStyle}>
                 {(isActive) => (
                   <span
@@ -55,18 +65,19 @@ export default function Profile() {
               </NavLink>
             </li>
             <li>
-              {' '}
-              <NavLink to="/profile/exit" style={navLinkStyle}>
-                {(isActive) => (
-                  <span
-                    className={`text text text_type_main-medium ${
-                      !isActive && 'text_color_inactive'
-                    }`}
-                  >
-                    Выход
-                  </span>
-                )}
-              </NavLink>
+              <button
+                onClick={handleExit}
+                className="text text text_type_main-medium text_color_inactive"
+                style={{
+                  ...navLinkStyle,
+                  color: '#8585AD',
+                  cursor: 'pointer',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+              >
+                Выход
+              </button>
             </li>
           </ul>
         </nav>

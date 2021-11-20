@@ -32,11 +32,11 @@ class Auth {
     }).then(this._onError);
   }
 
-  loguot(data) {
-    return fetch(`${this._baseUrl}/loguot`, {
+  logout() {
+    return fetch(`${this._baseUrl}/logout`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(data),
+      body: JSON.stringify({token: getCookie('refreshToken')}),
     }).then(this._onError);
   }
 

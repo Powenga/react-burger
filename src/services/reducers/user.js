@@ -2,6 +2,7 @@ import {
   USER_REQUEST,
   USER_REQUEST_FAILED,
   USER_REQUEST_SUCCESS,
+  USER_LOGOUT_SUCCESS,
 } from '../actions/user';
 
 const userState = {
@@ -38,6 +39,16 @@ export const user = (state = userState, action) => {
         user: { ...action.user },
         isUserLoaded: true,
         isLoggedIn: true,
+      };
+
+    case USER_LOGOUT_SUCCESS:
+      return {
+        ...state,
+        request: false,
+        requestFaided: false,
+        user: { email: '', name: '' },
+        isUserLoaded: false,
+        isLoggedIn: false,
       };
 
     default:
