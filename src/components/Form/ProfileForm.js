@@ -41,7 +41,6 @@ export default function ProfileForm() {
 
   const handleSumbit = useCallback(
     (event) => {
-      console.log('submit');
       event.preventDefault();
       dispatch(updateUser(values));
     },
@@ -51,7 +50,6 @@ export default function ProfileForm() {
   const handleReset = useCallback(
     (event) => {
       event.preventDefault();
-      console.log('reset');
       setValues((state) => ({
         ...state,
         name: user.name,
