@@ -5,7 +5,7 @@ import {
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { resetPassord } from '../../services/actions/user';
+import { resetPassword } from '../../services/actions/user';
 import Form from './Form';
 
 export default function ResetPasswordForm() {
@@ -30,7 +30,7 @@ export default function ResetPasswordForm() {
     (event) => {
       event.preventDefault();
       dispatch(
-        resetPassord(values, () => {
+        resetPassword(values, () => {
           history.push({
             pathname: '/login',
           });

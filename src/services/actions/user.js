@@ -192,13 +192,13 @@ export function getResetCode(data, callback) {
   };
 }
 
-export function resetPassord(data, callback) {
+export function resetPassword(data, callback) {
   return function (dispatch) {
     dispatch({
       type: USER_REQUEST,
     });
     api
-      .getResetCode(data)
+      .resetPassword(data)
       .then(() => {
         dispatch({ type: RESET_PASSWORD_SUCCESS });
         callback();
