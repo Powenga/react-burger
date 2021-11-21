@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Form.module.css';
 
-export default function Form({ name, title, children }) {
+export default function Form({ name, title, handleSubmit, children }) {
   return (
-    <form name={name} noValidate className={styles.form}>
+    <form name={name} noValidate className={styles.form} onSubmit={handleSubmit}>
       {title && <h1 className={`text text_type_main-medium mb-6`}>{title}</h1>}
       {children}
     </form>
@@ -18,4 +18,5 @@ Form.propTypes = {
     PropTypes.element,
     PropTypes.bool
   ])).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };

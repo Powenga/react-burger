@@ -41,6 +41,7 @@ export default function ProfileForm() {
 
   const handleSumbit = useCallback(
     (event) => {
+      console.log('submit');
       event.preventDefault();
       dispatch(updateUser(values));
     },
@@ -50,6 +51,7 @@ export default function ProfileForm() {
   const handleReset = useCallback(
     (event) => {
       event.preventDefault();
+      console.log('reset');
       setValues((state) => ({
         ...state,
         name: user.name,
@@ -82,7 +84,7 @@ export default function ProfileForm() {
   }, [values, user]);
 
   return (
-    <Form name="profileForm" title="">
+    <Form name="profileForm" title="" handleSubmit={handleSumbit}>
       <div className="mb-6">
         <Input
           placeholder="Имя"
@@ -119,13 +121,13 @@ export default function ProfileForm() {
       {isDataChanged && (
         <div style={buttonContainerStyle}>
           <div style={buttonWrapStyle}>
-            <Button type="primary" size="medium" onClick={handleReset}>
-              Отмена
+            <Button type="primary" size="medium">
+              Сохранить
             </Button>
           </div>
           <div style={buttonWrapStyle}>
-            <Button type="primary" size="medium" onClick={handleSumbit}>
-              Сохранить
+            <Button type="primary" size="medium" onClick={handleReset}>
+              Отмена
             </Button>
           </div>
         </div>
