@@ -31,7 +31,7 @@ export default function LoginForm() {
   }, [dispatch, values]);
 
   return (
-    <Form name="loginForom" title="Вход">
+    <Form name="loginForom" title="Вход" handleSubmit={handleSumbit}>
       <div className="mb-6">
         <Input
           placeholder="E-mail"
@@ -58,7 +58,7 @@ export default function LoginForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium" onClick={handleSumbit}>
+        <Button type="primary" size="medium">
           Войти
         </Button>
       </div>

@@ -32,7 +32,7 @@ export default function RegisterForm() {
   }, [dispatch, values]);
 
   return (
-    <Form name="loginForom" title="Регистрация">
+    <Form name="registerForom" title="Регистрация" handleSubmit={handleSumbit}>
       <div className="mb-6">
         <Input
           placeholder="Имя"
@@ -69,7 +69,7 @@ export default function RegisterForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium" onClick={handleSumbit}>
+        <Button type="primary" size="medium">
           Зарегистрироваться
         </Button>
       </div>

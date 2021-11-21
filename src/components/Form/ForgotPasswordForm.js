@@ -41,7 +41,7 @@ export default function ForgotPasswordForm() {
   );
 
   return (
-    <Form name="loginForom" title="Восстановление пароля">
+    <Form name="forgotPassword" title="Восстановление пароля" handleSubmit={handleSumbit}>
       <div className="mb-6">
         <Input
           placeholder="Укажите e-mail"
@@ -53,7 +53,7 @@ export default function ForgotPasswordForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium" onClick={handleSumbit}>
+        <Button type="primary" size="medium">
           Восстановить
         </Button>
       </div>

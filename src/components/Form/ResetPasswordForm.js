@@ -41,7 +41,7 @@ export default function ResetPasswordForm() {
   );
 
   return (
-    <Form name="loginForom" title="Восстановление пароля">
+    <Form name="resetPassword" title="Восстановление пароля" handleSubmit={handleSumbit}>
       <div className="mb-6">
         <Input
           placeholder="Введите новый пароль"
@@ -68,7 +68,7 @@ export default function ResetPasswordForm() {
         />
       </div>
       <div className="mb-20">
-        <Button type="primary" size="medium" onClick={handleSumbit}>
+        <Button type="primary" size="medium">
           Сохранить
         </Button>
       </div>
