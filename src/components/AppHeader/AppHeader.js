@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Logo,
   BurgerIcon,
@@ -46,7 +47,9 @@ export default function AppHeader() {
             }
           </NavLink>
         </nav>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <nav className={styles.profileWrap}>
           <NavLink
             to="/profile"
