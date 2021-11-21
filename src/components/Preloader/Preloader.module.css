@@ -1,6 +1,9 @@
 .preloader {
-  box-sizing: content-box;
-  min-height: 500px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .preloaderIcon {

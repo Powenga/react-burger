@@ -4,8 +4,8 @@ import { ingredientPropTypes } from '../../utils/prop-types';
 import styles from './IngredientsContainer.module.css';
 import { forwardRef } from 'react';
 
-export const IngredientsContainer = forwardRef(
-  ({ ingredients, title, onIngredientClick, ...props }, ref) => {
+const IngredientsContainer = forwardRef(
+  ({ ingredients, title, onIngredientClick }, ref) => {
     return (
       <>
         <h3

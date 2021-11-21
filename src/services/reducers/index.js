@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { user } from './user';
 
 import {
   ADD_INGREDIENT,
@@ -8,16 +9,15 @@ import {
   GET_INGREDIENTS_SUCCESS,
   MOVE_INGREDIENT,
   CLEAR_CONSTRUCTOR,
-  ADD_INGREDIENT_INFO,
   CHECKOUT_REQUEST,
   CHECKOUT_FAILED,
   CHECKOUT_SUCCESS,
-  SET_CURRENT_TAB
+  SET_CURRENT_TAB,
 } from '../actions';
 
 const ingedientsState = {
   ingredients: [],
-  ingredientsRequest: false,
+  ingredientsRequest: true,
   ingredientsRequestFailed: false,
 };
 
@@ -31,10 +31,7 @@ const orderState = {
   orders: [],
   checkoutRequest: false,
   checkoutRequestFailed: false,
-};
-
-const currentIngredientState = {
-  currentIngredient: {},
+  isCheckoutSuccess: false,
 };
 
 export const ingredients = (state = ingedientsState, action) => {
@@ -128,25 +125,13 @@ export const burgerConstructor = (state = constructorState, action) => {
   }
 };
 
-export const currentIngredient = (state = currentIngredientState, action) => {
-  switch (action.type) {
-    case ADD_INGREDIENT_INFO:
-      return { ...action.ingredient };
-
-    case REMOVE_INGREDIENT:
-      return {};
-
-    default:
-      return state;
-  }
-};
-
 export const order = (state = orderState, action) => {
   switch (action.type) {
     case CHECKOUT_REQUEST:
       return {
         ...state,
         checkoutRequest: true,
+        isCheckoutSuccess: false,
       };
 
     case CHECKOUT_FAILED:
@@ -154,6 +139,7 @@ export const order = (state = orderState, action) => {
         ...state,
         checkoutRequest: false,
         checkoutRequestFailed: true,
+        isCheckoutSuccess: false,
       };
 
     case CHECKOUT_SUCCESS:
@@ -166,11 +152,12 @@ export const order = (state = orderState, action) => {
           {
             orderNumber,
             ingredients: action.orderIngredients,
-            name: action.orderName
-          }
+            name: action.orderName,
+          },
         ],
         checkoutRequest: false,
         checkoutRequestFailed: false,
+        isCheckoutSuccess: true,
       };
 
     default:
@@ -191,7 +178,7 @@ export const currentTab = (state = 'buns', action) => {
 export const rootReducer = combineReducers({
   ingredients,
   burgerConstructor,
-  currentIngredient,
   order,
-  currentTab
+  currentTab,
+  user,
 });

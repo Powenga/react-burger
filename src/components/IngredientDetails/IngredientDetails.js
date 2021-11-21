@@ -1,9 +1,28 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { ingredientSelectors } from '../../services/selectors/ingredient-selectors';
 import styles from './IngredientDetails.module.css';
 
 export default function IngredientDetails() {
-  const { name, image_large, calories, carbohydrates, fat, proteins } =
-    useSelector((store) => store.currentIngredient);
+  const { ingredientsRequest } = useSelector(
+    (store) => store.ingredients
+  );
+  const { id } = useParams();
+  const ingredient = useSelector(ingredientSelectors.findById(id));
+  const history = useHistory();
+
+  if (!ingredient && !ingredientsRequest) {
+    history.replace('/404');
+  }
+
+  if (!ingredient) {
+    return null;
+  }
+
+  const { image_large, name, calories, proteins, fat, carbohydrates } =
+    ingredient;
+
   return (
     <>
       <img

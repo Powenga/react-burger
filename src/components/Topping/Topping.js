@@ -6,6 +6,8 @@ import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { MOVE_INGREDIENT } from '../../services/actions';
+import { ingredientPropTypes } from '../../utils/prop-types';
+import PropTypes from 'prop-types';
 import styles from './Topping.module.css';
 
 export default function Topping({ elem, index, handleRemove }) {
@@ -70,3 +72,9 @@ export default function Topping({ elem, index, handleRemove }) {
     </li>
   );
 }
+
+Topping.propTypes = {
+  elem: ingredientPropTypes.isRequired,
+  index: PropTypes.number.isRequired,
+  handleRemove: PropTypes.func.isRequired,
+};

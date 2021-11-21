@@ -9,9 +9,6 @@ export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
 export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 
-export const ADD_INGREDIENT_INFO = 'ADD_INGREDIENT_INFO';
-export const REMOVE_INGREDIENT_INFO = 'REMOVE_INGREDIENT_INFO';
-
 export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
 export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
 export const CHECKOUT_FAILED = 'CHECKOUT_FAILED';
@@ -39,7 +36,7 @@ export function getIngredients() {
   };
 }
 
-export function checkout(orderIngredients) {
+export function checkout(orderIngredients, callback) {
   return function (dispatch) {
     dispatch({
       type: CHECKOUT_REQUEST,
@@ -53,6 +50,7 @@ export function checkout(orderIngredients) {
           orderName: res.name,
           orderIngredients,
         });
+        callback();
         dispatch({type: CLEAR_CONSTRUCTOR});
       })
       .catch(() => {
