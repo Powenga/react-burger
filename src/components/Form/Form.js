@@ -14,5 +14,8 @@ export default function Form({ name, title, children }) {
 Form.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.bool
+  ])).isRequired,
 };
