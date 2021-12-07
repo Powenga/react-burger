@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../components/App/App.module.css';
 
-export default function NotFound() {
+export default function NotFound(): ReactElement {
   return (
     <main className={styles.main}>
       <div
