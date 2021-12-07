@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ESC_KEY, MODAL_ROOT_SELECTOR } from '../../utils/constants';
+import { KEYBOARD_KEYS, MODAL_ROOT_SELECTOR } from '../../utils/constants';
 import styles from './Modal.module.css';
 import PropTypes from 'prop-types';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -11,7 +11,7 @@ const modalRoot = document.querySelector(MODAL_ROOT_SELECTOR);
 export default function Modal({ title, closeModal, children }) {
   useEffect(() => {
     function handleEscPress(event) {
-      if (event.key === ESC_KEY) {
+      if (event.key === KEYBOARD_KEYS.ESCAPE) {
         closeModal();
       }
     }
