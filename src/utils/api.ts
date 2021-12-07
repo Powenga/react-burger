@@ -1,16 +1,18 @@
 import { BASE_URL } from './constants';
-import { TIngredient } from './types';
+import { TIngredient, TFetchHeaders } from './types';
 import { getCookie } from './utils';
 
-type THeaders = {
-  [header: string]: string,
-}
+export class Api {
+  protected baseUrl: string;
+  protected headers: HeadersInit | undefined;
 
-class Api {
-  private baseUrl: string;
-  private headers: HeadersInit | undefined;
-
-  constructor({ baseUrl, headers }: {baseUrl: string, headers: THeaders}) {
+  constructor({
+    baseUrl,
+    headers,
+  }: {
+    baseUrl: string;
+    headers: TFetchHeaders;
+  }) {
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
@@ -51,7 +53,7 @@ class Api {
     }).then(this.onError);
   }
 
-  resetPassword(data: { password: string, token: string }) {
+  resetPassword(data: { password: string; token: string }) {
     return fetch(`${this.baseUrl}/password-reset/reset`, {
       method: 'POST',
       headers: {

@@ -13,3 +13,7 @@ export type TIngredient = {
   readonly __v: number
 };
 
+export type TFetchHeaders = {
+  [header: string]: string,
+}
+
