@@ -1,28 +1,16 @@
-function getRandomIngridients(ingredients, type) {
-  const result = ingredients.reduce((acc, curr) => {
-    if(curr.type === type){
-      acc.push(curr);
-    }
-    return acc;
-  }, [])
-  return result[Math.floor(Math.random() * result.length)];
-}
+type TCokieProps = {
+  [name: string] : string | Date | number | boolean,
+};
 
-export function getRandomBurger(ingredients, types) {
-  return types.map(type => {
-    return getRandomIngridients(ingredients, type);
-  })
-}
-
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props: TCokieProps): void {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
-    const d = new Date();
+    const d: Date = new Date();
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  if (exp instanceof Date && exp) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
@@ -37,7 +25,7 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function setAccessToken(name, value) {
+export function setAccessToken(name: string, value: string): void {
   try {
     localStorage.setItem(name, JSON.stringify(value));
   } catch (error) {
@@ -45,13 +33,13 @@ export function setAccessToken(name, value) {
   }
 }
 
-export function getCookie(name) {
+export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string): void {
+  setCookie(name, '', { expires: -1 });
 }
