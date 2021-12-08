@@ -1,7 +1,11 @@
+import { FC } from 'react';
 import imagePath from '../../images/order-done.svg';
-import PropTypes from 'prop-types';
 
-export default function OrderDetails({ orderNumber }) {
+type TOrderDetails = {
+  orderNumber: string;
+};
+
+const OrderDetails: FC<TOrderDetails> = ({ orderNumber }) => {
   return (
     <>
       <h2
@@ -40,8 +44,6 @@ export default function OrderDetails({ orderNumber }) {
       </p>
     </>
   );
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.string.isRequired,
 };
+
+export default OrderDetails;

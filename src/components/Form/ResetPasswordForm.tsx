@@ -2,13 +2,13 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { resetPassword } from '../../services/actions/user';
 import Form from './Form';
 
-export default function ResetPasswordForm() {
+const ResetPasswordForm: FC = () => {
   const [values, setValues] = useState({
     password: '',
     token: '',
@@ -41,7 +41,11 @@ export default function ResetPasswordForm() {
   );
 
   return (
-    <Form name="resetPassword" title="Восстановление пароля" handleSubmit={handleSumbit}>
+    <Form
+      name="resetPassword"
+      title="Восстановление пароля"
+      handleSubmit={handleSumbit}
+    >
       <div className="mb-6">
         <Input
           placeholder="Введите новый пароль"
@@ -84,4 +88,6 @@ export default function ResetPasswordForm() {
       </p>
     </Form>
   );
-}
+};
+
+export default ResetPasswordForm;

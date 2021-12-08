@@ -2,12 +2,13 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../services/actions/user';
+import { TStyle } from '../../utils/types';
 import Form from './Form';
 
-const buttonContainerStyle = {
+const buttonContainerStyle: TStyle = {
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
@@ -19,9 +20,10 @@ const buttonWrapStyle = {
   flex: '0 0 20%',
 };
 
-export default function ProfileForm() {
+const ProfileForm: FC = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
   const dispatch = useDispatch();
+  // @ts-ignore
   const { user } = useSelector((store) => store.user);
 
   const [values, setValues] = useState({
@@ -133,3 +135,5 @@ export default function ProfileForm() {
     </Form>
   );
 }
+
+export default ProfileForm;

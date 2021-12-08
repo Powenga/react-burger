@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Preloader from '../../components/Preloader/Preloader';
+import { TPath } from '../../utils/types';
+import Preloader from '../Preloader/Preloader';
 
-export default function ProtectedRoute({ children, ...rest }) {
+type TProtectedRoute = {
+  path: TPath;
+};
+
+const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
+  // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
 
   if (!isUserLoaded) {
@@ -12,6 +17,8 @@ export default function ProtectedRoute({ children, ...rest }) {
   }
 
   return (
+
+    // @ts-ignore
     <Route
       {...rest}
       render={({ location }) =>
@@ -23,8 +30,6 @@ export default function ProtectedRoute({ children, ...rest }) {
       }
     />
   );
-}
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element,
 };
+
+export default ProtectedRoute;

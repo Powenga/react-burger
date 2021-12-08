@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_TAB } from '../../services/actions';
 
-export default function IngredientsSelector() {
+const IngredientsSelector: FC = () => {
+  // @ts-ignore
   const currentTab = useSelector((store) => store.currentTab);
   const dispatch = useDispatch();
 
-  function setCurrent(currentTab) {
+  function setCurrent(currentTab: string) {
     dispatch({ type: SET_CURRENT_TAB, currentTab });
   }
 
@@ -37,3 +38,5 @@ export default function IngredientsSelector() {
     </div>
   );
 }
+
+export default IngredientsSelector;

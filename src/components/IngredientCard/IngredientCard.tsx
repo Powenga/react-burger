@@ -2,19 +2,26 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
-import { ingredientPropTypes } from '../../utils/prop-types';
+import { TIngredient } from '../../utils/types';
 import styles from './IngredientCard.module.css';
 
-export default function IngredientCard({ ingredient, onIngredientClick }) {
+type TIngredientCard = {
+  ingredient: TIngredient;
+  onIngredientClick: (ingredient: TIngredient) => void;
+}
+
+const IngredientCard: FC<TIngredientCard> = ({ ingredient, onIngredientClick }) => {
   const { price, name, image, _id } = ingredient;
   const [qty, setQty] = useState(0);
   const constructorIngredients = useSelector((store) => [
+    //@ts-ignore
     store.burgerConstructor.bun,
+    //@ts-ignore
     store.burgerConstructor.bun,
+    //@ts-ignore
     ...store.burgerConstructor.toppings,
   ]);
 
@@ -52,7 +59,4 @@ export default function IngredientCard({ ingredient, onIngredientClick }) {
   );
 }
 
-IngredientCard.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-  onIngredientClick: PropTypes.func.isRequired,
-};
+export default IngredientCard;

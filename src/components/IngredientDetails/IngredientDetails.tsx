@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { ingredientSelectors } from '../../services/selectors/ingredient-selectors';
 import styles from './IngredientDetails.module.css';
 
-export default function IngredientDetails() {
+const IngredientDetails: FC = () => {
   const { ingredientsRequest } = useSelector(
+    // @ts-ignore
     (store) => store.ingredients
   );
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const ingredient = useSelector(ingredientSelectors.findById(id));
   const history = useHistory();
 
@@ -78,3 +79,5 @@ export default function IngredientDetails() {
     </>
   );
 }
+
+export default IngredientDetails;

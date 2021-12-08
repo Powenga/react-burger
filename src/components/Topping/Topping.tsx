@@ -2,16 +2,25 @@ import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { MOVE_INGREDIENT } from '../../services/actions';
-import { ingredientPropTypes } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+import { TIngredient } from '../../utils/types';
 import styles from './Topping.module.css';
 
-export default function Topping({ elem, index, handleRemove }) {
-  const ref = useRef(null);
+type TTopping = {
+  elem: TIngredient;
+  index: number;
+  handleRemove: (elem: TIngredient) => void
+};
+
+type TItem = {
+    index: number;
+}
+
+const Topping: FC<TTopping> = ({ elem, index, handleRemove }) => {
+  const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
   const [{ isDragging }, drag] = useDrag({
     type: 'topping',
@@ -24,7 +33,7 @@ export default function Topping({ elem, index, handleRemove }) {
 
   const [, drop] = useDrop({
     accept: 'topping',
-    hover(item, monitor) {
+    hover(item: TItem, monitor) {
       if (!ref.current) {
         return;
       }
@@ -37,6 +46,9 @@ export default function Topping({ elem, index, handleRemove }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      if(!clientOffset) {
+        return;
+      }
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -65,16 +77,12 @@ export default function Topping({ elem, index, handleRemove }) {
         text={elem.name}
         price={elem.price}
         thumbnail={elem.image_mobile}
-        handleClose={(event) => {
-          handleRemove(event, elem);
+        handleClose={() => {
+          handleRemove(elem);
         }}
       />
     </li>
   );
 }
 
-Topping.propTypes = {
-  elem: ingredientPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
-  handleRemove: PropTypes.func.isRequired,
-};
+export default Topping;

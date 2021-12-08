@@ -1,4 +1,6 @@
 import { Location } from 'history';
+import { Key } from 'react';
+
 export type TIngredient = {
   readonly _id: string;
   readonly name: string;
@@ -12,6 +14,7 @@ export type TIngredient = {
   readonly image_mobile: string;
   readonly image_large: string;
   readonly __v: number;
+  readonly key?: Key | null | undefined;
 };
 
 export type TFetchHeaders = {
@@ -25,14 +28,21 @@ export interface TLocationState {
 }
 
 export type TStyle = {
+  position?: 'absolute';
+  top?: number | string;
+  bottom?: number | string;
+  left?: number | string;
+  right?: number | string;
   textDecoration?: 'none';
   color?: 'inherit';
   display?: 'flex';
-  flexDirection?: 'column';
-  justifyContent?: 'center';
+  flexDirection?: 'column' | 'row';
+  justifyContent?: 'center' | 'space-between';
   alignItems?: 'flex-start';
   minHeight?: number;
   minWidth?: number;
+  width?: number;
+  backgroundColor?: string;
 };
 
 export type TPath =
@@ -40,4 +50,5 @@ export type TPath =
   | '/orders'
   | '/profile'
   | '/profile/orders'
-  | { pathname: 'string' };
+  |  string
+  | { pathname: string };

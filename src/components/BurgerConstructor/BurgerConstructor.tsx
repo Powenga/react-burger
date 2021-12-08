@@ -3,16 +3,21 @@ import {
   CurrencyIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
+import { TIngredient } from '../../utils/types';
 
-export default function BurgerConstructor({ onCheckout }) {
+type TBurgerConstructor = {
+  onCheckout: (data: { ingredients: TIngredient[] }) => void;
+};
+
+const BurgerConstructor: FC<TBurgerConstructor> = ({ onCheckout }) => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const { bun, toppings } = useSelector((store) => store.burgerConstructor);
 
   const [total, setTotal] = useState(0);
@@ -27,24 +32,27 @@ export default function BurgerConstructor({ onCheckout }) {
   useEffect(() => {
     if (bun.price) {
       setTotal(
-        bun.price * 2 + toppings.reduce((acc, curr) => acc + curr.price, 0)
+        bun.price * 2 +
+          toppings.reduce(
+            (acc: number, curr: { price: number }) => acc + curr.price,
+            0
+          )
       );
     }
   }, [bun, toppings]);
 
   function handleCheckout() {
-    const ingredients = toppings.map((elem) => elem._id);
+    const ingredients = toppings.map((elem: TIngredient) => elem._id);
     ingredients.push(bun._id);
     onCheckout({ ingredients });
   }
 
-  function handleRemove(event, ingredient) {
-    event.preventDefault();
+  function handleRemove(ingredient: TIngredient) {
     dispatch({ type: REMOVE_INGREDIENT, ingredient });
   }
 
   return (
-    <section className={styles.constructor}>
+    <section className={styles.constructorBlock}>
       <div ref={dropIngredientsTarget} className={styles.constructorWrap}>
         {bun && Object.keys(bun).length !== 0 && (
           <div className="mr-4">
@@ -60,7 +68,7 @@ export default function BurgerConstructor({ onCheckout }) {
 
         <ul className={styles.insideList}>
           {toppings.length ? (
-            toppings.map((elem, index) => (
+            toppings.map((elem: TIngredient, index: number) => (
               <Topping
                 key={elem.key}
                 elem={elem}
@@ -71,12 +79,9 @@ export default function BurgerConstructor({ onCheckout }) {
           ) : (
             <div className={styles.placeholderWrap}>
               <p className="text text_type_main-small text_color_inactive">
-                {bun && Object.keys(bun).length !== 0 ? (
-                  'Добавьте ингредиенты'
-                ) : (
-                  'Перенесите сюда булку, чтобы начать собирать заказ'
-                )}
-
+                {bun && Object.keys(bun).length !== 0
+                  ? 'Добавьте ингредиенты'
+                  : 'Перенесите сюда булку, чтобы начать собирать заказ'}
               </p>
             </div>
           )}
@@ -93,7 +98,6 @@ export default function BurgerConstructor({ onCheckout }) {
             />
           </div>
         )}
-
       </div>
       <div className={styles.orderWrap}>
         <p className="text text_type_digits-medium mr-10">
@@ -104,14 +108,12 @@ export default function BurgerConstructor({ onCheckout }) {
           type="primary"
           size="medium"
           onClick={handleCheckout}
-          disabled={!bun || Object.keys(bun).length === 0}>
+        >
           Оформить заказ
         </Button>
       </div>
     </section>
   );
-}
-
-BurgerConstructor.propTypes = {
-  onCheckout: PropTypes.func.isRequired,
 };
+
+export default BurgerConstructor;

@@ -41,14 +41,14 @@ const App: FC = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function handleIngredientClick(ingredient: TIngredient) {
+  function handleIngredientClick(ingredient: TIngredient): void {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
       state: { background: { pathname: '/' } },
     });
   }
 
-  function handleCheckout(data: { ingredients: TIngredient[]}) {
+  function handleCheckout(data: { ingredients: TIngredient[]}):void {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {
@@ -64,7 +64,7 @@ const App: FC = () => {
     history.push('/');
   }
 
-  function closeModal() {
+  function closeModal(): void {
     setIsModalOpen(false);
   }
 

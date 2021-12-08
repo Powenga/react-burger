@@ -2,14 +2,15 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../services/actions/user';
+import { register } from '../../services/actions/user';
 import Form from './Form';
 
-export default function LoginForm() {
+const RegisterForm: FC = () => {
   const [values, setValues] = useState({
+    name: '',
     email: '',
     password: '',
   });
@@ -27,11 +28,21 @@ export default function LoginForm() {
 
   const handleSumbit = useCallback((event) => {
     event.preventDefault();
-    dispatch(login(values));
+    dispatch(register(values));
   }, [dispatch, values]);
 
   return (
-    <Form name="loginForom" title="Вход" handleSubmit={handleSumbit}>
+    <Form name="registerForom" title="Регистрация" handleSubmit={handleSumbit}>
+      <div className="mb-6">
+        <Input
+          placeholder="Имя"
+          name="name"
+          value={values.name}
+          onChange={handleChange}
+          type="text"
+          size={'default'}
+        />
+      </div>
       <div className="mb-6">
         <Input
           placeholder="E-mail"
@@ -59,29 +70,21 @@ export default function LoginForm() {
       </div>
       <div className="mb-20">
         <Button type="primary" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
-      <p className="mb-4 text text_type_main-default text_color_inactive">
-        Вы — новый пользователь?{' '}
-        <Link
-          to="/register"
-          className="text text_type_main-default text_color_accent"
-          style={{ textDecoration: 'none' }}
-        >
-          Зарегистрироваться
-        </Link>
-      </p>
       <p className="text text_type_main-default text_color_inactive">
-        Забыли пароль?{' '}
+        Уже зарегистрированы?{' '}
         <Link
-          to="/forgot-password"
+          to="/login"
           className="text text_type_main-default text_color_accent"
           style={{ textDecoration: 'none' }}
         >
-          Восстановить пароль
+          Войти
         </Link>
       </p>
     </Form>
   );
 }
+
+export default RegisterForm;

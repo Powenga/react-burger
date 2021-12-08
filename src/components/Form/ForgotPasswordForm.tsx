@@ -2,13 +2,19 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useCallback, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useState,
+  ChangeEvent,
+  SyntheticEvent,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getResetCode } from '../../services/actions/user';
 import Form from './Form';
 
-export default function ForgotPasswordForm() {
+const ForgotPasswordForm: FC = () => {
   const [values, setValues] = useState({
     email: '',
   });
@@ -16,7 +22,9 @@ export default function ForgotPasswordForm() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleChange = useCallback((event) => {
+  const handleChange = useCallback<
+    (event: ChangeEvent<HTMLInputElement>) => void
+  >((event) => {
     event.preventDefault();
     const { name, value } = event.target;
     setValues((state) => ({
@@ -25,7 +33,7 @@ export default function ForgotPasswordForm() {
     }));
   }, []);
 
-  const handleSumbit = useCallback(
+  const handleSumbit = useCallback<(event: SyntheticEvent) => void>(
     (event) => {
       event.preventDefault();
       dispatch(
@@ -41,7 +49,11 @@ export default function ForgotPasswordForm() {
   );
 
   return (
-    <Form name="forgotPassword" title="Восстановление пароля" handleSubmit={handleSumbit}>
+    <Form
+      name="forgotPassword"
+      title="Восстановление пароля"
+      handleSubmit={handleSumbit}
+    >
       <div className="mb-6">
         <Input
           placeholder="Укажите e-mail"
@@ -69,4 +81,6 @@ export default function ForgotPasswordForm() {
       </p>
     </Form>
   );
-}
+};
+
+export default ForgotPasswordForm;
