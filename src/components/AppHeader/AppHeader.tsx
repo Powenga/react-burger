@@ -32,7 +32,7 @@ export default function AppHeader() {
           <NavLink
             to="/"
             exact={true}
-            className={`${styles.link} pl-5 pr-5 pt-4 pb-4`}
+            linkClass={`${styles.link} pl-5 pr-5 pt-4 pb-4`}
           >
             {(isActive) =>
               returnLinkContent(isActive, BurgerIcon, 'Конструктор')
@@ -40,7 +40,7 @@ export default function AppHeader() {
           </NavLink>
           <NavLink
             to="/orders"
-            className={`${styles.link} ml-2 pl-5 pr-5 pt-4 pb-4`}
+            linkClass={`${styles.link} ml-2 pl-5 pr-5 pt-4 pb-4`}
           >
             {(isActive) =>
               returnLinkContent(isActive, ListIcon, 'Лента заказов')
@@ -53,7 +53,7 @@ export default function AppHeader() {
         <nav className={styles.profileWrap}>
           <NavLink
             to="/profile"
-            className={`${styles.link} pl-5 pr-5 pt-4 pb-4`}
+            linkClass={`${styles.link} pl-5 pr-5 pt-4 pb-4`}
           >
             {(isActive) =>
               returnLinkContent(isActive, ProfileIcon, 'Личный кабинет')

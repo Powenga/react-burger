@@ -22,7 +22,7 @@ export interface TLocationState {
   from?: { pathname: string };
   email?: string;
   background?: Location;
-};
+}
 
 export type TStyle = {
   textDecoration?: 'none';
@@ -34,3 +34,10 @@ export type TStyle = {
   minHeight?: number;
   minWidth?: number;
 };
+
+export type TPath =
+  | '/'
+  | '/orders'
+  | '/profile'
+  | '/profile/orders'
+  | { pathname: 'string' };

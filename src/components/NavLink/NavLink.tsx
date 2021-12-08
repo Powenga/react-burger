@@ -1,13 +1,13 @@
 import React, { FC, ReactElement } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { TStyle } from '../../utils/types';
+import { TPath, TStyle } from '../../utils/types';
 
 type TNavLink = {
-  to: '/profile' | '/profile/orders' | { pathname: 'string' };
+  to: TPath;
   linkClass?: string;
   exact?: boolean;
   children: (isActive: boolean) => ReactElement | ReactElement;
-  navLinkStyle: TStyle;
+  navLinkStyle?: TStyle;
 };
 
 const NavLink: FC<TNavLink> = ({
