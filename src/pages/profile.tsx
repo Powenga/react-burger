@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC, SyntheticEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import ProfileForm from '../components/Form/ProfileForm';
 import NavLink from '../components/NavLink/NavLink';
-import styles from '../components/App/App.module.css';
 import { logout } from '../services/actions/user';
+import styles from '../components/App/App.module.css';
+import { TStyle } from '../utils/types';
 
-const navLinkStyle = {
+const navLinkStyle: TStyle = {
   textDecoration: 'none',
   color: 'inherit',
   display: 'flex',
@@ -17,11 +18,11 @@ const navLinkStyle = {
   minWidth: 320,
 };
 
-export default function Profile() {
+const Profile: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  function handleExit(event) {
+  function handleExit(event: SyntheticEvent) {
     event.preventDefault();
     dispatch(
       logout(() => {
@@ -43,7 +44,7 @@ export default function Profile() {
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <li>
               <NavLink to="/profile" style={navLinkStyle} exact={true}>
-                {(isActive) => (
+                {(isActive: boolean) => (
                   <span
                     className={`text text_type_main-medium ${
                       !isActive && 'text_color_inactive'
@@ -56,7 +57,7 @@ export default function Profile() {
             </li>
             <li>
               <NavLink to="/profile/orders" style={navLinkStyle}>
-                {(isActive) => (
+                {(isActive: boolean) => (
                   <span
                     className={`text text text_type_main-medium ${
                       !isActive && 'text_color_inactive'
@@ -97,3 +98,4 @@ export default function Profile() {
     </main>
   );
 }
+export default Profile;

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import ResetPasswordForm from '../components/Form/ResetPasswordForm';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
+import { TState } from '../utils/types';
 
-export default function ResetPassword() {
+const ResetPassword: FC = () => {
+  // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
-  const location = useLocation();
+  const location = useLocation<TState>();
 
   if (isLoggedIn) {
     return <Redirect to={location.state?.from || '/'} />;
@@ -30,3 +32,5 @@ export default function ResetPassword() {
     </div>
   );
 }
+
+export default ResetPassword;

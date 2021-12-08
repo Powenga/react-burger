@@ -17,3 +17,19 @@ export type TFetchHeaders = {
   [header: string]: string,
 }
 
+export type TState = {
+  from: { pathname: string },
+  email?: string,
+};
+
+export type TStyle = {
+  textDecoration?: 'none',
+  color?: 'inherit',
+  display?: 'flex',
+  flexDirection?: 'column',
+  justifyContent?: 'center',
+  alignItems?: 'flex-start',
+  minHeight?: number,
+  minWidth?: number,
+};
+

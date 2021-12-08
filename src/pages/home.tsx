@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import BurgerIngredients from '../components/BurgerIngredients/BurgerIngredients.js';
 import BurgerConstructor from '../components/BurgerConstructor/BurgerConstructor.js';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
+import { TIngredient } from '../utils/types.js';
 
-export default function Home({ handleIngredientClick, handleCheckout }) {
+type THome = {
+  handleIngredientClick: (ingredient: TIngredient) => void,
+  handleCheckout: (data: { ingredients: TIngredient[] }) => void,
+};
+
+const Home: FC<THome> = ({ handleIngredientClick, handleCheckout }) => {
   const { ingredientsRequest, ingredientsRequestFailed } = useSelector(
+    // @ts-ignore
     (store) => store.ingredients
   );
 
@@ -48,7 +54,4 @@ export default function Home({ handleIngredientClick, handleCheckout }) {
   );
 }
 
-Home.propTypes = {
-  handleIngredientClick: PropTypes.func.isRequired,
-  handleCheckout: PropTypes.func.isRequired,
-};
+export default Home;

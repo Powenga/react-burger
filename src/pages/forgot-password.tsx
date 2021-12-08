@@ -1,13 +1,15 @@
-import React from 'react';
-import { Redirect, useLocation } from 'react-router-dom';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import RegisterForm from '../components/Form/RegisterForm';
+import { Redirect, useLocation } from 'react-router-dom';
+import ForgotPasswordForm from '../components/Form/ForgotPasswordForm';
 import Preloader from '../components/Preloader/Preloader';
+import { TState } from '../utils/types';
 import styles from '../components/App/App.module.css';
 
-export default function Register() {
+const ForgotPassword: FC = () => {
+  // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
-  const location = useLocation();
+  const location = useLocation<TState>();
 
   if (isLoggedIn) {
     return <Redirect to={location.state?.from || '/'} />;
@@ -19,7 +21,9 @@ export default function Register() {
 
   return (
     <main className={styles.main}>
-      <RegisterForm />
+      <ForgotPasswordForm />
     </main>
   );
-}
+};
+
+export default ForgotPassword;

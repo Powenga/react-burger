@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { Route, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { TStyle } from '../../utils/types';
 
-export default function NavLink({ to, linkClass, exact, children, ...rest }){
+type TNavLink = {
+  to: '/profile' | '/profile/orders' | { pathname: 'string' },
+  linkClass?: string,
+  exact?: boolean,
+  children: (isActive: boolean) => ReactElement | ReactElement,
+  style: TStyle,
+}
+
+const NavLink: FC<TNavLink> = ({ to, linkClass, style, exact, children, ...rest }) => {
   const path = typeof to === 'object' ? to.pathname : to;
   return (
     <Route
@@ -20,9 +28,4 @@ export default function NavLink({ to, linkClass, exact, children, ...rest }){
   );
 }
 
-NavLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  linkClass: PropTypes.string,
-  exact: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-};
+export default NavLink;

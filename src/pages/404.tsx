@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../components/App/App.module.css';
 
-export default function NotFound(): ReactElement {
+const NotFound: FC = () => {
   return (
     <main className={styles.main}>
       <div
@@ -33,4 +33,6 @@ export default function NotFound(): ReactElement {
       </div>
     </main>
   );
-}
+};
+
+export default NotFound;
