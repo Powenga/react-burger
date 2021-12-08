@@ -1,0 +1,150 @@
+import { FC, ReactNode, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+  RouteComponentProps,
+} from 'react-router-dom';
+import { checkout, getIngredients } from '../../services/actions/index';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import AppHeader from '../AppHeader/AppHeader';
+import Modal from '../Modal/Modal';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import Preloader from '../Preloader/Preloader';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import OrderDetails from '../OrderDetails/OrderDetails';
+import { getUser } from '../../services/actions/user';
+import {
+  ForgotPassword,
+  Home,
+  Login,
+  Register,
+  NotFound,
+  ResetPassword,
+  Ingredient,
+  Profile,
+} from '../../pages';
+import { TIngredient, TLocationState } from '../../utils/types.js';
+
+const App: FC = () => {
+  // @ts-ignore
+  const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
+  // @ts-ignore
+  const { isLoggedIn, userRequest } = useSelector((store) => store.user);
+  const location = useLocation<TLocationState>();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function handleIngredientClick(ingredient: TIngredient): void {
+    history.push({
+      pathname: `/ingredients/${ingredient._id}`,
+      state: { background: { pathname: '/' } },
+    });
+  }
+
+  function handleCheckout(data: { ingredients: TIngredient[] }): void {
+    if (!isLoggedIn) {
+      history.push({ pathname: '/login', state: { from: location } });
+    } else {
+      dispatch(
+        checkout(data, () => {
+          setIsModalOpen(true);
+        })
+      );
+    }
+  }
+
+  function closeIngredientModal() {
+    history.push('/');
+  }
+
+  function closeModal(): void {
+    setIsModalOpen(false);
+  }
+
+  return (
+    <>
+      <AppHeader />
+      <Switch location={location.state?.background ?? location}>
+        <Route path="/" exact>
+          <Home
+            handleIngredientClick={handleIngredientClick}
+            handleCheckout={handleCheckout}
+          />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/register" exact>
+          <Register />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPassword />
+        </Route>
+        <Route path="/reset-password" exact>
+          <ResetPassword />
+        </Route>
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/ingredients/:id" exact>
+          <Ingredient />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+
+      <div style={{ overflow: 'hidden' }}>
+        <Route
+          path="/ingredients/:id"
+          exact
+          render={(
+            props: RouteComponentProps<
+              {
+                id: string;
+              },
+              any,
+              any
+            >
+          ): ReactNode => {
+            if (props.location?.state?.background)
+              return (
+                <Modal
+                  closeModal={closeIngredientModal}
+                  title="Детали ингредиента"
+                >
+                  <IngredientDetails />
+                </Modal>
+              );
+          }}
+        />
+        {isModalOpen && (
+          <Modal closeModal={closeModal}>
+            <OrderDetails orderNumber={orderNumber} />
+          </Modal>
+        )}
+        {(checkoutRequest || userRequest) && (
+          <>
+            <ModalOverlay closeModal={() => {}} />
+            <Preloader />
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default App;
