@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { TPath } from '../../utils/types';
 import Preloader from '../Preloader/Preloader';
 
 type TProtectedRoute = {
-  path: TPath;
+  path: string | readonly string[] | undefined;
 };
 
 const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
@@ -18,7 +17,6 @@ const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
 
   return (
 
-    // @ts-ignore
     <Route
       {...rest}
       render={({ location }) =>

@@ -21,7 +21,7 @@ export type TFetchHeaders = {
   [header: string]: string;
 };
 
-export interface TLocationState {
+export type TLocationState = {
   from?: { pathname: string };
   email?: string;
   background?: Location;
@@ -52,3 +52,4 @@ export type TPath =
   | '/profile/orders'
   |  string
   | { pathname: string };
+

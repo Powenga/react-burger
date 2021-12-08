@@ -1,6 +1,12 @@
-import { FC, useEffect, useState,  } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory,
+  RouteComponentProps,
+} from 'react-router-dom';
 import { checkout, getIngredients } from '../../services/actions/index';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
@@ -48,7 +54,7 @@ const App: FC = () => {
     });
   }
 
-  function handleCheckout(data: { ingredients: TIngredient[]}):void {
+  function handleCheckout(data: { ingredients: TIngredient[] }): void {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {
@@ -105,20 +111,25 @@ const App: FC = () => {
         <Route
           path="/ingredients/:id"
           exact
-          render={
-             ({ location }) => {
-               //@ts-ignore
-              if (location.state?.background)
-                return (
-                  <Modal
-                    closeModal={closeIngredientModal}
-                    title="Детали ингредиента"
-                  >
-                    <IngredientDetails />
-                  </Modal>
-                );
-            }
-        }
+          render={(
+            props: RouteComponentProps<
+              {
+                id: string;
+              },
+              any,
+              any
+            >
+          ): ReactNode => {
+            if (props.location?.state?.background)
+              return (
+                <Modal
+                  closeModal={closeIngredientModal}
+                  title="Детали ингредиента"
+                >
+                  <IngredientDetails />
+                </Modal>
+              );
+          }}
         />
         {isModalOpen && (
           <Modal closeModal={closeModal}>
@@ -134,6 +145,6 @@ const App: FC = () => {
       </div>
     </>
   );
-}
+};
 
 export default App;
