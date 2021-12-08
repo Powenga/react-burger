@@ -27,6 +27,6 @@ const Ingredient: FC = () => {
       </div>
     </main>
   );
-}
+};
 
 export default Ingredient;

@@ -4,12 +4,12 @@ import { Redirect, useLocation } from 'react-router-dom';
 import ResetPasswordForm from '../components/Form/ResetPasswordForm';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
-import { TState } from '../utils/types';
+import { TLocationState } from '../utils/types';
 
 const ResetPassword: FC = () => {
   // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
-  const location = useLocation<TState>();
+  const location = useLocation<TLocationState>();
 
   if (isLoggedIn) {
     return <Redirect to={location.state?.from || '/'} />;

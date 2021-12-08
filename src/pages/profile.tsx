@@ -43,7 +43,7 @@ const Profile: FC = () => {
         <nav className="mb-20">
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             <li>
-              <NavLink to="/profile" style={navLinkStyle} exact={true}>
+              <NavLink to="/profile" navLinkStyle={navLinkStyle} exact={true}>
                 {(isActive: boolean) => (
                   <span
                     className={`text text_type_main-medium ${
@@ -56,7 +56,7 @@ const Profile: FC = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/profile/orders" style={navLinkStyle}>
+              <NavLink to="/profile/orders" navLinkStyle={navLinkStyle}>
                 {(isActive: boolean) => (
                   <span
                     className={`text text text_type_main-medium ${
@@ -97,5 +97,5 @@ const Profile: FC = () => {
       </Switch>
     </main>
   );
-}
+};
 export default Profile;

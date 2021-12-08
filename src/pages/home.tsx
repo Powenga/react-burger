@@ -9,8 +9,8 @@ import styles from '../components/App/App.module.css';
 import { TIngredient } from '../utils/types.js';
 
 type THome = {
-  handleIngredientClick: (ingredient: TIngredient) => void,
-  handleCheckout: (data: { ingredients: TIngredient[] }) => void,
+  handleIngredientClick: (ingredient: TIngredient) => void;
+  handleCheckout: (data: { ingredients: TIngredient[] }) => void;
 };
 
 const Home: FC<THome> = ({ handleIngredientClick, handleCheckout }) => {
@@ -52,6 +52,6 @@ const Home: FC<THome> = ({ handleIngredientClick, handleCheckout }) => {
       </main>
     </>
   );
-}
+};
 
 export default Home;

@@ -3,14 +3,21 @@ import { Route, Link } from 'react-router-dom';
 import { TStyle } from '../../utils/types';
 
 type TNavLink = {
-  to: '/profile' | '/profile/orders' | { pathname: 'string' },
-  linkClass?: string,
-  exact?: boolean,
-  children: (isActive: boolean) => ReactElement | ReactElement,
-  style: TStyle,
-}
+  to: '/profile' | '/profile/orders' | { pathname: 'string' };
+  linkClass?: string;
+  exact?: boolean;
+  children: (isActive: boolean) => ReactElement | ReactElement;
+  navLinkStyle: TStyle;
+};
 
-const NavLink: FC<TNavLink> = ({ to, linkClass, style, exact, children, ...rest }) => {
+const NavLink: FC<TNavLink> = ({
+  to,
+  navLinkStyle,
+  linkClass,
+  exact,
+  children,
+  ...rest
+}) => {
   const path = typeof to === 'object' ? to.pathname : to;
   return (
     <Route
@@ -19,13 +26,13 @@ const NavLink: FC<TNavLink> = ({ to, linkClass, style, exact, children, ...rest 
       children={({ match }) => {
         const isActive = !!match;
         return (
-          <Link to={to} className={linkClass} {...rest}>
+          <Link to={to} className={linkClass} style={navLinkStyle} {...rest}>
             {typeof children === 'function' ? children(isActive) : children}
           </Link>
         );
       }}
     ></Route>
   );
-}
+};
 
 export default NavLink;

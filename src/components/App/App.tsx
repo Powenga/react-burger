@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState,  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { checkout, getIngredients } from '../../services/actions/index.js';
@@ -19,12 +19,15 @@ import {
   ResetPassword,
   Ingredient,
   Profile,
-} from '../../pages/';
+} from '../../pages';
+import { TIngredient, TLocationState } from '../../utils/types.js';
 
-export default function App() {
+const App: FC = () => {
+  // @ts-ignore
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
+  // @ts-ignore
   const { isLoggedIn, userRequest } = useSelector((store) => store.user);
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -38,14 +41,14 @@ export default function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function handleIngredientClick(ingredient) {
+  function handleIngredientClick(ingredient: TIngredient) {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
       state: { background: { pathname: '/' } },
     });
   }
 
-  function handleCheckout(data) {
+  function handleCheckout(data: { ingredients: TIngredient[]}) {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {
@@ -102,17 +105,20 @@ export default function App() {
         <Route
           path="/ingredients/:id"
           exact
-          render={({ location }) => {
-            if (location.state?.background)
-              return (
-                <Modal
-                  closeModal={closeIngredientModal}
-                  title="Детали ингредиента"
-                >
-                  <IngredientDetails />
-                </Modal>
-              );
-          }}
+          render={
+             ({ location }) => {
+               //@ts-ignore
+              if (location.state?.background)
+                return (
+                  <Modal
+                    closeModal={closeIngredientModal}
+                    title="Детали ингредиента"
+                  >
+                    <IngredientDetails />
+                  </Modal>
+                );
+            }
+        }
         />
         {isModalOpen && (
           <Modal closeModal={closeModal}>
@@ -129,3 +135,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;
