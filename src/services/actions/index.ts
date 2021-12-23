@@ -40,7 +40,7 @@ export interface IMoveIngredient {
 export interface IClearConstructor {
   readonly type: typeof CLEAR_CONSTRUCTOR;
 }
-export interface ISetCurrentTab {
+export type TSetCurrentTab = {
   readonly type: typeof SET_CURRENT_TAB;
   currentTab: string;
 }

@@ -1,5 +1,3 @@
-import auth from '../../utils/auth';
-import api from '../../utils/api';
 import {
   ACCESS_COOKIE_EXPIRES,
   GET_USER_REQUEST_FAILED,
@@ -12,8 +10,10 @@ import {
   GET_RESET_CODE_SUCCESS,
   RESET_PASSWORD_SUCCESS,
 } from '../../utils/constants';
+import auth from '../../utils/auth';
+import api from '../../utils/api';
 import { setCookie, deleteCookie } from '../../utils/utils';
-import { TUser } from '../../utils/types';
+import { TUser, AppDispatch, TToken, AppThunk } from '../../utils/types';
 
 export interface IGetUserRequestFailed {
   readonly type: typeof GET_USER_REQUEST_FAILED;
@@ -52,7 +52,7 @@ export type TUserActions =
   | IGetResetCodeSuccess
   | IResetPassworSuccess;
 
-function saveCokies(accessToken, refreshToken) {
+function saveCokies(accessToken: TToken, refreshToken: TToken) {
   try {
     setCookie('accessToken', accessToken.split('Bearer ')[1], {
       expires: ACCESS_COOKIE_EXPIRES,
@@ -65,8 +65,8 @@ function saveCokies(accessToken, refreshToken) {
   }
 }
 
-export function login(data) {
-  return function (dispatch) {
+export function login(data: { email: string; password: string }) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REQUEST,
     });
@@ -88,8 +88,12 @@ export function login(data) {
   };
 }
 
-export function register(data) {
-  return function (dispatch) {
+export const register: AppThunk = (data: {
+  email: string;
+  name: string;
+  password: string;
+}) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REQUEST,
     });
@@ -109,10 +113,10 @@ export function register(data) {
         });
       });
   };
-}
+};
 
-export function getUser() {
-  return function (dispatch) {
+export const getUser: AppThunk = () => {
+  return function (dispatch: AppDispatch | AppThunk) {
     return auth
       .getUser()
       .then((res) => {
@@ -142,10 +146,14 @@ export function getUser() {
         });
       });
   };
-}
+};
 
-export function updateUser(data) {
-  return function (dispatch) {
+export const updateUser: AppThunk = (data: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
+  return function (dispatch: AppDispatch | AppThunk) {
     dispatch({
       type: USER_REQUEST,
     });
@@ -178,10 +186,10 @@ export function updateUser(data) {
         });
       });
   };
-}
+};
 
-export function logout(callback) {
-  return function (dispatch) {
+export function logout(callback: () => void) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REQUEST,
     });
@@ -207,8 +215,8 @@ export function logout(callback) {
   };
 }
 
-export function getResetCode(data, callback) {
-  return function (dispatch) {
+export function getResetCode(data: { email: string }, callback: () => void) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REQUEST,
     });
@@ -226,8 +234,11 @@ export function getResetCode(data, callback) {
   };
 }
 
-export function resetPassword(data, callback) {
-  return function (dispatch) {
+export function resetPassword(
+  data: { password: string; token: string },
+  callback: () => void
+) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: USER_REQUEST,
     });

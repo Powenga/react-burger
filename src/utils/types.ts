@@ -1,5 +1,14 @@
 import { Location } from 'history';
 import { Key } from 'react';
+import { compose, Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import {
+  TSetCurrentTab,
+  TConstructorActions,
+  TGetIngredientsActions,
+} from '../services/actions';
+import { TUserActions } from '../services/actions/user';
+import store from '../services/store';
 
 export type TIngredient = {
   readonly _id: string;
@@ -54,6 +63,36 @@ export type TPath =
   | { pathname: string };
 
 export type TUser = {
-  email: String;
-  name: String;
+  email: string;
+  name: string;
 };
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+export type TRootState = typeof store.getState;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type TAppActions =
+  | TUserActions
+  | TGetIngredientsActions
+  | TConstructorActions
+  | TSetCurrentTab;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, TRootState, TAppActions>
+>;
+
+export type TToken = string;
+
+export type TAuthResponse = {
+  accessToken: TToken;
+  refreshToken: TToken;
+  user: TUser;
+};
+
+export type TResponse = TAuthResponse;

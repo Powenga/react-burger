@@ -1,5 +1,5 @@
 import { BASE_URL } from './constants';
-import { TIngredient, TFetchHeaders } from './types';
+import { TIngredient, TFetchHeaders, TResponse } from './types';
 import { getCookie } from './utils';
 
 export class Api {
@@ -18,7 +18,7 @@ export class Api {
   }
 
   protected onError(res: Response) {
-    return res.json().then((data: Response) => {
+    return res.json().then((data: TResponse) => {
       if (res.ok) {
         return Promise.resolve(data);
       }

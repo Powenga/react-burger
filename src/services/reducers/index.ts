@@ -19,7 +19,7 @@ import {
   TGetIngredientsActions,
   TConstructorActions,
   TCheckoutActions,
-  ISetCurrentTab,
+  TSetCurrentTab,
 } from '../actions';
 import { TIngredient } from '../../utils/types';
 
@@ -186,7 +186,7 @@ export const order = (state = orderState, action: TCheckoutActions) => {
   }
 };
 
-export const currentTab = (state = 'buns', action: ISetCurrentTab) => {
+export const currentTab = (state = 'buns', action: TSetCurrentTab) => {
   switch (action.type) {
     case SET_CURRENT_TAB:
       return action.currentTab;
