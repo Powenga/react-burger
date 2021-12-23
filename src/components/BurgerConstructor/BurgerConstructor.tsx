@@ -6,7 +6,7 @@ import {
 import { FC, useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../utils/constants';
 import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
 import { TIngredient } from '../../utils/types';

@@ -95,4 +95,15 @@ export type TAuthResponse = {
   user: TUser;
 };
 
-export type TResponse = TAuthResponse;
+export type TIngredientsResponse = {
+  data: TIngredient[];
+};
+
+export type TOrderResponse = {
+  name: string;
+  order: {
+    number: number;
+  };
+};
+
+export type TResponse = TIngredientsResponse & TAuthResponse & TOrderResponse;

@@ -4,7 +4,7 @@ import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useRef } from 'react';
-import { SET_CURRENT_TAB } from '../../services/actions';
+import { SET_CURRENT_TAB } from '../../utils/constants';
 import { TIngredient } from '../../utils/types';
 
 type TBurgerIngredients = {

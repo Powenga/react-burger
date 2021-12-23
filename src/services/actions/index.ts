@@ -12,7 +12,7 @@ import {
   CHECKOUT_FAILED,
   SET_CURRENT_TAB,
 } from '../../utils/constants';
-import { TIngredient } from '../../utils/types';
+import { AppDispatch, AppThunk, TIngredient } from '../../utils/types';
 
 export interface IGetIngredientsRequest {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -49,7 +49,7 @@ export interface ICheckoutRequest {
 }
 export interface ICheckoutSuccess {
   readonly type: typeof CHECKOUT_SUCCESS;
-  readonly orderNumber: number;
+  readonly orderNumber: string;
   readonly orderName: string;
   readonly orderIngredients: TIngredient[];
 }
@@ -73,8 +73,8 @@ export type TCheckoutActions =
   | ICheckoutSuccess
   | ICheckoutFailed;
 
-export function getIngredients() {
-  return function (dispatch) {
+export const getIngredients: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
@@ -94,8 +94,8 @@ export function getIngredients() {
   };
 }
 
-export function checkout(orderIngredients, callback) {
-  return function (dispatch) {
+export const checkout: AppThunk = (orderIngredients, callback) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: CHECKOUT_REQUEST,
     });
