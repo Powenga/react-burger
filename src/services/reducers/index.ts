@@ -30,7 +30,7 @@ type TIngredientState = {
 };
 
 type TConstructorState = {
-  bun: TIngredient | {};
+  bun: TIngredient;
   toppings: Array<TIngredient & { key?: number }>;
 };
 
@@ -41,7 +41,7 @@ const ingedientsState: TIngredientState = {
 };
 
 const constructorState: TConstructorState = {
-  bun: {},
+  bun: {} as TIngredient,
   toppings: [],
 };
 
@@ -137,7 +137,7 @@ export const burgerConstructor = (
     case CLEAR_CONSTRUCTOR:
       return {
         ...state,
-        bun: {},
+        bun: {} as TIngredient,
         toppings: [],
       };
 

@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import {
   Switch,
   Route,
@@ -29,9 +29,7 @@ import {
 import { TIngredient, TLocationState } from '../../utils/types.js';
 
 const App: FC = () => {
-  // @ts-ignore
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
-  // @ts-ignore
   const { isLoggedIn, userRequest } = useSelector((store) => store.user);
   const location = useLocation<TLocationState>();
   const history = useHistory();
@@ -54,7 +52,7 @@ const App: FC = () => {
     });
   }
 
-  function handleCheckout(data: { ingredients: TIngredient[] }): void {
+  function handleCheckout(data: { ingredients: string[] }): void {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {

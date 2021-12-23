@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { Route, Redirect } from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
 
@@ -8,7 +8,6 @@ type TProtectedRoute = {
 };
 
 const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
-  // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
 
   if (!isUserLoaded) {
