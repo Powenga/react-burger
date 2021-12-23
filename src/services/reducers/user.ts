@@ -7,9 +7,20 @@ import {
   USER_LOGOUT_SUCCESS,
   GET_RESET_CODE_SUCCESS,
   RESET_PASSWORD_SUCCESS,
-} from '../actions/user';
+} from '../../utils/constants';
 
-const userState = {
+import { TUserActions } from '../actions/user';
+import { TUser } from '../../utils/types';
+
+type TUserState = {
+  user: TUser;
+  isUserLoaded: Boolean;
+  isLoggedIn: Boolean;
+  userRequest: Boolean;
+  requestFaided: Boolean;
+};
+
+const userState: TUserState = {
   user: { email: '', name: '' },
   isUserLoaded: false,
   isLoggedIn: false,
@@ -17,7 +28,7 @@ const userState = {
   requestFaided: false,
 };
 
-export const user = (state = userState, action) => {
+export const user = (state = userState, action: TUserActions): TUserState => {
   switch (action.type) {
     case GET_USER_REQUEST_FAILED:
       return {
@@ -32,7 +43,6 @@ export const user = (state = userState, action) => {
     case GET_USER_REQUEST_SUCCESS:
       return {
         ...state,
-
         requestFaided: false,
         user: { ...action.user },
         isUserLoaded: true,

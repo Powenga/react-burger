@@ -20,10 +20,10 @@ export interface IGetUserRequestFailed {
 }
 export interface IGetUserRequestSuccess {
   readonly type: typeof GET_USER_REQUEST_SUCCESS;
+  readonly user: TUser;
 }
 export interface IUserRequest {
   readonly type: typeof USER_REQUEST;
-  readonly user: TUser;
 }
 export interface IUserRequestFailed {
   readonly type: typeof USER_REQUEST_FAILED;
@@ -41,6 +41,16 @@ export interface IGetResetCodeSuccess {
 export interface IResetPassworSuccess {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
 }
+
+export type TUserActions =
+  | IGetUserRequestFailed
+  | IGetUserRequestSuccess
+  | IUserRequest
+  | IUserRequestFailed
+  | IUserRequestSuccess
+  | IUserLogoutSuccess
+  | IGetResetCodeSuccess
+  | IResetPassworSuccess;
 
 function saveCokies(accessToken, refreshToken) {
   try {
