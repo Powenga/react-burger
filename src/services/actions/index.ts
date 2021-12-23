@@ -1,19 +1,28 @@
 import api from '../../utils/api';
+import {
+  GET_INGREDIENTS_FAILED,
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+} from '../../utils/constants';
+import { TIngredient } from '../../utils/types';
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export interface IGetIngredientsRequest {
+  readonly type: typeof GET_INGREDIENTS_REQUEST;
+}
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
-export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
-export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
+export interface IGetIngredientsSuccess {
+  readonly type: typeof GET_INGREDIENTS_SUCCESS;
+  readonly ingredients: TIngredient[];
+}
 
-export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST';
-export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
-export const CHECKOUT_FAILED = 'CHECKOUT_FAILED';
+export interface IGetIngredientsFailed {
+  readonly type: typeof GET_INGREDIENTS_FAILED;
+}
 
-export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
+export type TGetIngredientsActions =
+  | IGetIngredientsRequest
+  | IGetIngredientsSuccess
+  | IGetIngredientsFailed;
 
 export function getIngredients() {
   return function (dispatch) {
@@ -51,7 +60,7 @@ export function checkout(orderIngredients, callback) {
           orderIngredients,
         });
         callback();
-        dispatch({type: CLEAR_CONSTRUCTOR});
+        dispatch({ type: CLEAR_CONSTRUCTOR });
       })
       .catch(() => {
         dispatch({

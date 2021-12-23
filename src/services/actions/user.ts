@@ -2,21 +2,45 @@ import auth from '../../utils/auth';
 import api from '../../utils/api';
 import {
   ACCESS_COOKIE_EXPIRES,
+  GET_USER_REQUEST_FAILED,
+  GET_USER_REQUEST_SUCCESS,
   REFRESH_COOKIE_EXPIRES,
+  USER_REQUEST,
+  USER_REQUEST_FAILED,
+  USER_REQUEST_SUCCESS,
+  USER_LOGOUT_SUCCESS,
+  GET_RESET_CODE_SUCCESS,
+  RESET_PASSWORD_SUCCESS,
 } from '../../utils/constants';
 import { setCookie, deleteCookie } from '../../utils/utils';
+import { TUser } from '../../utils/types';
 
-export const GET_USER_REQUEST_FAILED = 'GET_USER_REQUEST_FAILED';
-export const GET_USER_REQUEST_SUCCESS = 'GET_USER_REQUEST_SUCCESS';
-
-export const USER_REQUEST = 'USER_REQUEST';
-export const USER_REQUEST_FAILED = 'USER_REQUEST_FAILED';
-export const USER_REQUEST_SUCCESS = 'USER_REQUEST_SUCCESS';
-
-export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
-
-export const GET_RESET_CODE_SUCCESS = 'GET_RESET_CODE_SUCCESS';
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export interface IGetUserRequestFailed {
+  readonly type: typeof GET_USER_REQUEST_FAILED;
+}
+export interface IGetUserRequestSuccess {
+  readonly type: typeof GET_USER_REQUEST_SUCCESS;
+}
+export interface IUserRequest {
+  readonly type: typeof USER_REQUEST;
+  readonly user: TUser;
+}
+export interface IUserRequestFailed {
+  readonly type: typeof USER_REQUEST_FAILED;
+}
+export interface IUserRequestSuccess {
+  readonly type: typeof USER_REQUEST_SUCCESS;
+  readonly user: TUser;
+}
+export interface IUserLogoutSuccess {
+  readonly type: typeof USER_LOGOUT_SUCCESS;
+}
+export interface IGetResetCodeSuccess {
+  readonly type: typeof GET_RESET_CODE_SUCCESS;
+}
+export interface IResetPassworSuccess {
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
 
 function saveCokies(accessToken, refreshToken) {
   try {

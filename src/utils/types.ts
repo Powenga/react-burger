@@ -25,7 +25,7 @@ export type TLocationState = {
   from?: { pathname: string };
   email?: string;
   background?: Location;
-}
+};
 
 export type TStyle = {
   position?: 'absolute';
@@ -50,6 +50,10 @@ export type TPath =
   | '/orders'
   | '/profile'
   | '/profile/orders'
-  |  string
+  | string
   | { pathname: string };
 
+export type TUser = {
+  email: String;
+  name: String;
+};
