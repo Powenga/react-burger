@@ -84,6 +84,9 @@ const App: FC = () => {
             handleCheckout={handleCheckout}
           />
         </Route>
+        <Route path="/feed" >
+
+        </Route>
         <Route path="/login" exact>
           <Login />
         </Route>
