@@ -1,4 +1,5 @@
 import api from '../../utils/api';
+import auth from '../../utils/auth';
 import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
@@ -13,6 +14,7 @@ import {
   SET_CURRENT_TAB,
 } from '../../utils/constants';
 import { AppDispatch, AppThunk, TIngredient } from '../../utils/types';
+import { saveCookies } from '../../utils/utils';
 
 export interface IGetIngredientsRequest {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -95,7 +97,7 @@ export const getIngredients: AppThunk = () => {
 }
 
 export const checkout: AppThunk = (orderIngredients, callback) => {
-  return function (dispatch: AppDispatch) {
+  return function (dispatch: AppDispatch | AppThunk) {
     dispatch({
       type: CHECKOUT_REQUEST,
     });
@@ -110,6 +112,20 @@ export const checkout: AppThunk = (orderIngredients, callback) => {
         });
         callback();
         dispatch({ type: CLEAR_CONSTRUCTOR });
+      })
+      .catch((error) => {
+        if (error.message === 'jwt malformed') {
+          return auth
+            .refreshToken()
+            .then(({ accessToken, refreshToken }) => {
+              saveCookies(accessToken, refreshToken);
+              dispatch(checkout(orderIngredients, callback));
+            })
+            .catch((error) => {
+              return Promise.reject(error);
+            });
+        }
+        return Promise.reject(error);
       })
       .catch(() => {
         dispatch({

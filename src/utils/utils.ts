@@ -1,3 +1,10 @@
+import {
+  ACCESS_COOKIE_EXPIRES,
+  REFRESH_COOKIE_EXPIRES,
+} from './constants';
+import { TToken } from './types';
+
+
 type TCokieProps = {
   [name: string]: string | Date | number | boolean;
 };
@@ -51,6 +58,19 @@ export function getCookie(name: string): string | undefined {
 
 export function deleteCookie(name: string): void {
   setCookie(name, '', { expires: -1 });
+}
+
+export function saveCookies(accessToken: TToken, refreshToken: TToken) {
+  try {
+    setCookie('accessToken', accessToken.split('Bearer ')[1], {
+      expires: ACCESS_COOKIE_EXPIRES,
+    });
+    setCookie('refreshToken', refreshToken, {
+      expires: REFRESH_COOKIE_EXPIRES,
+    });
+  } catch (error) {
+    throw new Error();
+  }
 }
 
 export function formatOrderDate(orderCreateDate: string) {

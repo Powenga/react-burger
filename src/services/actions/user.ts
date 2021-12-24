@@ -1,8 +1,6 @@
 import {
-  ACCESS_COOKIE_EXPIRES,
   GET_USER_REQUEST_FAILED,
   GET_USER_REQUEST_SUCCESS,
-  REFRESH_COOKIE_EXPIRES,
   USER_REQUEST,
   USER_REQUEST_FAILED,
   USER_REQUEST_SUCCESS,
@@ -12,8 +10,8 @@ import {
 } from '../../utils/constants';
 import auth from '../../utils/auth';
 import api from '../../utils/api';
-import { setCookie, deleteCookie } from '../../utils/utils';
-import { TUser, AppDispatch, TToken, AppThunk } from '../../utils/types';
+import { saveCookies, deleteCookie } from '../../utils/utils';
+import { TUser, AppDispatch, AppThunk } from '../../utils/types';
 
 export interface IGetUserRequestFailed {
   readonly type: typeof GET_USER_REQUEST_FAILED;
@@ -52,19 +50,6 @@ export type TUserActions =
   | IGetResetCodeSuccess
   | IResetPassworSuccess;
 
-function saveCokies(accessToken: TToken, refreshToken: TToken) {
-  try {
-    setCookie('accessToken', accessToken.split('Bearer ')[1], {
-      expires: ACCESS_COOKIE_EXPIRES,
-    });
-    setCookie('refreshToken', refreshToken, {
-      expires: REFRESH_COOKIE_EXPIRES,
-    });
-  } catch (error) {
-    throw new Error();
-  }
-}
-
 export function login(data: { email: string; password: string }) {
   return function (dispatch: AppDispatch) {
     dispatch({
@@ -74,7 +59,7 @@ export function login(data: { email: string; password: string }) {
       .login(data)
       .then((res) => {
         const { accessToken, refreshToken, user } = res;
-        saveCokies(accessToken, refreshToken);
+        saveCookies(accessToken, refreshToken);
         dispatch({
           type: USER_REQUEST_SUCCESS,
           user,
@@ -101,7 +86,7 @@ export const register: AppThunk = (data: {
       .register(data)
       .then((res) => {
         const { accessToken, refreshToken, user } = res;
-        saveCokies(accessToken, refreshToken);
+        saveCookies(accessToken, refreshToken);
         dispatch({
           type: USER_REQUEST_SUCCESS,
           user,
@@ -131,7 +116,7 @@ export const getUser: AppThunk = () => {
           return auth
             .refreshToken()
             .then(({ accessToken, refreshToken }) => {
-              saveCokies(accessToken, refreshToken);
+              saveCookies(accessToken, refreshToken);
               dispatch(getUser());
             })
             .catch((error) => {
@@ -171,7 +156,7 @@ export const updateUser: AppThunk = (data: {
           return auth
             .refreshToken()
             .then(({ accessToken, refreshToken }) => {
-              saveCokies(accessToken, refreshToken);
+              saveCookies(accessToken, refreshToken);
               dispatch(updateUser(data));
             })
             .catch((error) => {
