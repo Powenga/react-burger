@@ -41,6 +41,7 @@ export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' +
+      /* eslint-disable */
         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
         '=([^;]*)'
     )

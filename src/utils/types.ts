@@ -8,6 +8,7 @@ import {
   TGetIngredientsActions,
 } from '../services/actions';
 import { TUserActions } from '../services/actions/user';
+import { TWSActions } from '../services/actions/ws';
 import store from '../services/store';
 
 export type TIngredient = {
@@ -81,7 +82,8 @@ export type TAppActions =
   | TUserActions
   | TGetIngredientsActions
   | TConstructorActions
-  | TSetCurrentTab;
+  | TSetCurrentTab
+  | TWSActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, TRootState, TAppActions>
@@ -107,3 +109,20 @@ export type TOrderResponse = {
 };
 
 export type TResponse = TIngredientsResponse & TAuthResponse & TOrderResponse;
+
+export type TMessage = {
+  success: boolean;
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+};
+
+export type TOrder = {
+  _id: 'string';
+  ingredients: string[];
+  status: 'done' | 'created' | 'pending';
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};

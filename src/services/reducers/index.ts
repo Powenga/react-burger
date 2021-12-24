@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { user } from './user';
-
+import { ws } from './ws';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
@@ -202,4 +202,5 @@ export const rootReducer = combineReducers({
   order,
   currentTab,
   user,
+  ws,
 });
