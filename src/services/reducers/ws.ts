@@ -46,7 +46,7 @@ export const ws = (state = initialState, action: TWSActions) => {
       return {
         ...state,
         error: undefined,
-        messages: action.payload,
+        message: action.payload,
       };
     default:
       return state;

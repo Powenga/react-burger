@@ -7,6 +7,7 @@ import {
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
 } from '../../utils/constants';
+import { TMessage } from '../../utils/types';
 
 export interface wsConnectionStartAll {
   readonly type: typeof WS_CONNECTION_START_ALL;
@@ -28,7 +29,7 @@ export interface wsConnectionClosed {
 }
 export interface wsGetMessage {
   readonly type: typeof WS_GET_MESSAGE;
-  payload: string;
+  payload: TMessage;
 }
 export interface wsSendMessage {
   readonly type: typeof WS_SEND_MESSAGE;

@@ -9,7 +9,7 @@ import {
   WS_SEND_MESSAGE,
 } from '../../utils/constants';
 
-import type { TAppActions, TRootState, AppDispatch } from '../../utils/types';
+import type { TAppActions, TRootState, AppDispatch, TMessage } from '../../utils/types';
 import { getCookie } from '../../utils/utils';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {
@@ -17,7 +17,6 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: TAppActions) => {
-      console.log('action');
       const { dispatch } = store;
       const { type } = action;
 

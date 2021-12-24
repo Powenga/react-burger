@@ -2,19 +2,12 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from '../../hooks';
 import { ingredientSelectors } from '../../services/selectors/ingredient-selectors';
+import { TOrder } from '../../utils/types';
 import { formatOrderDate } from '../../utils/utils';
 import styles from './OrderCard.module.css';
 
 type TOrderCard = {
-  order: {
-    readonly _id: string;
-    readonly ingredients: string[];
-    readonly status: string;
-    readonly name: string;
-    readonly createdAt: string;
-    readonly updatedAt: string;
-    readonly number: number;
-  };
+  order: TOrder;
 };
 
 const OrderCard: FC<TOrderCard> = ({ order }) => {

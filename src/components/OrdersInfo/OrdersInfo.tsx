@@ -1,25 +1,43 @@
-import React, { FC } from 'react';
-import { TStyle } from '../../utils/types';
+import React, { FC, useEffect, useState } from 'react';
+import { TOrder, TStyle } from '../../utils/types';
 import styles from './OrdersInfo.module.css';
 
 const readyOrderStyle: TStyle = {
   color: '#00cccc',
 };
 
-const orders = [
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-  '034533',
-];
+type TOrdersInfo = {
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+};
 
-const OrdersInfo: FC = () => {
+const OrdersInfo: FC<TOrdersInfo> = ({ orders, total, totalToday }) => {
+  const [ordersObj, setOrdersObj] = useState<{
+    done: TOrder[];
+    pending: TOrder[];
+  }>({
+    done: [],
+    pending: [],
+  });
+
+  useEffect(() => {
+    setOrdersObj(() => {
+      return orders.reduce(
+        (acc, curr) => {
+          if (curr.status === 'done') {
+            acc.done.push(curr);
+          }
+          if (curr.status === 'pending') {
+            acc.pending.push(curr);
+          }
+          return acc;
+        },
+        { done: [] as TOrder[], pending: [] as TOrder[] }
+      );
+    });
+  }, [orders]);
+
   return (
     <section className={styles.orderInfo}>
       <div className={`${styles.status} mb-15`}>
@@ -30,13 +48,13 @@ const OrdersInfo: FC = () => {
             Готовы:
           </h2>
           <ul className={styles.list}>
-            {orders.map((elem) => (
-              <li>
+            {ordersObj.done.slice(0, 10).map((elem) => (
+              <li key={elem._id}>
                 <p
                   className="text text_type_digits-default mb-2"
                   style={readyOrderStyle}
                 >
-                  {elem}
+                  {elem.number}
                 </p>
               </li>
             ))}
@@ -49,12 +67,10 @@ const OrdersInfo: FC = () => {
             В работе:
           </h2>
           <ul className={styles.list}>
-            {orders.map((elem) => (
-              <li>
-                <p
-                  className="text text_type_digits-default mb-2"
-                >
-                  {elem}
+            {ordersObj.pending.slice(0, 10).map((elem) => (
+              <li key={elem._id}>
+                <p className="text text_type_digits-default mb-2">
+                  {elem.number}
                 </p>
               </li>
             ))}
@@ -66,7 +82,7 @@ const OrdersInfo: FC = () => {
           Выполнено за все время:
         </h2>
         <p className={`${styles['info-content']} text text_type_digits-large`}>
-          28 752
+          {total}
         </p>
       </div>
       <div className={`${styles.info} mb-15`}>
@@ -74,7 +90,7 @@ const OrdersInfo: FC = () => {
           Выполнено за сегодня:
         </h2>
         <p className={`${styles['info-content']} text text_type_digits-large`}>
-          28 752
+          {totalToday}
         </p>
       </div>
     </section>

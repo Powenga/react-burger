@@ -1,9 +1,13 @@
 import React, { FC } from 'react';
 import styles from './OrdersFeed.module.css';
-import { orders } from '../../utils/data';
 import OrderCard from '../OrderCard/OrderCard';
+import { TOrder } from '../../utils/types';
 
-const OrdersFeed: FC = () => {
+type TOrdersFeed = {
+  orders: TOrder[];
+};
+
+const OrdersFeed: FC<TOrdersFeed> = ({ orders }) => {
   return (
     <section className={styles.feed}>
       <h2 className="text text_type_main-large mt-10 mb-5">Лента заказов</h2>
