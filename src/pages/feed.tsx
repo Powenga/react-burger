@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import Preloader from '../components/Preloader/Preloader';
-import styles from '../components/App/App.module.css';
 import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
+import OrdersInfo from '../components/OrdersInfo/OrdersInfo';
+import styles from '../components/App/App.module.css';
 
 const Feed: FC = () => {
   if(0) {
@@ -10,6 +11,7 @@ const Feed: FC = () => {
   return (
     <main className={`${styles.main} ${styles['main_type_home']} `}>
       <OrdersFeed />
+      <OrdersInfo/>
     </main>
   )
 };

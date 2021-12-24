@@ -1,0 +1,30 @@
+.orderInfo {
+  margin: 100px 0 0;
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.col{
+  flex: 1 0 50%;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-height: 162px;
+}
+
+.info-content {
+  text-shadow: 0 0 16px rgba(51, 51, 255, 0.25), 0 0 8px rgba(51, 51, 255, 0.25),
+    0 0 32px rgba(51, 51, 255, 0.25);
+}

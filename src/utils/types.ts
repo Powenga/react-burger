@@ -43,7 +43,7 @@ export type TStyle = {
   left?: number | string;
   right?: number | string;
   textDecoration?: 'none';
-  color?: 'inherit';
+  color?: 'inherit' | string;
   display?: 'flex';
   flexDirection?: 'column' | 'row';
   justifyContent?: 'center' | 'space-between';

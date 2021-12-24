@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import 'moment/locale/ru';
 import styles from './OrdersFeed.module.css';
 import { orders } from '../../utils/data';
 import OrderCard from '../OrderCard/OrderCard';
