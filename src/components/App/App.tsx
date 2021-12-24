@@ -27,6 +27,7 @@ import {
   Profile,
 } from '../../pages';
 import { TIngredient, TLocationState } from '../../utils/types.js';
+import Feed from '../../pages/feed';
 
 const App: FC = () => {
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
@@ -83,7 +84,7 @@ const App: FC = () => {
           />
         </Route>
         <Route path="/feed" >
-
+          <Feed />
         </Route>
         <Route path="/login" exact>
           <Login />

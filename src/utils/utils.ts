@@ -1,8 +1,12 @@
 type TCokieProps = {
-  [name: string] : string | Date | number | boolean,
+  [name: string]: string | Date | number | boolean;
 };
 
-export function setCookie(name: string, value: string, props: TCokieProps): void {
+export function setCookie(
+  name: string,
+  value: string,
+  props: TCokieProps
+): void {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -35,11 +39,53 @@ export function setAccessToken(name: string, value: string): void {
 
 export function getCookie(name: string): string | undefined {
   const matches = document.cookie.match(
-    new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+    new RegExp(
+      '(?:^|; )' +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+        '=([^;]*)'
+    )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 export function deleteCookie(name: string): void {
   setCookie(name, '', { expires: -1 });
+}
+
+export function formatOrderDate(orderCreateDate: string) {
+  const now = new Date();
+  const nowDate = now.getDate();
+  const nowMonth = now.getMonth() + 1;
+  const nowYear = now.getFullYear();
+  const order = new Date(orderCreateDate);
+  const orderDate = order.getDate();
+  const orderMonth = order.getMonth() + 1;
+  const orderYear = order.getFullYear();
+  let diff;
+  if (nowYear === orderYear && nowMonth === orderMonth) {
+    diff = orderDate - nowDate;
+  } else {
+    diff = (+order - +now) / (60 * 60 * 24 * 1000);
+  }
+  let days;
+
+  if (diff === 0) {
+    days = 'Cегодня';
+  } else if (diff === -1) {
+    days = 'Вчера';
+  } else if (diff < 0 && diff > -5) {
+    days = `${Math.abs(diff)} дня назад`;
+  } else if (diff < 0 && diff <= -5 && diff >= -10) {
+    days = `${Math.abs(diff)} днeй назад`;
+  } else {
+    days = `${orderDate < 10 ? '0' + orderDate : orderDate}.${
+      orderMonth < 10 ? '0' + orderMonth : orderMonth
+    }.${orderYear}`;
+  }
+  const timeZoneOffset = order.getTimezoneOffset() / 60;
+  const timeZoneCode = `i-GMT${timeZoneOffset < 0 ? '+' : '-'}${Math.abs(
+    timeZoneOffset
+  )}`;
+  const time = `${order.getHours()}:${order.getMinutes()}`;
+  return `${days}, ${time} ${timeZoneCode}`;
 }
