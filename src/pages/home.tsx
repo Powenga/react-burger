@@ -6,14 +6,17 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from '../hooks';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
-import { TIngredient } from '../utils/types.js';
+import { TIngredient} from '../utils/types.js';
 
 type THome = {
   handleIngredientClick: (ingredient: TIngredient) => void;
   handleCheckout: (data: { ingredients: string[] }) => void;
 };
 
-const Home: FC<THome> = ({ handleIngredientClick, handleCheckout }) => {
+const Home: FC<THome> = ({
+  handleIngredientClick,
+  handleCheckout,
+}) => {
   const { ingredientsRequest, ingredientsRequestFailed } = useSelector(
     (store) => store.ingredients
   );

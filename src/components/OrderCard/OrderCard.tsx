@@ -8,13 +8,18 @@ import styles from './OrderCard.module.css';
 
 type TOrderCard = {
   order: TOrder;
+  onClick: (order: TOrder) => void;
 };
 
-const OrderCard: FC<TOrderCard> = ({ order }) => {
+const OrderCard: FC<TOrderCard> = ({ order, onClick }) => {
   const [price, setPrice] = useState(0);
   const ingredients = useSelector(
     ingredientSelectors.getOrderIngredients(order.ingredients)
   );
+
+  function handleClick() {
+    onClick(order);
+  }
 
   useEffect(() => {
     setPrice(() => {
@@ -31,7 +36,11 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
   }, [ingredients]);
 
   return (
-    <li key={order._id} className={`${styles.order} mb-4 mr-2 p-6`}>
+    <li
+      key={order._id}
+      className={`${styles.order} mb-4 mr-2 p-6`}
+      onClick={handleClick}
+    >
       <div className={`${styles.header} mb-6`}>
         <p className={`text text_type_digits-default ${styles.number}`}>
           {`#${order.number}`}

@@ -6,7 +6,7 @@ import NavLink from '../components/NavLink/NavLink';
 import Orders from './orders';
 import { logout } from '../services/actions/user';
 import styles from '../components/App/App.module.css';
-import { TStyle } from '../utils/types';
+import { TOrder, TStyle } from '../utils/types';
 
 const navLinkStyle: TStyle = {
   textDecoration: 'none',
@@ -19,7 +19,11 @@ const navLinkStyle: TStyle = {
   minWidth: 320,
 };
 
-const Profile: FC = () => {
+type TProfile = {
+  handleOrderClick: (order: TOrder) => void;
+};
+
+const Profile: FC<TProfile> = ({ handleOrderClick }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -95,7 +99,7 @@ const Profile: FC = () => {
           <ProfileForm />
         </Route>
         <Route path="/profile/orders" exact>
-          <Orders />
+          <Orders handleOrderClick={handleOrderClick} />
         </Route>
       </Switch>
     </main>

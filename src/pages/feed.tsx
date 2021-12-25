@@ -8,8 +8,13 @@ import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START_ALL,
 } from '../utils/constants';
+import { TOrder } from '../utils/types';
 
-const Feed: FC = () => {
+type TFeed = {
+  handleOrderClick: (order: TOrder) => void;
+};
+
+const Feed: FC<TFeed> = ({ handleOrderClick }) => {
   const { wsConnected, message, error } = useSelector((store) => store.ws);
 
   const dispatch = useDispatch();
@@ -28,7 +33,11 @@ const Feed: FC = () => {
     <main className={`${styles.main} ${styles['main_type_home']} `}>
       {wsConnected && message.success && (
         <>
-          <OrdersFeed title="Лента заказов" orders={message.orders} />
+          <OrdersFeed
+            title="Лента заказов"
+            orders={message.orders}
+            handleOrderClick={handleOrderClick}
+          />
           <OrdersInfo
             orders={message.orders}
             total={message.total}

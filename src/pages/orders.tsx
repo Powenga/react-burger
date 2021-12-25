@@ -8,8 +8,13 @@ import {
   WS_CONNECTION_START_PERSON,
 } from '../utils/constants';
 import { getCookie } from '../utils/utils';
+import { TOrder } from '../utils/types';
 
-const Orders: FC = () => {
+type TOrders = {
+  handleOrderClick: (order: TOrder) => void;
+};
+
+const Orders: FC<TOrders> = ({ handleOrderClick }) => {
   const { wsConnected, message, error } = useSelector((store) => store.ws);
 
   const dispatch = useDispatch();
@@ -30,7 +35,11 @@ const Orders: FC = () => {
   return (
     <>
       {wsConnected && message.success && (
-        <OrdersFeed orders={message.orders} classes={styles['main__profile-orders']} />
+        <OrdersFeed
+          orders={message.orders}
+          classes={styles['main__profile-orders']}
+          handleOrderClick={handleOrderClick}
+        />
       )}
       {error && (
         <div>
@@ -48,7 +57,7 @@ const Orders: FC = () => {
           </p>
         </div>
       )}
-  </>
+    </>
   );
 };
 

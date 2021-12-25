@@ -26,8 +26,9 @@ import {
   Ingredient,
   Profile,
 } from '../../pages';
-import { TIngredient, TLocationState } from '../../utils/types.js';
+import { TIngredient, TLocationState, TOrder } from '../../utils/types.js';
 import Feed from '../../pages/feed';
+import OrderData from '../OrderData/OrderData';
 
 const App: FC = () => {
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
@@ -49,7 +50,14 @@ const App: FC = () => {
   function handleIngredientClick(ingredient: TIngredient): void {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
-      state: { background: { pathname: '/' } },
+      state: { background: { pathname: location.pathname } },
+    });
+  }
+
+  function handleOrderClick(order: TOrder): void {
+    history.push({
+      pathname: `/orders/${order._id}`,
+      state: { background: { pathname: location.pathname } },
     });
   }
 
@@ -66,7 +74,9 @@ const App: FC = () => {
   }
 
   function closeIngredientModal() {
-    history.push('/');
+    history.push({
+      pathname: location.state?.background?.pathname
+    });
   }
 
   function closeModal(): void {
@@ -83,8 +93,8 @@ const App: FC = () => {
             handleCheckout={handleCheckout}
           />
         </Route>
-        <Route path="/feed" >
-          <Feed />
+        <Route path="/feed">
+          <Feed handleOrderClick={handleOrderClick} />
         </Route>
         <Route path="/login" exact>
           <Login />
@@ -99,7 +109,7 @@ const App: FC = () => {
           <ResetPassword />
         </Route>
         <ProtectedRoute path="/profile">
-          <Profile />
+          <Profile handleOrderClick={handleOrderClick} />
         </ProtectedRoute>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
@@ -133,6 +143,17 @@ const App: FC = () => {
               );
           }}
         />
+        <Route
+          path="/orders/:id"
+          exact
+          render={() => {
+            return (
+              <Modal closeModal={closeIngredientModal}>
+                <OrderData />
+              </Modal>
+            );
+          }}
+        ></Route>
         {isModalOpen && (
           <Modal closeModal={closeModal}>
             <OrderDetails orderNumber={orderNumber} />
