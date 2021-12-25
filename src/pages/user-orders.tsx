@@ -7,13 +7,13 @@ import { WS_CLOSE, WS_CONNECTION_START_PERSON } from '../utils/constants';
 import { getCookie } from '../utils/utils';
 import { TOrder } from '../utils/types';
 import { Route, Switch } from 'react-router-dom';
-import Order from '../pages/order';
+import Order from './order';
 
-type TOrders = {
+type TUserOrders = {
   handleOrderClick: (order: TOrder) => void;
 };
 
-const Orders: FC<TOrders> = ({ handleOrderClick }) => {
+const UserOrders: FC<TUserOrders> = ({ handleOrderClick }) => {
   const { wsConnected, message, error } = useSelector((store) => store.ws);
 
   const dispatch = useDispatch();
@@ -65,4 +65,4 @@ const Orders: FC<TOrders> = ({ handleOrderClick }) => {
   );
 };
 
-export default Orders;
+export default UserOrders;
