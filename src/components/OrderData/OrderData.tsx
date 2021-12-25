@@ -1,6 +1,6 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { FC, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from '../../hooks';
 import { orderSelectors, ingredientSelectors } from '../../services/selectors';
 import { formatOrderDate } from '../../utils/utils';
@@ -9,9 +9,16 @@ import styles from './OrderData.module.css';
 const OrderData: FC = () => {
   const { id } = useParams<{ id: string }>();
   const order = useSelector(orderSelectors.findById(id));
+
   const ingredients = useSelector(
     ingredientSelectors.getOrderIngredients(order.ingredients)
   );
+
+  const history = useHistory();
+
+  if (!order.ingredients) {
+    history.replace('/404');
+  }
 
   const [price, setPrice] = useState(0);
 
@@ -81,9 +88,7 @@ const OrderData: FC = () => {
         ))}
       </ul>
       <div className={styles.footer}>
-        <p
-          className="text text_type_main-default text_color_inactive"
-        >
+        <p className="text text_type_main-default text_color_inactive">
           {formatOrderDate(order.createdAt)}
         </p>
         <p className="text text_type_digits-default">
