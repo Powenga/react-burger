@@ -21,7 +21,7 @@ const OrdersFeed: FC<TOrdersFeed> = ({
       {title && <h2 className="text text_type_main-large mb-5">{title}</h2>}
       <ul className={styles.container}>
         {orders.map((order) => (
-          <OrderCard order={order} onClick={handleOrderClick} />
+          <OrderCard key={order._id} order={order} onClick={handleOrderClick} />
         ))}
       </ul>
     </section>

@@ -156,6 +156,7 @@ const App: FC = () => {
             >
           ) => {
             if (props.location?.state?.background)
+            console.log('Мы тут!')
               return (
                 <Modal closeModal={closeIngredientModal} title="Детали заказа">
                   <OrderData />

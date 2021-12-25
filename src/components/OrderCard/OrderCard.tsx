@@ -63,7 +63,7 @@ const OrderCard: FC<TOrderCard> = ({ order, onClick }) => {
             .slice(0, 5)
             .reverse()
             .map((ingredient, index) => (
-              <div className={styles['ingredient-card']}>
+              <div key={index} className={styles['ingredient-card']}>
                 <div className={styles['ingredient-card-inner']}>
                   <img
                     className={styles[`ingredient-img`]}

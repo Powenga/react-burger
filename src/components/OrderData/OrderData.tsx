@@ -52,8 +52,8 @@ const OrderData: FC = () => {
       </p>
       <h4 className={`text text_type_main-medium mb-6`}>Состав:</h4>
       <ul className={styles.ingredients}>
-        {ingredients.map((ingredient) => (
-          <li className={styles.ingredient}>
+        {ingredients.map((ingredient, index) => (
+          <li key={index} className={styles.ingredient}>
             <div className={styles['ingredient__img-wrap']}>
               <div className={styles['ingredient__img-inner']}>
                 <img
