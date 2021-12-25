@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import ProfileForm from '../components/Form/ProfileForm';
 import NavLink from '../components/NavLink/NavLink';
+import Orders from './orders';
 import { logout } from '../services/actions/user';
 import styles from '../components/App/App.module.css';
 import { TStyle } from '../utils/types';
@@ -93,7 +94,9 @@ const Profile: FC = () => {
         <Route path="/profile" exact>
           <ProfileForm />
         </Route>
-        <Route path="/profile/orders" exact></Route>
+        <Route path="/profile/orders" exact>
+          <Orders />
+        </Route>
       </Switch>
     </main>
   );

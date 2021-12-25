@@ -4,13 +4,14 @@ import OrderCard from '../OrderCard/OrderCard';
 import { TOrder } from '../../utils/types';
 
 type TOrdersFeed = {
+  title?: string;
   orders: TOrder[];
 };
 
-const OrdersFeed: FC<TOrdersFeed> = ({ orders }) => {
+const OrdersFeed: FC<TOrdersFeed> = ({ title, orders }) => {
   return (
     <section className={styles.feed}>
-      <h2 className="text text_type_main-large mt-10 mb-5">Лента заказов</h2>
+      {title && (<h2 className="text text_type_main-large mb-5">{title}</h2>)}
       <ul className={styles.container}>
         {orders.map((order) => (
           <OrderCard order={order} />

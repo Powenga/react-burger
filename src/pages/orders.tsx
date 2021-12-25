@@ -1,21 +1,21 @@
 import React, { FC, useEffect } from 'react';
 import Preloader from '../components/Preloader/Preloader';
 import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
-import OrdersInfo from '../components/OrdersInfo/OrdersInfo';
 import styles from '../components/App/App.module.css';
 import { useDispatch, useSelector } from '../hooks';
 import {
   WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START_ALL,
+  WS_CONNECTION_START_PERSON,
 } from '../utils/constants';
+import { getCookie } from '../utils/utils';
 
-const Feed: FC = () => {
+const Orders: FC = () => {
   const { wsConnected, message, error } = useSelector((store) => store.ws);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START_ALL });
+    dispatch({ type: WS_CONNECTION_START_PERSON, payload: getCookie('accessToken') });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
@@ -26,16 +26,7 @@ const Feed: FC = () => {
   }
   return (
     <main className={`${styles.main} ${styles['main_type_home']} `}>
-      {wsConnected && message.success && (
-        <>
-          <OrdersFeed title="Лента заказов" orders={message.orders} />
-          <OrdersInfo
-            orders={message.orders}
-            total={message.total}
-            totalToday={message.totalToday}
-          />
-        </>
-      )}
+      {wsConnected && message.success && <OrdersFeed orders={message.orders} />}
       {error && (
         <div>
           <p
@@ -56,4 +47,4 @@ const Feed: FC = () => {
   );
 };
 
-export default Feed;
+export default Orders;

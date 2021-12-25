@@ -71,7 +71,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({ onIngredientClick }) => {
 
   return (
     <section className={`${styles.ingredients}`}>
-      <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
+      <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <IngredientsSelector />
       <div ref={constainerRef} className={styles.container}>
         <IngredientsContainer
