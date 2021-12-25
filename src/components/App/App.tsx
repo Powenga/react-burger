@@ -86,7 +86,13 @@ const App: FC = () => {
   return (
     <>
       <AppHeader />
-      <Switch location={location.state?.background ?? location}>
+      <Switch
+        location={
+          location.state?.background && history.action !== 'POP'
+            ? location.state?.background
+            : location
+        }
+      >
         <Route path="/" exact>
           <Home
             handleIngredientClick={handleIngredientClick}
@@ -132,7 +138,10 @@ const App: FC = () => {
               any
             >
           ): ReactNode => {
-            if (props.location?.state?.background)
+            if (
+              props.location?.state?.background &&
+              props.history.action !== 'POP'
+            )
               return (
                 <Modal
                   closeModal={closeIngredientModal}
@@ -155,13 +164,16 @@ const App: FC = () => {
               any
             >
           ) => {
-            if (props.location?.state?.background)
-            console.log('Мы тут!')
+            if (
+              props.location?.state?.background &&
+              props.history.action !== 'POP'
+            ) {
               return (
                 <Modal closeModal={closeIngredientModal} title="Детали заказа">
                   <OrderData />
                 </Modal>
               );
+            }
           }}
         ></Route>
         {isModalOpen && (
