@@ -6,11 +6,12 @@ import { TOrder } from '../../utils/types';
 type TOrdersFeed = {
   title?: string;
   orders: TOrder[];
+  classes? : string;
 };
 
-const OrdersFeed: FC<TOrdersFeed> = ({ title, orders }) => {
+const OrdersFeed: FC<TOrdersFeed> = ({ title, orders, classes }) => {
   return (
-    <section className={styles.feed}>
+    <section className={`${styles.feed} ${classes || ''}`}>
       {title && (<h2 className="text text_type_main-large mb-5">{title}</h2>)}
       <ul className={styles.container}>
         {orders.map((order) => (

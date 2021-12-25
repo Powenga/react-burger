@@ -15,7 +15,10 @@ const Orders: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START_PERSON, payload: getCookie('accessToken') });
+    dispatch({
+      type: WS_CONNECTION_START_PERSON,
+      payload: getCookie('accessToken'),
+    });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
@@ -25,8 +28,10 @@ const Orders: FC = () => {
     return <Preloader />;
   }
   return (
-    <main className={`${styles.main} ${styles['main_type_home']} `}>
-      {wsConnected && message.success && <OrdersFeed orders={message.orders} />}
+    <>
+      {wsConnected && message.success && (
+        <OrdersFeed orders={message.orders} classes={styles['main__profile-orders']} />
+      )}
       {error && (
         <div>
           <p
@@ -43,7 +48,7 @@ const Orders: FC = () => {
           </p>
         </div>
       )}
-    </main>
+  </>
   );
 };
 
