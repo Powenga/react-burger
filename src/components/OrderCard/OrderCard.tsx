@@ -1,7 +1,7 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from '../../hooks';
-import { ingredientSelectors } from '../../services/selectors/ingredient-selectors';
+import { ingredientSelectors } from '../../services/selectors';
 import { TOrder } from '../../utils/types';
 import { formatOrderDate } from '../../utils/utils';
 import styles from './OrderCard.module.css';
@@ -68,7 +68,7 @@ const OrderCard: FC<TOrderCard> = ({ order, onClick }) => {
                   <img
                     className={styles[`ingredient-img`]}
                     src={ingredient.image_mobile}
-                    alt=""
+                    alt={ingredient.name}
                   />
                   {index === 0 && ingredients.length > 5 && (
                     <div className={styles['ingredient-cover']}>

@@ -1,4 +1,4 @@
-import { TIngredient, TRootState } from '../../utils/types';
+import { TIngredient, TOrder, TRootState } from '../../utils/types';
 
 export const ingredientSelectors = {
   findById: (id: string) => (store: TRootState) => {
@@ -25,3 +25,13 @@ export const ingredientSelectors = {
     }, [] as TIngredient[]);
   },
 };
+
+export const orderSelectors = {
+  findById: (id: string) => (store: TRootState) => {
+    const order = store.ws.message.orders.find((elem: TOrder) => elem._id === id);
+    if(!order) {
+      return {} as TOrder;
+    }
+    return order;
+  }
+}

@@ -75,7 +75,7 @@ const App: FC = () => {
 
   function closeIngredientModal() {
     history.push({
-      pathname: location.state?.background?.pathname
+      pathname: location.state?.background?.pathname,
     });
   }
 
@@ -148,7 +148,10 @@ const App: FC = () => {
           exact
           render={() => {
             return (
-              <Modal closeModal={closeIngredientModal}>
+              <Modal
+                closeModal={closeIngredientModal}
+                title="Детали заказа"
+              >
                 <OrderData />
               </Modal>
             );
