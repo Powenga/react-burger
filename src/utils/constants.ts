@@ -52,5 +52,6 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' =
   'WS_CONNECTION_CLOSED';
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
+export const WS_CLOSE: 'WS_CLOSE' = 'WS_CLOSE';
 
 export const WS_URL: string = 'wss://norma.nomoreparties.space/orders';

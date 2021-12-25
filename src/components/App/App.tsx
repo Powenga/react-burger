@@ -56,7 +56,7 @@ const App: FC = () => {
 
   function handleOrderClick(order: TOrder): void {
     history.push({
-      pathname: `/orders/${order._id}`,
+      pathname: `${location.pathname}/${order._id}`,
       state: { background: { pathname: location.pathname } },
     });
   }
@@ -144,7 +144,7 @@ const App: FC = () => {
           }}
         />
         <Route
-          path="/orders/:id"
+          path={['/feed/:id', '/profile/orders/:id']}
           exact
           render={() => {
             return (

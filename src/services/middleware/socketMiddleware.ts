@@ -7,6 +7,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_CLOSE,
 } from '../../utils/constants';
 
 import type { TAppActions, TRootState, AppDispatch } from '../../utils/types';
@@ -52,6 +53,10 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
           const { payload } = action;
           const message = payload;
           socket.send(JSON.stringify(message));
+        }
+
+        if (type === WS_CLOSE) {
+          socket.close();
         }
       }
 

@@ -4,7 +4,7 @@ import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
 import styles from '../components/App/App.module.css';
 import { useDispatch, useSelector } from '../hooks';
 import {
-  WS_CONNECTION_CLOSED,
+  WS_CLOSE,
   WS_CONNECTION_START_PERSON,
 } from '../utils/constants';
 import { getCookie } from '../utils/utils';
@@ -25,7 +25,7 @@ const Orders: FC<TOrders> = ({ handleOrderClick }) => {
       payload: getCookie('accessToken'),
     });
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: WS_CLOSE });
     };
   }, [dispatch]);
 

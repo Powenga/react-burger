@@ -5,7 +5,7 @@ import OrdersInfo from '../components/OrdersInfo/OrdersInfo';
 import styles from '../components/App/App.module.css';
 import { useDispatch, useSelector } from '../hooks';
 import {
-  WS_CONNECTION_CLOSED,
+  WS_CLOSE,
   WS_CONNECTION_START_ALL,
 } from '../utils/constants';
 import { TOrder } from '../utils/types';
@@ -22,7 +22,7 @@ const Feed: FC<TFeed> = ({ handleOrderClick }) => {
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START_ALL });
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: WS_CLOSE });
     };
   }, [dispatch]);
 

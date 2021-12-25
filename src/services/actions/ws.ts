@@ -6,6 +6,7 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   WS_SEND_MESSAGE,
+  WS_CLOSE,
 } from '../../utils/constants';
 import { TMessage } from '../../utils/types';
 
@@ -18,7 +19,7 @@ export interface wsConnectionStartPerson {
 }
 export interface wsConnectionSuccess {
   readonly type: typeof WS_CONNECTION_SUCCESS;
-   readonly payload: Event;
+  readonly payload: Event;
 }
 export interface wsConnectionError {
   readonly type: typeof WS_CONNECTION_ERROR;
@@ -35,6 +36,9 @@ export interface wsSendMessage {
   readonly type: typeof WS_SEND_MESSAGE;
   payload: string[];
 }
+export interface wsClose {
+  readonly type: typeof WS_CLOSE;
+}
 
 export type TWSActions =
   | wsConnectionStartAll
@@ -43,4 +47,5 @@ export type TWSActions =
   | wsConnectionError
   | wsConnectionClosed
   | wsGetMessage
-  | wsSendMessage;
+  | wsSendMessage
+  | wsClose;
