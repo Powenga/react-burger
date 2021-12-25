@@ -46,7 +46,10 @@ export const ws = (state = initialState, action: TWSActions) => {
       return {
         ...state,
         error: undefined,
-        message: action.payload,
+        message: {...action.payload,
+        orders: action.payload.orders.sort((a, b) => {
+          return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+        })},
       };
     default:
       return state;
