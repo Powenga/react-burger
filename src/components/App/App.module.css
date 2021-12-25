@@ -27,6 +27,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  grid-column: 1 / -1;
 }
 
 .main__profile-orders {

@@ -12,6 +12,7 @@ const OrderData: FC = () => {
   const ingredients = useSelector(
     ingredientSelectors.getOrderIngredients(order.ingredients)
   );
+
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
