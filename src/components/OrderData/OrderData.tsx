@@ -15,11 +15,6 @@ const OrderData: FC = () => {
   );
 
   const history = useHistory();
-
-  if (!order.ingredients) {
-    history.replace('/404');
-  }
-
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
@@ -35,6 +30,11 @@ const OrderData: FC = () => {
       }, 0);
     });
   }, [ingredients]);
+
+  if (!order.ingredients) {
+    history.replace('/404');
+    return null;
+  }
 
   return (
     <div className={styles.orderData}>
