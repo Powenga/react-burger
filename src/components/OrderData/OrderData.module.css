@@ -1,4 +1,6 @@
-
+.orderData {
+  max-width: 640px;
+}
 .name {
   max-width: 640px;
   overflow: hidden;

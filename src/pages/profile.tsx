@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import ProfileForm from '../components/Form/ProfileForm';
 import NavLink from '../components/NavLink/NavLink';
+import Order from '../pages/order';
 import Orders from './orders';
 import { logout } from '../services/actions/user';
 import styles from '../components/App/App.module.css';
@@ -100,6 +101,9 @@ const Profile: FC<TProfile> = ({ handleOrderClick }) => {
         </Route>
         <Route path="/profile/orders" exact>
           <Orders handleOrderClick={handleOrderClick} />
+        </Route>
+        <Route path="/profile/orders/:id" exact>
+          <Order />
         </Route>
       </Switch>
     </main>

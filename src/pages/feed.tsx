@@ -1,13 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import Preloader from '../components/Preloader/Preloader';
 import OrdersFeed from '../components/OrdersFeed/OrdersFeed';
 import OrdersInfo from '../components/OrdersInfo/OrdersInfo';
 import styles from '../components/App/App.module.css';
-import { useDispatch, useSelector } from '../hooks';
-import {
-  WS_CLOSE,
-  WS_CONNECTION_START_ALL,
-} from '../utils/constants';
+import { useSelector } from '../hooks';
 import { TOrder } from '../utils/types';
 
 type TFeed = {
@@ -16,15 +12,6 @@ type TFeed = {
 
 const Feed: FC<TFeed> = ({ handleOrderClick }) => {
   const { wsConnected, message, error } = useSelector((store) => store.ws);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START_ALL });
-    return () => {
-      dispatch({ type: WS_CLOSE });
-    };
-  }, [dispatch]);
 
   if (!wsConnected) {
     return <Preloader />;

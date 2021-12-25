@@ -10,6 +10,7 @@ import {
 import { checkout, getIngredients } from '../../services/actions/index';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
+import Order from '../../pages/order';
 import Modal from '../Modal/Modal';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import Preloader from '../Preloader/Preloader';
@@ -29,6 +30,7 @@ import {
 import { TIngredient, TLocationState, TOrder } from '../../utils/types.js';
 import Feed from '../../pages/feed';
 import OrderData from '../OrderData/OrderData';
+import { WS_CLOSE, WS_CONNECTION_START_ALL } from '../../utils/constants';
 
 const App: FC = () => {
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
@@ -43,6 +45,10 @@ const App: FC = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START_ALL });
   }, [dispatch]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,8 +99,11 @@ const App: FC = () => {
             handleCheckout={handleCheckout}
           />
         </Route>
-        <Route path="/feed">
+        <Route path="/feed" exact>
           <Feed handleOrderClick={handleOrderClick} />
+        </Route>
+        <Route path="/feed/:id" exact>
+          <Order />
         </Route>
         <Route path="/login" exact>
           <Login />
@@ -146,15 +155,21 @@ const App: FC = () => {
         <Route
           path={['/feed/:id', '/profile/orders/:id']}
           exact
-          render={() => {
-            return (
-              <Modal
-                closeModal={closeIngredientModal}
-                title="Детали заказа"
-              >
-                <OrderData />
-              </Modal>
-            );
+          render={(
+            props: RouteComponentProps<
+              {
+                id: string;
+              },
+              any,
+              any
+            >
+          ) => {
+            if (props.location?.state?.background)
+              return (
+                <Modal closeModal={closeIngredientModal} title="Детали заказа">
+                  <OrderData />
+                </Modal>
+              );
           }}
         ></Route>
         {isModalOpen && (

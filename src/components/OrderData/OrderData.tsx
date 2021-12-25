@@ -29,7 +29,7 @@ const OrderData: FC = () => {
   }, [ingredients]);
 
   return (
-    <>
+    <div className={styles.orderData}>
       <p className={`text text_type_digits-default mb-10`}>
         {`#${order.number}`}
       </p>
@@ -90,7 +90,7 @@ const OrderData: FC = () => {
           <CurrencyIcon type="primary" />
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
