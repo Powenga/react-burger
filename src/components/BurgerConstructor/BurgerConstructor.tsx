@@ -5,19 +5,18 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useEffect, useState } from 'react';
 import styles from './BurgerConstructor.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../services/actions';
+import { useDispatch, useSelector } from '../../hooks';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../utils/constants';
 import { useDrop } from 'react-dnd';
 import Topping from '../Topping/Topping';
 import { TIngredient } from '../../utils/types';
 
 type TBurgerConstructor = {
-  onCheckout: (data: { ingredients: TIngredient[] }) => void;
+  onCheckout: (data: { ingredients: string[] }) => void;
 };
 
 const BurgerConstructor: FC<TBurgerConstructor> = ({ onCheckout }) => {
   const dispatch = useDispatch();
-  //@ts-ignore
   const { bun, toppings } = useSelector((store) => store.burgerConstructor);
 
   const [total, setTotal] = useState(0);

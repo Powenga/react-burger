@@ -5,7 +5,7 @@ import {
 import { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { MOVE_INGREDIENT } from '../../services/actions';
+import { MOVE_INGREDIENT } from '../../utils/constants';
 import { TIngredient } from '../../utils/types';
 import styles from './Topping.module.css';
 

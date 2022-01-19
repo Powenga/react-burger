@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import styles from './BurgerIngredients.module.css';
 import IngredientsSelector from '../IngredientsSelector/IngredientsSelector';
 import IngredientsContainer from '../IngredientsContainer/IngredientsContainer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import { useCallback, useEffect, useRef } from 'react';
-import { SET_CURRENT_TAB } from '../../services/actions';
+import { SET_CURRENT_TAB } from '../../utils/constants';
 import { TIngredient } from '../../utils/types';
 
 type TBurgerIngredients = {
@@ -12,9 +12,7 @@ type TBurgerIngredients = {
 };
 
 const BurgerIngredients: FC<TBurgerIngredients> = ({ onIngredientClick }) => {
-  //@ts-ignore
   const { ingredients } = useSelector((store) => store.ingredients);
-  //@ts-ignore
   const currentTab = useSelector((store) => store.currentTab);
   const constainerRef = useRef<HTMLDivElement>(null);
   const bunsRef = useRef<HTMLHeadingElement>(null);
@@ -73,7 +71,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({ onIngredientClick }) => {
 
   return (
     <section className={`${styles.ingredients}`}>
-      <h2 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h2>
+      <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
       <IngredientsSelector />
       <div ref={constainerRef} className={styles.container}>
         <IngredientsContainer

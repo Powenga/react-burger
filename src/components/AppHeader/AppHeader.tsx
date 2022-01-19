@@ -39,7 +39,7 @@ export default function AppHeader() {
             }
           </NavLink>
           <NavLink
-            to="/orders"
+            to="/feed"
             linkClass={`${styles.link} ml-2 pl-5 pr-5 pt-4 pb-4`}
           >
             {(isActive) =>

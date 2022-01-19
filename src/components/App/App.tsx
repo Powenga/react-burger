@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks';
 import {
   Switch,
   Route,
@@ -26,12 +26,12 @@ import {
   Ingredient,
   Profile,
 } from '../../pages';
-import { TIngredient, TLocationState } from '../../utils/types.js';
+import { TIngredient, TLocationState, TOrder } from '../../utils/types.js';
+import Feed from '../../pages/feed';
+import OrderData from '../OrderData/OrderData';
 
 const App: FC = () => {
-  // @ts-ignore
   const { orderNumber, checkoutRequest } = useSelector((store) => store.order);
-  // @ts-ignore
   const { isLoggedIn, userRequest } = useSelector((store) => store.user);
   const location = useLocation<TLocationState>();
   const history = useHistory();
@@ -50,11 +50,18 @@ const App: FC = () => {
   function handleIngredientClick(ingredient: TIngredient): void {
     history.push({
       pathname: `/ingredients/${ingredient._id}`,
-      state: { background: { pathname: '/' } },
+      state: { background: { pathname: location.pathname } },
     });
   }
 
-  function handleCheckout(data: { ingredients: TIngredient[] }): void {
+  function handleOrderClick(order: TOrder): void {
+    history.push({
+      pathname: `${location.pathname}/${order._id}`,
+      state: { background: { pathname: location.pathname } },
+    });
+  }
+
+  function handleCheckout(data: { ingredients: string[] }): void {
     if (!isLoggedIn) {
       history.push({ pathname: '/login', state: { from: location } });
     } else {
@@ -67,7 +74,9 @@ const App: FC = () => {
   }
 
   function closeIngredientModal() {
-    history.push('/');
+    history.push({
+      pathname: location.state?.background?.pathname,
+    });
   }
 
   function closeModal(): void {
@@ -77,12 +86,21 @@ const App: FC = () => {
   return (
     <>
       <AppHeader />
-      <Switch location={location.state?.background ?? location}>
+      <Switch
+        location={
+          location.state?.background && history.action !== 'POP'
+            ? location.state?.background
+            : location
+        }
+      >
         <Route path="/" exact>
           <Home
             handleIngredientClick={handleIngredientClick}
             handleCheckout={handleCheckout}
           />
+        </Route>
+        <Route path="/feed">
+          <Feed handleOrderClick={handleOrderClick} />
         </Route>
         <Route path="/login" exact>
           <Login />
@@ -97,7 +115,7 @@ const App: FC = () => {
           <ResetPassword />
         </Route>
         <ProtectedRoute path="/profile">
-          <Profile />
+          <Profile handleOrderClick={handleOrderClick} />
         </ProtectedRoute>
         <Route path="/ingredients/:id" exact>
           <Ingredient />
@@ -120,7 +138,10 @@ const App: FC = () => {
               any
             >
           ): ReactNode => {
-            if (props.location?.state?.background)
+            if (
+              props.location?.state?.background &&
+              props.history.action !== 'POP'
+            )
               return (
                 <Modal
                   closeModal={closeIngredientModal}
@@ -131,6 +152,30 @@ const App: FC = () => {
               );
           }}
         />
+        <Route
+          path={['/feed/:id', '/profile/orders/:id']}
+          exact
+          render={(
+            props: RouteComponentProps<
+              {
+                id: string;
+              },
+              any,
+              any
+            >
+          ) => {
+            if (
+              props.location?.state?.background &&
+              props.history.action !== 'POP'
+            ) {
+              return (
+                <Modal closeModal={closeIngredientModal} title="Детали заказа">
+                  <OrderData />
+                </Modal>
+              );
+            }
+          }}
+        ></Route>
         {isModalOpen && (
           <Modal closeModal={closeModal}>
             <OrderDetails orderNumber={orderNumber} />

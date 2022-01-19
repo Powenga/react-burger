@@ -4,7 +4,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { TIngredient } from '../../utils/types';
 import styles from './IngredientCard.module.css';
 
@@ -17,11 +17,8 @@ const IngredientCard: FC<TIngredientCard> = ({ ingredient, onIngredientClick }) 
   const { price, name, image, _id } = ingredient;
   const [qty, setQty] = useState(0);
   const constructorIngredients = useSelector((store) => [
-    //@ts-ignore
     store.burgerConstructor.bun,
-    //@ts-ignore
     store.burgerConstructor.bun,
-    //@ts-ignore
     ...store.burgerConstructor.toppings,
   ]);
 

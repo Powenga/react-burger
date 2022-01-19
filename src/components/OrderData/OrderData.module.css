@@ -1,0 +1,72 @@
+.orderData {
+  max-width: 640px;
+}
+.name {
+  max-width: 640px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ingredients {
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  max-height: 312px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.ingredient {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+  margin-right: 24px;
+}
+
+.ingredient__img-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(128,26,178,1) 0%, rgba(76,76,255,1) 100%);
+  position: relative;
+  margin-right: 16px;
+}
+
+.ingredient__img-inner {
+  width: 60px;
+  height: 60px;
+  background-color: #000;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredient__img {
+  display: block;
+  height: 56px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}

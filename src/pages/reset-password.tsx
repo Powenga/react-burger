@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../hooks';
 import { Redirect, useLocation } from 'react-router-dom';
 import ResetPasswordForm from '../components/Form/ResetPasswordForm';
 import Preloader from '../components/Preloader/Preloader';
@@ -7,7 +7,6 @@ import styles from '../components/App/App.module.css';
 import { TLocationState } from '../utils/types';
 
 const ResetPassword: FC = () => {
-  // @ts-ignore
   const { isLoggedIn, isUserLoaded } = useSelector((store) => store.user);
   const location = useLocation<TLocationState>();
 

@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../hooks';
 import IngredientDetails from '../components/IngredientDetails/IngredientDetails';
 import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
 const Ingredient: FC = () => {
   const { ingredientsRequest } = useSelector(
-    // @ts-ignore
     (store) => store.ingredients
   );
 

@@ -1,5 +1,15 @@
 import { Location } from 'history';
 import { Key } from 'react';
+import { compose, Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import {
+  TSetCurrentTab,
+  TConstructorActions,
+  TGetIngredientsActions,
+} from '../services/actions';
+import { TUserActions } from '../services/actions/user';
+import { TWSActions } from '../services/actions/ws';
+import store from '../services/store';
 
 export type TIngredient = {
   readonly _id: string;
@@ -25,7 +35,7 @@ export type TLocationState = {
   from?: { pathname: string };
   email?: string;
   background?: Location;
-}
+};
 
 export type TStyle = {
   position?: 'absolute';
@@ -34,7 +44,7 @@ export type TStyle = {
   left?: number | string;
   right?: number | string;
   textDecoration?: 'none';
-  color?: 'inherit';
+  color?: 'inherit' | string;
   display?: 'flex';
   flexDirection?: 'column' | 'row';
   justifyContent?: 'center' | 'space-between';
@@ -50,6 +60,69 @@ export type TPath =
   | '/orders'
   | '/profile'
   | '/profile/orders'
-  |  string
+  | string
   | { pathname: string };
 
+export type TUser = {
+  email: string;
+  name: string;
+};
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+export type TRootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type TAppActions =
+  | TUserActions
+  | TGetIngredientsActions
+  | TConstructorActions
+  | TSetCurrentTab
+  | TWSActions;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, TRootState, TAppActions>
+>;
+
+export type TToken = string;
+
+export type TAuthResponse = {
+  accessToken: TToken;
+  refreshToken: TToken;
+  user: TUser;
+};
+
+export type TIngredientsResponse = {
+  data: TIngredient[];
+};
+
+export type TOrderResponse = {
+  name: string;
+  order: {
+    number: number;
+  };
+};
+
+export type TResponse = TIngredientsResponse & TAuthResponse & TOrderResponse;
+
+export type TMessage = {
+  success: boolean;
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+};
+
+export type TOrder = {
+  _id: 'string';
+  ingredients: string[];
+  status: 'done' | 'created' | 'pending';
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+};

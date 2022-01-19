@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { user } from './user';
-
+import { ws } from './ws';
 import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
@@ -13,16 +13,35 @@ import {
   CHECKOUT_FAILED,
   CHECKOUT_SUCCESS,
   SET_CURRENT_TAB,
-} from '../actions';
+} from '../../utils/constants';
 
-const ingedientsState = {
+import {
+  TGetIngredientsActions,
+  TConstructorActions,
+  TCheckoutActions,
+  TSetCurrentTab,
+} from '../actions';
+import { TIngredient } from '../../utils/types';
+
+type TIngredientState = {
+  ingredients: TIngredient[];
+  ingredientsRequest: Boolean;
+  ingredientsRequestFailed: Boolean;
+};
+
+type TConstructorState = {
+  bun: TIngredient;
+  toppings: Array<TIngredient & { key?: number }>;
+};
+
+const ingedientsState: TIngredientState = {
   ingredients: [],
   ingredientsRequest: true,
   ingredientsRequestFailed: false,
 };
 
-const constructorState = {
-  bun: {},
+const constructorState: TConstructorState = {
+  bun: {} as TIngredient,
   toppings: [],
 };
 
@@ -34,7 +53,10 @@ const orderState = {
   isCheckoutSuccess: false,
 };
 
-export const ingredients = (state = ingedientsState, action) => {
+export const ingredients = (
+  state = ingedientsState,
+  action: TGetIngredientsActions
+): TIngredientState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST:
       return {
@@ -55,10 +77,6 @@ export const ingredients = (state = ingedientsState, action) => {
         ingredientsRequest: false,
         ingredientsRequestFailed: false,
         ingredients: action.ingredients,
-        constructorIngredients: {
-          bun: action.ingredients.find((elem) => elem.type === 'bun'),
-          toppings: [],
-        },
       };
 
     default:
@@ -66,7 +84,10 @@ export const ingredients = (state = ingedientsState, action) => {
   }
 };
 
-export const burgerConstructor = (state = constructorState, action) => {
+export const burgerConstructor = (
+  state = constructorState,
+  action: TConstructorActions
+): TConstructorState => {
   switch (action.type) {
     case ADD_INGREDIENT:
       if (action.ingredient.type === 'bun') {
@@ -116,7 +137,7 @@ export const burgerConstructor = (state = constructorState, action) => {
     case CLEAR_CONSTRUCTOR:
       return {
         ...state,
-        bun: {},
+        bun: {} as TIngredient,
         toppings: [],
       };
 
@@ -125,7 +146,7 @@ export const burgerConstructor = (state = constructorState, action) => {
   }
 };
 
-export const order = (state = orderState, action) => {
+export const order = (state = orderState, action: TCheckoutActions) => {
   switch (action.type) {
     case CHECKOUT_REQUEST:
       return {
@@ -165,7 +186,7 @@ export const order = (state = orderState, action) => {
   }
 };
 
-export const currentTab = (state = 'buns', action) => {
+export const currentTab = (state = 'buns', action: TSetCurrentTab) => {
   switch (action.type) {
     case SET_CURRENT_TAB:
       return action.currentTab;
@@ -181,4 +202,5 @@ export const rootReducer = combineReducers({
   order,
   currentTab,
   user,
+  ws,
 });

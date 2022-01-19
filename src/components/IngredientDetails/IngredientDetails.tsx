@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks';
 import { useParams, useHistory } from 'react-router-dom';
-import { ingredientSelectors } from '../../services/selectors/ingredient-selectors';
+import { ingredientSelectors } from '../../services/selectors';
 import styles from './IngredientDetails.module.css';
 
 const IngredientDetails: FC = () => {
   const { ingredientsRequest } = useSelector(
-    // @ts-ignore
     (store) => store.ingredients
   );
   const { id } = useParams<{ id: string }>();
