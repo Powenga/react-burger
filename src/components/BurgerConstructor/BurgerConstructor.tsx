@@ -106,7 +106,9 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ onCheckout }) => {
         <Button
           type="primary"
           size="medium"
-          onClick={handleCheckout}
+          onClick={
+            bun && Object.keys(bun).length !== 0 ? handleCheckout : undefined
+          }
         >
           Оформить заказ
         </Button>
