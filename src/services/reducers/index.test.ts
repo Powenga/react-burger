@@ -64,7 +64,7 @@ const testIngredients = [
   },
 ];
 
-describe('ngredient reducer', () => {
+describe('ingredient reducer', () => {
   it('should return the initial state', () => {
     expect(ingredients(undefined, {} as TGetIngredientsActions)).toEqual({
       ingredients: [],
@@ -126,6 +126,10 @@ describe('constructor reducer', () => {
     });
   });
   it('should add ingredient in toppings', () => {
+    const DateKey = 121313213213;
+    jest
+      .spyOn(global.Date, 'now')
+      .mockImplementation(() => DateKey);
     expect(
       burgerConstructor(undefined, {
         type: ADD_INGREDIENT,
@@ -133,7 +137,7 @@ describe('constructor reducer', () => {
       })
     ).toEqual({
       bun: {},
-      toppings: [{ ...testIngredients[1], key: Date.now() }],
+      toppings: [{ ...testIngredients[1], key: DateKey }],
     });
   });
   it('should remove ingredient', () => {
