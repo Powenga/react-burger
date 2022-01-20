@@ -118,7 +118,7 @@ export type TMessage = {
 };
 
 export type TOrder = {
-  _id: 'string';
+  _id: string;
   ingredients: string[];
   status: 'done' | 'created' | 'pending';
   name: string;
