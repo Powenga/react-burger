@@ -36,7 +36,7 @@ type TConstructorState = {
 
 const ingedientsState: TIngredientState = {
   ingredients: [],
-  ingredientsRequest: true,
+  ingredientsRequest: false,
   ingredientsRequestFailed: false,
 };
 
