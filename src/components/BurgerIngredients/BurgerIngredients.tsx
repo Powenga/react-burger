@@ -57,13 +57,28 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({ onIngredientClick }) => {
     }
   }, [currentTab, dispatch]);
 
+  const scrollToTab = useCallback((tab: string): void => {
+    if (tab === 'buns') {
+      bunsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'sauces') {
+      saucesRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (tab === 'toppings') {
+      toppingsRef?.current?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     const container = constainerRef.current;
     if (container) {
       container.addEventListener('scroll', switchTabs);
     }
     return () => {
-      if(container) {
+      if (container) {
         container.removeEventListener('scroll', switchTabs);
       }
     };
@@ -72,7 +87,7 @@ const BurgerIngredients: FC<TBurgerIngredients> = ({ onIngredientClick }) => {
   return (
     <section className={`${styles.ingredients}`}>
       <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
-      <IngredientsSelector />
+      <IngredientsSelector tabClickHandler={scrollToTab} />
       <div ref={constainerRef} className={styles.container}>
         <IngredientsContainer
           ref={bunsRef}
