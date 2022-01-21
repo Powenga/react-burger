@@ -24,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "cypress:open": "./node_modules/.bin/cypress open",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* powenga@62.84.122.170:/home/powenga/react-burger/frontend"
   },
   "eslintConfig": {
     "extends": [
