@@ -70,6 +70,7 @@ describe('ingredient reducer', () => {
       ingredients: [],
       ingredientsRequest: false,
       ingredientsRequestFailed: false,
+      isIngredientsLoaded: false,
     });
   });
 
@@ -78,6 +79,7 @@ describe('ingredient reducer', () => {
       ingredients: [],
       ingredientsRequest: true,
       ingredientsRequestFailed: false,
+      isIngredientsLoaded: false,
     });
   });
 
@@ -86,6 +88,7 @@ describe('ingredient reducer', () => {
       ingredients: [],
       ingredientsRequest: false,
       ingredientsRequestFailed: true,
+      isIngredientsLoaded: false,
     });
   });
 
@@ -96,6 +99,7 @@ describe('ingredient reducer', () => {
           ingredients: [],
           ingredientsRequest: true,
           ingredientsRequestFailed: false,
+          isIngredientsLoaded: false,
         },
         { type: GET_INGREDIENTS_SUCCESS, ingredients: testIngredients }
       )
@@ -103,6 +107,7 @@ describe('ingredient reducer', () => {
       ingredients: testIngredients,
       ingredientsRequest: false,
       ingredientsRequestFailed: false,
+      isIngredientsLoaded: true,
     });
   });
 });
