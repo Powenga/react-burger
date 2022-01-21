@@ -5,7 +5,7 @@ import Preloader from '../components/Preloader/Preloader';
 import styles from '../components/App/App.module.css';
 
 const Ingredient: FC = () => {
-  const { ingredientsRequest } = useSelector(
+  const { ingredientsRequest, isIngredientsLoaded } = useSelector(
     (store) => store.ingredients
   );
 
@@ -22,7 +22,7 @@ const Ingredient: FC = () => {
         >
           Детали ингредиента
         </h1>
-        <IngredientDetails />
+        {isIngredientsLoaded && <IngredientDetails />}
       </div>
     </main>
   );

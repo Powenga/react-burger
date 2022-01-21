@@ -27,6 +27,7 @@ type TIngredientState = {
   ingredients: TIngredient[];
   ingredientsRequest: Boolean;
   ingredientsRequestFailed: Boolean;
+  isIngredientsLoaded: Boolean;
 };
 
 type TConstructorState = {
@@ -38,6 +39,7 @@ const ingedientsState: TIngredientState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsRequestFailed: false,
+  isIngredientsLoaded: false,
 };
 
 const constructorState: TConstructorState = {
@@ -77,6 +79,7 @@ export const ingredients = (
         ingredientsRequest: false,
         ingredientsRequestFailed: false,
         ingredients: action.ingredients,
+        isIngredientsLoaded: true,
       };
 
     default:

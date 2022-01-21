@@ -5,14 +5,11 @@ import { ingredientSelectors } from '../../services/selectors';
 import styles from './IngredientDetails.module.css';
 
 const IngredientDetails: FC = () => {
-  const { ingredientsRequest } = useSelector(
-    (store) => store.ingredients
-  );
   const { id } = useParams<{ id: string }>();
   const ingredient = useSelector(ingredientSelectors.findById(id));
   const history = useHistory();
 
-  if (!ingredient && !ingredientsRequest) {
+  if (!ingredient) {
     history.replace('/404');
   }
 
@@ -77,6 +74,6 @@ const IngredientDetails: FC = () => {
       </ul>
     </>
   );
-}
+};
 
 export default IngredientDetails;
