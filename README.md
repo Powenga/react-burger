@@ -22,5 +22,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### `Ссылка на проект`
 
- [React Burger](powenga.nomoredomains.rocks) 
+ [React Burger](http://powenga.nomoredomains.rocks) 
 
