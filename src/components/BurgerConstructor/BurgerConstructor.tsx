@@ -29,15 +29,18 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ onCheckout }) => {
   });
 
   useEffect(() => {
-    if (bun.price) {
-      setTotal(
-        bun.price * 2 +
+    setTotal(() => {
+      if (bun && Object.keys(bun).length !== 0) {
+        return (
+          bun.price * 2 +
           toppings.reduce(
             (acc: number, curr: { price: number }) => acc + curr.price,
             0
           )
-      );
-    }
+        );
+      }
+      return 0;
+    });
   }, [bun, toppings]);
 
   function handleCheckout() {
@@ -106,7 +109,9 @@ const BurgerConstructor: FC<TBurgerConstructor> = ({ onCheckout }) => {
         <Button
           type="primary"
           size="medium"
-          onClick={handleCheckout}
+          onClick={
+            bun && Object.keys(bun).length !== 0 ? handleCheckout : undefined
+          }
         >
           Оформить заказ
         </Button>

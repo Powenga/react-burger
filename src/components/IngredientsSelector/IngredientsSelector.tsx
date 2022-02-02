@@ -3,12 +3,17 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from '../../hooks';
 import { SET_CURRENT_TAB } from '../../utils/constants';
 
-const IngredientsSelector: FC = () => {
+type TIngredientsSelector = {
+  tabClickHandler: (tab: string) => void;
+};
+
+const IngredientsSelector: FC<TIngredientsSelector> = ({ tabClickHandler }) => {
   const currentTab = useSelector((store) => store.currentTab);
   const dispatch = useDispatch();
 
   function setCurrent(currentTab: string) {
     dispatch({ type: SET_CURRENT_TAB, currentTab });
+    tabClickHandler(currentTab);
   }
 
   return (
@@ -36,6 +41,6 @@ const IngredientsSelector: FC = () => {
       </Tab>
     </div>
   );
-}
+};
 
 export default IngredientsSelector;
